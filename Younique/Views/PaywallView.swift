@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct PaywallView: View {
     @Environment(PurchaseManager.self) private var purchaseManager
@@ -37,7 +38,7 @@ struct PaywallView: View {
                             .multilineTextAlignment(.center)
                             .foregroundStyle(Theme.ink)
 
-                        Text("Met de eenmalige Premium-aankoop gebruik je 3, 4 of 5 posities voor uitgebreidere en gevarieerdere namen.")
+                        Text("Met de eenmalige Premium-aankoop gebruik je 3, 4 of 5 posities en alle selectiemodi, en synchroniseren je favorieten via iCloud naar al je apparaten. Deelbaar met je gezin via Family Sharing.")
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                             .multilineTextAlignment(.center)
                             .foregroundStyle(Theme.inkSoft)
@@ -45,9 +46,10 @@ struct PaywallView: View {
                     .padding(.horizontal, 24)
 
                     VStack(alignment: .leading, spacing: 10) {
-                        featureRow(icon: "checkmark.seal.fill", text: "3, 4 en 5 posities ontgrendeld")
+                        featureRow(icon: "checkmark.seal.fill", text: "3, 4 en 5 posities + alle selectiemodi")
+                        featureRow(icon: "icloud.fill", text: "Favorieten synchroniseren via iCloud")
                         featureRow(icon: "infinity", text: "Eenmalig betalen, voor altijd toegang")
-                        featureRow(icon: "arrow.clockwise.icloud", text: "Synchroniseert via je Apple-ID")
+                        featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Family Sharing")
                     }
                     .padding(20)
                     .background(.white.opacity(0.6))

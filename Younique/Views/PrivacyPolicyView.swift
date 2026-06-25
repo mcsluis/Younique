@@ -43,8 +43,13 @@ struct PrivacyPolicyView: View {
                         )
 
                         section(
-                            title: "iCloud",
-                            body: "Als je iCloud hebt ingeschakeld op je iPhone, kunnen je favorieten via Apple's SwiftData/CloudKit synchroniseren tussen je eigen apparaten. Dit gebeurt versleuteld via je Apple-ID — wij hebben er geen toegang toe."
+                            title: "iCloud-synchronisatie",
+                            body: "Premium-gebruikers met iCloud ingeschakeld kunnen hun Youniquelist synchroniseren tussen hun eigen Apple-apparaten via Apple's SwiftData/CloudKit. Dit gebeurt versleuteld via je eigen Apple-ID — wij hebben er geen toegang toe. Family Sharing-leden behouden hun eigen iCloud en zien dus hun eigen favorieten, niet die van anderen."
+                        )
+
+                        section(
+                            title: "Delen",
+                            body: "Wanneer je een naam deelt via het deel-icoon, opent het standaard iOS-deelvenster. De naam gaat rechtstreeks naar de gekozen app (iMessage, WhatsApp, Mail, etc.) — Younique stuurt zelf geen data en houdt niets bij."
                         )
 
                         section(

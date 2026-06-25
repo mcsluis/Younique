@@ -1,6 +1,6 @@
 //
 //  ShortlistView.swift
-//  Kampert
+//  Younique
 //
 //  Created by Marc van der Sluis on 22/06/2026.
 //
@@ -29,7 +29,7 @@ struct ShortlistView: View {
                     list
                 }
             }
-            .navigationTitle("Jullie shortlist")
+            .navigationTitle("Youniquelist")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -81,7 +81,7 @@ struct ShortlistView: View {
                     .font(.system(size: 26, weight: .semibold, design: .serif))
                     .foregroundStyle(Theme.ink)
 
-                Text(favorite.savedAt.formatted(date: .abbreviated, time: .omitted))
+                Text(NameProfile(syllables: favorite.syllables).summary)
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(Theme.inkSoft)
             }

@@ -1,6 +1,6 @@
 //
 //  NameProfile.swift
-//  Kampert
+//  Younique
 //
 //  Created by Marc van der Sluis on 22/06/2026.
 //

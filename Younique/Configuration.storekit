@@ -5,16 +5,16 @@
   "products" : [
     {
       "displayPrice" : "1.99",
-      "familyShareable" : false,
+      "familyShareable" : true,
       "internalID" : "5AB8C234-7E54-4567-8C9A-1B2D3E4F5A6B",
       "localizations" : [
         {
-          "description" : "Gebruik 3, 4 of 5 posities voor uitgebreidere namen.",
+          "description" : "Gebruik 3, 4 of 5 posities en alle selectiemodi. Eenmalig betalen, deelbaar met je gezin via Apple Family Sharing.",
           "displayName" : "Younique Premium",
           "locale" : "nl_NL"
         },
         {
-          "description" : "Use 3, 4 or 5 positions for longer, richer names.",
+          "description" : "Use 3, 4 or 5 positions and all selection modes. One-time purchase, shareable with your family via Apple Family Sharing.",
           "displayName" : "Younique Premium",
           "locale" : "en_US"
         }

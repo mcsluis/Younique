@@ -1,0 +1,224 @@
+YOUNIQUE — HANDOFF BRIEFING VOOR CODEX AI AGENT
+================================================
+Laatste update: 25 juni 2026
+Opgesteld door: Claude (Sonnet)
+Volgende agent: Codex
+
+================================================
+1. WAT IS DE APP
+================================================
+
+Younique is een SwiftUI iOS-app voor (aanstaande) ouders om unieke baby-
+voornamen te genereren door zorgvuldig samengestelde lettergrepen te
+combineren via een slot-machine UI.
+
+Doelgroep: Nederlandstalige aanstaande ouders.
+Platform: iOS 26.5+ (iPhone + iPad universal).
+Architectuur: SwiftUI + SwiftData + StoreKit 2 + @Observable ViewModels.
+Geen Combine, geen UIKit-fallbacks. Async/await waar nodig.
+
+================================================
+2. PROJECTSTRUCTUUR
+================================================
+
+Younique/Younique/
+  YouniqueApp.swift             — @main entry, ModelContainer, PurchaseManager injection
+  ContentView.swift             — Homepage met pickers + result overlay
+  Configuration.storekit        — Lokaal StoreKit testbestand
+  Assets.xcassets               — Kleurset + AppIcon set (PNG's ontbreken nog)
+  Models/
+    FavoriteName.swift          — SwiftData @Model voor opgeslagen namen
+    GeneratedName.swift         — Plain struct met syllables + fullName
+    NameProfile.swift           — Beschrijving van een naam (summary)
+    NameType.swift              — girl / boy / neutral
+    NameFilterGroup.swift       — sharpStarts, flowStarts, etc. (5 groepen)
+    NameGeneratorViewModel.swift — @Observable, beheert state + spinReels
+    ReelCount.swift             — .two / .three / .four / .five
+    Syllable.swift              — Enum van ~90 lettergrepen
+    SyllableSelectionMode.swift — automatic + 4 premium modi
+    DisplayFont.swift           — 6 calligraphic fonts voor naam-weergave
+  Services/
+    NameGenerator.swift         — Reglogica: pools, V/C-alternation, dedup
+    PurchaseManager.swift       — StoreKit 2 wrapper, @Observable
+  Views/
+    InfoView.swift              — Help-sheet met 6 secties
+    PaywallView.swift           — Premium-aankoop sheet
+    PrivacyPolicyView.swift     — In-app privacybeleid sheet
+    SettingsView.swift          — Lettertype-keuze, Premium, Over
+    ShortlistView.swift         — Favorietenlijst (heet "Youniquelist")
+    Components/
+      FilterChip.swift
+      ReelCard.swift
+      SyllableChip.swift
+
+YouniqueTests/
+  YouniqueTests.swift           — Swift Testing-tests voor NameGenerator
+
+docs/
+  privacy.html                  — Live op GitHub Pages
+
+================================================
+3. RECENT GEDAAN (juni 2026)
+================================================
+
+- Project hernoemd van Kampert naar Younique (mappen, targets, klassen)
+- Samengestelde lettergrepen verwijderd (nique, ella, ana, etc.) — alleen
+  enkellettergrepige cases in Syllable.swift
+- NameGenerator.randomName(...) gebruikt nu:
+  * V/C-alternation (geen klinker-botsing of medeklinker-cluster)
+  * Dedup binnen naam (geen syllable dubbel)
+  * Sessie-dedup van laatste 30 namen
+  * Vh-fix (ah/oh/eh telt als klinker-eind)
+  * GEEN stress-pattern meer (was te beperkend, viel weg op lyn/lynn)
+- Snell Roundhand Bold default font + 5 alternatieven (Zapfino, Apple
+  Chancery, Hoefler Italic, Snell Regular, system serif). @AppStorage.
+- ContentView homepage opgeschoond:
+  * "rol" + "deel" → "positie" overal in UI
+  * Verkorte section labels
+  * "Aantal posities" + "Lettergrepen kiezen" als labels
+  * reelCount.subtitle direct onder picker
+  * Syllable-grid vult resterende verticale ruimte
+- Selectiemodi hernoemd (in alle UI-strings):
+  * Automatisch → Geoptimaliseerd
+  * Alle posities, alle lettergrepen → Iedere positie, elke lettergreep →
+    (laatste rename) "Elke gekozen lettergreep op alle posities"
+  * Gedeelde selectie → Elke gekozen lettergreep op alle posities (DOUBLE?
+    let op: er zijn 2 modi met vergelijkbare naam — controleer mode .title
+    in SyllableSelectionMode.swift)
+  * Selectie per positiestructuur → Gekozen lettergrepen beschikbaar
+    volgens de positiestructuur
+  * Per positie kiezen → Zelf de lettergrepen per positie kiezen
+- StoreKit 2 IAP geïmplementeerd:
+  * Product ID: com.mcs.younique.unlock_full
+  * Type: Non-Consumable, prijs €1,99, familyShareable: true
+  * PurchaseManager + PaywallView + Configuration.storekit
+  * Custom posities-picker met lock-icoon op 3/4/5
+  * Menu-picker voor selectiemodi met lock-icoon op alle behalve
+    .automatic
+  * Auto-revert naar gratis defaults bij verlies entitlement
+  * Restore-knop in Paywall én SettingsView
+- Privacybeleid (in-app sheet + live GitHub Pages)
+- "Over"-sectie in Settings met versienummer
+
+================================================
+4. WAT NOG GEDAAN MOET WORDEN — TODO LIJST
+================================================
+
+[KRITIEK VOOR APP STORE LAUNCH]
+
+[ ] APP ICOON: 1024x1024 PNG + dark variant + tinted variant
+    Locatie: Younique/Younique/Assets.xcassets/AppIcon.appiconset/
+    JSON structuur is klaar, PNG's ontbreken.
+
+[ ] LAUNCH SCREEN: customize via Xcode Target Info
+    - Voeg UILaunchScreen dictionary toe met UIColorName "LaunchBackgroundColor"
+    - Maak Color Set "LaunchBackgroundColor" in Assets met cream #FAF0DE
+    - Zet INFOPLIST_KEY_UILaunchScreen_Generation op NO
+
+[ ] APP STORE CONNECT product config: maak het non-consumable product met
+    productID "com.mcs.younique.unlock_full" aan op €1,99 met Family
+    Sharing aan. Localizations NL + EN. Beschrijvingen staan in
+    Configuration.storekit als referentie.
+
+[ ] APP STORE METADATA invullen: zie laatste sectie van deze briefing
+    voor copy-pastable teksten.
+
+[ ] SCHEME terugzetten op "Geen StoreKit configuration" vóór Archive
+    voor App Store upload.
+
+[VOLGENDE FEATURES — IN PROGRESS]
+
+[ ] #5 SHARELINK voor gegenereerde naam (in result overlay) + voor elke
+    favoriet in ShortlistView. — IN PROGRESS in deze sessie
+
+[ ] #6 ICLOUD-SYNC voor favorieten via SwiftData + CloudKit. — IN PROGRESS
+    Vereist:
+    - FavoriteName moet CloudKit-compatible (geen @Attribute(.unique),
+      defaults op alle properties)
+    - iCloud capability toevoegen in Xcode (Signing & Capabilities)
+    - CloudKit container: iCloud.MCS.Younique (of vergelijkbaar)
+    - Younique.entitlements file aanmaken (handmatig in Xcode)
+    De code-changes in deze sessie zijn voorbereidend.
+
+[NICE TO HAVE — LATER]
+
+[ ] ONBOARDING-flow voor nieuwe gebruikers (3 schermen)
+[ ] NOTITIE per favoriet (kort tekstveld in ShortlistView detail)
+[ ] DARK MODE-controle — Theme-kleuren laten adapteren
+[ ] ENGELSE LOCALIZATION (alle Text-strings via String Catalog)
+[ ] LAST NAME-input — naam matchen met begin/eind-klanken achternaam
+[ ] DYNAMIC TYPE + accessibility audit (VoiceOver labels op chips, etc.)
+[ ] PRONUNCIATION via AVSpeechSynthesizer
+[ ] COMPARE-flow met partner (Tinder-stijl swipen)
+[ ] LANGERE SYLLABLE-POOL — meer variatie, eventueel Skandinavisch, Spaans
+[ ] SOUND-STYLE PRESETS (Zacht & Latijn / Stoer & Kort / etc.)
+
+================================================
+5. BUILD & TEST
+================================================
+
+Build via Xcode (Cmd+B) of via MCP tool BuildProject.
+Tests draaien via Cmd+U of RunAllTests.
+StoreKit testen: Edit Scheme → Run → StoreKit Configuration →
+"Configuration.storekit". Daarna kun je in Debug → StoreKit → Manage
+Transactions de aankopen resetten.
+
+================================================
+6. CONVENTIES & STIJL
+================================================
+
+- SwiftUI views: PascalCase, conform to View, body als computed.
+- @State private var voor lokale state.
+- @Environment(...) voor injected services (PurchaseManager).
+- @AppStorage voor persistente prefs (displayFont).
+- 4-space indentatie.
+- Geen Combine. Async/await voor alles.
+- Comments alleen bij niet-obvious logica.
+- Tests via Swift Testing framework (niet XCTest).
+- UI tests via XCUIAutomation.
+- Dutch language voor user-facing strings; English voor code identifiers.
+
+================================================
+7. APP STORE METADATA (copy-paste klaar)
+================================================
+
+App-naam: Younique – Babynamen
+Subtitel: Vind jullie unieke babynaam
+Categorie: Primary Lifestyle, Secondary Health & Fitness
+Leeftijd: 4+
+
+Promotionele tekst (170 tekens):
+Genereer unieke voornamen door lettergrepen te combineren. Stel het
+naamtype en aantal posities in, bewaar favorieten en deel met je
+partner. Premium ontgrendelt langere namen.
+
+Keywords:
+babynaam,voornaam,zwanger,baby,naamgenerator,uniek,babynamen,bevalling,zwangerschap
+
+Privacy URL: https://<jouw-username>.github.io/Younique/privacy.html
+Support URL: maak een README met contact info op je repo
+
+================================================
+8. NUTTIGE FILES VOOR DE NIEUWE AGENT
+================================================
+
+Begin met deze files in te lezen:
+- YouniqueApp.swift (entry point)
+- ContentView.swift (homepage)
+- NameGenerator.swift (kern-logica)
+- PurchaseManager.swift (IAP)
+- PaywallView.swift (sheet)
+
+Bij wijzigingen aan Syllable.swift: NameGenerator.swift heeft pools die
+verwijzen naar de cases (leadPool, bridgePool, etc.) — die moeten
+synchroon blijven.
+
+Bij wijzigingen aan SyllableSelectionMode of NameFilterGroup: InfoView
+heeft uitleg-strings die de namen noemen. Update consistent.
+
+Permission/security: app slaat NIETS extern op, geen analytics, geen
+networking behalve StoreKit. Houd dit zo voor privacy-statement.
+
+================================================
+EINDE BRIEFING
+================================================

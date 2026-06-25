@@ -18,7 +18,7 @@ final class PurchaseManager {
     var isPurchasing: Bool = false
     var errorMessage: String?
 
-    private var updatesTask: Task<Void, Never>?
+    private nonisolated(unsafe) var updatesTask: Task<Void, Never>?
 
     init() {
         updatesTask = Task { [weak self] in

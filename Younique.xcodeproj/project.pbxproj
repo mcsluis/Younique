@@ -12,37 +12,50 @@
 			containerPortal = 7D943F7F2FE865630011C0F5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7D943F862FE865630011C0F5;
-			remoteInfo = Kampert;
+			remoteInfo = Younique;
 		};
 		7D943F9F2FE865640011C0F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7D943F7F2FE865630011C0F5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7D943F862FE865630011C0F5;
-			remoteInfo = Kampert;
+			remoteInfo = Younique;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7D943F872FE865630011C0F5 /* Kampert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kampert.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D943F942FE865640011C0F5 /* KampertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KampertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D943F9E2FE865640011C0F5 /* KampertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KampertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D943F872FE865630011C0F5 /* Younique.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Younique.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D943F942FE865640011C0F5 /* YouniqueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouniqueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D943F9E2FE865640011C0F5 /* YouniqueUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouniqueUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7D92BDB42FED4C1D00534C3D /* Exceptions for "Younique" folder in "Younique" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7D943F862FE865630011C0F5 /* Younique */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7D943F892FE865630011C0F5 /* Kampert */ = {
+		7D943F892FE865630011C0F5 /* Younique */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Kampert;
+			exceptions = (
+				7D92BDB42FED4C1D00534C3D /* Exceptions for "Younique" folder in "Younique" target */,
+			);
+			path = Younique;
 			sourceTree = "<group>";
 		};
-		7D943F972FE865640011C0F5 /* KampertTests */ = {
+		7D943F972FE865640011C0F5 /* YouniqueTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = KampertTests;
+			path = YouniqueTests;
 			sourceTree = "<group>";
 		};
-		7D943FA12FE865640011C0F5 /* KampertUITests */ = {
+		7D943FA12FE865640011C0F5 /* YouniqueUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = KampertUITests;
+			path = YouniqueUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +88,9 @@
 		7D943F7E2FE865630011C0F5 = {
 			isa = PBXGroup;
 			children = (
-				7D943F892FE865630011C0F5 /* Kampert */,
-				7D943F972FE865640011C0F5 /* KampertTests */,
-				7D943FA12FE865640011C0F5 /* KampertUITests */,
+				7D943F892FE865630011C0F5 /* Younique */,
+				7D943F972FE865640011C0F5 /* YouniqueTests */,
+				7D943FA12FE865640011C0F5 /* YouniqueUITests */,
 				7D943F882FE865630011C0F5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +98,9 @@
 		7D943F882FE865630011C0F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7D943F872FE865630011C0F5 /* Kampert.app */,
-				7D943F942FE865640011C0F5 /* KampertTests.xctest */,
-				7D943F9E2FE865640011C0F5 /* KampertUITests.xctest */,
+				7D943F872FE865630011C0F5 /* Younique.app */,
+				7D943F942FE865640011C0F5 /* YouniqueTests.xctest */,
+				7D943F9E2FE865640011C0F5 /* YouniqueUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7D943F862FE865630011C0F5 /* Kampert */ = {
+		7D943F862FE865630011C0F5 /* Younique */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7D943FA82FE865640011C0F5 /* Build configuration list for PBXNativeTarget "Kampert" */;
+			buildConfigurationList = 7D943FA82FE865640011C0F5 /* Build configuration list for PBXNativeTarget "Younique" */;
 			buildPhases = (
 				7D943F832FE865630011C0F5 /* Sources */,
 				7D943F842FE865630011C0F5 /* Frameworks */,
@@ -108,18 +121,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7D943F892FE865630011C0F5 /* Kampert */,
+				7D943F892FE865630011C0F5 /* Younique */,
 			);
-			name = Kampert;
+			name = Younique;
 			packageProductDependencies = (
 			);
-			productName = Kampert;
-			productReference = 7D943F872FE865630011C0F5 /* Kampert.app */;
+			productName = Younique;
+			productReference = 7D943F872FE865630011C0F5 /* Younique.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7D943F932FE865640011C0F5 /* KampertTests */ = {
+		7D943F932FE865640011C0F5 /* YouniqueTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7D943FAB2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "KampertTests" */;
+			buildConfigurationList = 7D943FAB2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "YouniqueTests" */;
 			buildPhases = (
 				7D943F902FE865640011C0F5 /* Sources */,
 				7D943F912FE865640011C0F5 /* Frameworks */,
@@ -131,18 +144,18 @@
 				7D943F962FE865640011C0F5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7D943F972FE865640011C0F5 /* KampertTests */,
+				7D943F972FE865640011C0F5 /* YouniqueTests */,
 			);
-			name = KampertTests;
+			name = YouniqueTests;
 			packageProductDependencies = (
 			);
-			productName = KampertTests;
-			productReference = 7D943F942FE865640011C0F5 /* KampertTests.xctest */;
+			productName = YouniqueTests;
+			productReference = 7D943F942FE865640011C0F5 /* YouniqueTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7D943F9D2FE865640011C0F5 /* KampertUITests */ = {
+		7D943F9D2FE865640011C0F5 /* YouniqueUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7D943FAE2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "KampertUITests" */;
+			buildConfigurationList = 7D943FAE2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "YouniqueUITests" */;
 			buildPhases = (
 				7D943F9A2FE865640011C0F5 /* Sources */,
 				7D943F9B2FE865640011C0F5 /* Frameworks */,
@@ -154,13 +167,13 @@
 				7D943FA02FE865640011C0F5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7D943FA12FE865640011C0F5 /* KampertUITests */,
+				7D943FA12FE865640011C0F5 /* YouniqueUITests */,
 			);
-			name = KampertUITests;
+			name = YouniqueUITests;
 			packageProductDependencies = (
 			);
-			productName = KampertUITests;
-			productReference = 7D943F9E2FE865640011C0F5 /* KampertUITests.xctest */;
+			productName = YouniqueUITests;
+			productReference = 7D943F9E2FE865640011C0F5 /* YouniqueUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7D943F822FE865630011C0F5 /* Build configuration list for PBXProject "Kampert" */;
+			buildConfigurationList = 7D943F822FE865630011C0F5 /* Build configuration list for PBXProject "Younique" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +213,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7D943F862FE865630011C0F5 /* Kampert */,
-				7D943F932FE865640011C0F5 /* KampertTests */,
-				7D943F9D2FE865640011C0F5 /* KampertUITests */,
+				7D943F862FE865630011C0F5 /* Younique */,
+				7D943F932FE865640011C0F5 /* YouniqueTests */,
+				7D943F9D2FE865640011C0F5 /* YouniqueUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +271,12 @@
 /* Begin PBXTargetDependency section */
 		7D943F962FE865640011C0F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7D943F862FE865630011C0F5 /* Kampert */;
+			target = 7D943F862FE865630011C0F5 /* Younique */;
 			targetProxy = 7D943F952FE865640011C0F5 /* PBXContainerItemProxy */;
 		};
 		7D943FA02FE865640011C0F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7D943F862FE865630011C0F5 /* Kampert */;
+			target = 7D943F862FE865630011C0F5 /* Younique */;
 			targetProxy = 7D943F9F2FE865640011C0F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -395,15 +408,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Younique/Younique.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79S3547Z9A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Younique/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Younique;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -428,15 +442,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Younique/Younique.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79S3547Z9A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Younique/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Younique;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,7 +489,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kampert.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kampert";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Younique.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Younique";
 			};
 			name = Debug;
 		};
@@ -496,7 +511,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kampert.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kampert";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Younique.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Younique";
 			};
 			name = Release;
 		};
@@ -516,7 +531,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Kampert;
+				TEST_TARGET_NAME = Younique;
 			};
 			name = Debug;
 		};
@@ -536,14 +551,14 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Kampert;
+				TEST_TARGET_NAME = Younique;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7D943F822FE865630011C0F5 /* Build configuration list for PBXProject "Kampert" */ = {
+		7D943F822FE865630011C0F5 /* Build configuration list for PBXProject "Younique" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7D943FA62FE865640011C0F5 /* Debug */,
@@ -552,7 +567,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7D943FA82FE865640011C0F5 /* Build configuration list for PBXNativeTarget "Kampert" */ = {
+		7D943FA82FE865640011C0F5 /* Build configuration list for PBXNativeTarget "Younique" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7D943FA92FE865640011C0F5 /* Debug */,
@@ -561,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7D943FAB2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "KampertTests" */ = {
+		7D943FAB2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "YouniqueTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7D943FAC2FE865640011C0F5 /* Debug */,
@@ -570,7 +585,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7D943FAE2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "KampertUITests" */ = {
+		7D943FAE2FE865640011C0F5 /* Build configuration list for PBXNativeTarget "YouniqueUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7D943FAF2FE865640011C0F5 /* Debug */,

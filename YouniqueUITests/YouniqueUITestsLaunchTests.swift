@@ -1,13 +1,13 @@
 //
-//  KampertUITestsLaunchTests.swift
-//  KampertUITests
+//  YouniqueUITestsLaunchTests.swift
+//  YouniqueUITests
 //
 //  Created by Marc van der Sluis on 21/06/2026.
 //
 
 import XCTest
 
-final class KampertUITestsLaunchTests: XCTestCase {
+final class YouniqueUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -1,13 +1,13 @@
 //
-//  KampertUITests.swift
-//  KampertUITests
+//  YouniqueUITests.swift
+//  YouniqueUITests
 //
 //  Created by Marc van der Sluis on 21/06/2026.
 //
 
 import XCTest
 
-final class KampertUITests: XCTestCase {
+final class YouniqueUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

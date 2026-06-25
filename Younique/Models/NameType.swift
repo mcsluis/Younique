@@ -1,6 +1,6 @@
 //
 //  NameType.swift
-//  Kampert
+//  Younique
 //
 //  Created by Marc van der Sluis on 22/06/2026.
 //
@@ -32,7 +32,7 @@ enum NameType: String, CaseIterable, Identifiable {
         case .boy:
             return "Stevigere starts en meer gesloten of harde eindklanken."
         case .neutral:
-            return "Een gemengde pool zonder uitgesproken meisjes- of jongenseindes."
+            return "Een gemengde pool zonder specifieke klankaanpassingen."
         }
     }
 }
