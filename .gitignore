@@ -40,3 +40,6 @@ fastlane/test_output
 
 # Logs
 *.log
+
+# Local handoff notes
+CODEX_TODO.txt
