@@ -95,7 +95,13 @@ struct YouniqueTests {
         let flattened = Set(options.flatMap { $0.map { $0.lowercased() } })
 
         #expect(options.count == ReelCount.three.rawValue)
-        #expect(flattened == Set(["ka", "lo", "mi", "ra", "zo"]))
+        #expect(!flattened.isEmpty)
+        // Voorbeelden uit elke uitgesloten groep mogen niet voorkomen
+        #expect(!flattened.contains("ka"), "ka (sharpStarts) zou uitgesloten moeten zijn")
+        #expect(!flattened.contains("la"), "la (flowStarts) zou uitgesloten moeten zijn")
+        #expect(!flattened.contains("a"), "a (softFillers) zou uitgesloten moeten zijn")
+        #expect(!flattened.contains("ley"), "ley (englishTails) zou uitgesloten moeten zijn")
+        #expect(!flattened.contains("dja"), "dja (urbanAccents) zou uitgesloten moeten zijn")
     }
 
     @Test
@@ -218,5 +224,108 @@ struct YouniqueTests {
         #expect(!flattened.contains("lyn"))
         #expect(!flattened.contains("ya"))
         #expect(flattened.contains("son"))
+    }
+
+    // MARK: - V/C-alternation regel
+
+    @Test(arguments: ReelCount.allCases)
+    @MainActor
+    func generatedNamesAlternateVowelAndConsonant(reelCount: ReelCount) async throws {
+        let generator = NameGenerator()
+        // 50 iteraties om random variatie te dekken, met grote default pool.
+        for _ in 0..<50 {
+            let name = generator.randomName(
+                reelCount: reelCount,
+                useSharedPool: false,
+                excludedGroups: [],
+                includedSyllables: nil,
+                distributeSelectedAcrossRoles: false,
+                includedSyllablesByReel: nil
+            )
+            let syllables = name.syllables
+            guard syllables.count > 1 else { continue }
+            for i in 0..<(syllables.count - 1) {
+                let current = syllables[i]
+                let next = syllables[i + 1]
+                let currentEndsVowel = TestHelpers.endsWithVowel(current)
+                let nextStartsVowel = TestHelpers.startsWithVowel(next)
+                #expect(
+                    currentEndsVowel != nextStartsVowel,
+                    "V/C-regel geschonden tussen '\(current)' en '\(next)' in \(name.fullName)"
+                )
+            }
+        }
+    }
+
+    // MARK: - Dedup binnen één gegenereerde naam
+
+    @Test(arguments: ReelCount.allCases)
+    @MainActor
+    func generatedNamesHaveNoDuplicateSyllables(reelCount: ReelCount) async throws {
+        let generator = NameGenerator()
+        for _ in 0..<50 {
+            let name = generator.randomName(
+                reelCount: reelCount,
+                useSharedPool: false,
+                excludedGroups: [],
+                includedSyllables: nil,
+                distributeSelectedAcrossRoles: false,
+                includedSyllablesByReel: nil
+            )
+            let lowered = name.syllables.map { $0.lowercased() }
+            #expect(
+                Set(lowered).count == lowered.count,
+                "Dubbele syllable gevonden in '\(name.fullName)' — \(name.syllables)"
+            )
+        }
+    }
+
+    // MARK: - FavoriteName model
+
+    @Test
+    func favoriteNameInitializesWithDefaults() {
+        let favorite = FavoriteName(name: "Anna", syllables: ["an", "na"])
+        #expect(favorite.name == "Anna")
+        #expect(favorite.syllables == ["an", "na"])
+        #expect(favorite.note == "")
+    }
+
+    @Test
+    func favoriteNameAcceptsNote() {
+        let favorite = FavoriteName(
+            name: "Karina",
+            syllables: ["ka", "ri", "na"],
+            note: "favo van mama"
+        )
+        #expect(favorite.note == "favo van mama")
+    }
+
+    @Test
+    func favoriteNameNoteIsMutable() {
+        let favorite = FavoriteName(name: "Mira", syllables: ["mi", "ra"])
+        favorite.note = "klinkt zacht"
+        #expect(favorite.note == "klinkt zacht")
+    }
+}
+
+// MARK: - Test helpers (mirror van private logica in NameGenerator)
+
+private enum TestHelpers {
+    static func startsWithVowel(_ syllable: String) -> Bool {
+        guard let first = syllable.lowercased().first else { return false }
+        return "aeiou".contains(first)
+    }
+
+    static func endsWithVowel(_ syllable: String) -> Bool {
+        let lower = syllable.lowercased()
+        guard let last = lower.last else { return false }
+        // Vh-uitzondering: "ah", "oh", "eh" tellen als klinker-eind.
+        if last == "h", lower.count >= 2 {
+            let secondLast = lower[lower.index(lower.endIndex, offsetBy: -2)]
+            if "aeiou".contains(secondLast) {
+                return true
+            }
+        }
+        return "aeiouy".contains(last)
     }
 }

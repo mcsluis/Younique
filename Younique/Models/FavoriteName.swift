@@ -16,10 +16,12 @@ final class FavoriteName {
     var name: String = ""
     var syllables: [String] = []
     var savedAt: Date = Date.now
+    var note: String = ""
 
-    init(name: String, syllables: [String], savedAt: Date = .now) {
+    init(name: String, syllables: [String], savedAt: Date = .now, note: String = "") {
         self.name = name
         self.syllables = syllables
         self.savedAt = savedAt
+        self.note = note
     }
 }

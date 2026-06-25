@@ -23,14 +23,36 @@ final class YouniqueUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testAppLaunchesToHomepage() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        // App-titel zichtbaar
+        XCTAssertTrue(app.staticTexts["Younique"].waitForExistence(timeout: 5))
+
+        // Default section labels aanwezig
+        XCTAssertTrue(app.staticTexts["Naamtype"].exists)
+        XCTAssertTrue(app.staticTexts["Aantal posities"].exists)
+        XCTAssertTrue(app.staticTexts["Lettergrepen kiezen"].exists)
+    }
+
+    @MainActor
+    func testDiscoverButtonOpensOverlay() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let discoverButton = app.buttons["Ontdek een naam"]
+        XCTAssertTrue(discoverButton.waitForExistence(timeout: 5))
+        discoverButton.tap()
+
+        // Wacht tot de slot-machine animatie klaar is en de naam zichtbaar wordt.
+        // De animatie duurt enkele seconden afhankelijk van aantal reels.
+        Thread.sleep(forTimeInterval: 4)
+
+        // De heart-knop (favoriet toggle) of het kruisje moet bestaan na completion.
+        // We checken op "Nog een keer draaien" (toverstaf-knop accessibility label).
+        let wandButton = app.buttons["Nog een keer draaien"]
+        XCTAssertTrue(wandButton.waitForExistence(timeout: 5))
     }
 
     @MainActor
