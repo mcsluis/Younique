@@ -22,6 +22,7 @@ final class NameGeneratorViewModel {
     var selectionMode: SyllableSelectionMode = .automatic {
         didSet {
             guard !isCreating else { return }
+            syncActiveSoundStylePreset()
             resetGeneratedState()
         }
     }
@@ -30,6 +31,7 @@ final class NameGeneratorViewModel {
         didSet {
             guard !isCreating else { return }
             sanitizeSelectionsForCurrentNameType()
+            syncActiveSoundStylePreset()
             resetGeneratedState()
         }
     }
@@ -37,6 +39,7 @@ final class NameGeneratorViewModel {
     var excludedGroups = Set<NameFilterGroup>() {
         didSet {
             guard !isCreating else { return }
+            syncActiveSoundStylePreset()
             resetGeneratedState()
         }
     }
@@ -44,6 +47,7 @@ final class NameGeneratorViewModel {
     var selectedSyllables = Set<String>() {
         didSet {
             guard !isCreating else { return }
+            syncActiveSoundStylePreset()
             resetGeneratedState()
         }
     }
@@ -51,11 +55,13 @@ final class NameGeneratorViewModel {
     var perReelSelectedSyllables: [Int: Set<String>] = [:] {
         didSet {
             guard !isCreating else { return }
+            syncActiveSoundStylePreset()
             resetGeneratedState()
         }
     }
 
     var activeReelSelectionIndex = 0
+    var activeSoundStylePreset: SoundStylePreset?
 
     var displayedName: String?
     var reels: [String] = []
@@ -67,6 +73,7 @@ final class NameGeneratorViewModel {
     private var recentNames: [String] = []
     private let recentNamesLimit = 30
     private let dedupRetryLimit = 5
+    private var isApplyingSoundStylePreset = false
 
     var allSyllables: [String] {
         generator.allSyllables(for: nameType)
@@ -161,6 +168,21 @@ final class NameGeneratorViewModel {
         case .automatic, .automaticShared:
             break
         }
+    }
+
+    func applySoundStylePreset(_ preset: SoundStylePreset) {
+        let allowedSyllables = Set(allSyllables)
+        let presetSelection = preset.availableSyllables(for: nameType, allowedSyllables: allowedSyllables)
+
+        isApplyingSoundStylePreset = true
+        excludedGroups.removeAll()
+        perReelSelectedSyllables.removeAll()
+        activeReelSelectionIndex = 0
+        selectionMode = .sharedManual
+        selectedSyllables = presetSelection
+        activeSoundStylePreset = preset
+        isApplyingSoundStylePreset = false
+        resetGeneratedState()
     }
 
     func isSyllableSelected(_ syllable: String) -> Bool {
@@ -287,6 +309,29 @@ final class NameGeneratorViewModel {
 
         selectedSyllables = selectedSyllables.intersection(allowed)
         perReelSelectedSyllables = perReelSelectedSyllables.mapValues { $0.intersection(allowed) }
+    }
+
+    private func syncActiveSoundStylePreset() {
+        guard !isApplyingSoundStylePreset else { return }
+
+        guard excludedGroups.isEmpty else {
+            activeSoundStylePreset = nil
+            return
+        }
+
+        if selectionMode == .perReelManual {
+            return
+        }
+
+        guard selectionMode == .sharedManual || selectionMode == .distributedManual else {
+            activeSoundStylePreset = nil
+            return
+        }
+
+        let allowedSyllables = Set(allSyllables)
+        activeSoundStylePreset = SoundStylePreset.allCases.first { preset in
+            preset.availableSyllables(for: nameType, allowedSyllables: allowedSyllables) == selectedSyllables
+        }
     }
 
     private func spinSingleReel(index: Int, options: [String], finalValue: String, cycles: Int) async {

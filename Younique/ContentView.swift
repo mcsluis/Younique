@@ -204,6 +204,8 @@ struct ContentView: View {
                     .foregroundStyle(Theme.inkSoft)
             }
 
+            soundStyleSection
+
             VStack(alignment: .leading, spacing: 6) {
                 Text("Lettergrepen kiezen")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -372,6 +374,88 @@ struct ContentView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: isFilterSectionExpanded)
     }
 
+    private var soundStyleSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Klankstijl")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(SoundStylePreset.allCases) { preset in
+                        soundStyleCard(for: preset)
+                    }
+                }
+                .padding(.vertical, 1)
+            }
+
+            Text(soundStyleDetailText)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
+        }
+    }
+
+    private func soundStyleCard(for preset: SoundStylePreset) -> some View {
+        let isSelected = viewModel.activeSoundStylePreset == preset
+        let isLocked = preset.isPremium && !purchaseManager.isUnlocked
+
+        return Button {
+            if isLocked {
+                isPaywallPresented = true
+            } else {
+                viewModel.applySoundStylePreset(preset)
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    Text(preset.title)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.ink))
+
+                    Spacer(minLength: 0)
+
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : (isLocked ? "lock.fill" : "circle"))
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.accent.opacity(0.7)))
+                }
+
+                Text(preset.detail)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(isSelected ? .white.opacity(0.86) : Theme.inkSoft)
+                    .lineLimit(3)
+
+                Text(preset.accentLine)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundStyle(isSelected ? .white.opacity(0.78) : (isLocked ? Theme.inkSoft : Theme.accent))
+                    .lineLimit(1)
+
+                if isLocked {
+                    Text("Premium")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.accent)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Theme.surfaceStrong)
+                        .clipShape(Capsule())
+                }
+            }
+            .frame(width: 208, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 14)
+            .background(isSelected ? Theme.accent : (isLocked ? Theme.surfaceSoft : Theme.surface))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(isSelected ? Color.clear : Theme.borderStrong, lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(viewModel.isCreating)
+        .accessibilityLabel(preset.title)
+        .accessibilityValue(isLocked ? "Vergrendeld" : (isSelected ? "Geselecteerd" : "Niet geselecteerd"))
+        .accessibilityHint(isLocked ? "Dubbeltik om Premium te bekijken." : "Dubbeltik om deze klankstijl toe te passen.")
+    }
+
     private var syllableSelectionSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
@@ -450,6 +534,14 @@ struct ContentView: View {
         }
 
         return "Kies hier je lettergrepen"
+    }
+
+    private var soundStyleDetailText: String {
+        if let preset = viewModel.activeSoundStylePreset {
+            return "\(preset.title) zet meteen een bijpassende lettergreepselectie klaar."
+        }
+
+        return "Kies een voorselectie en verfijn daarna verder via de lettergreepmodus."
     }
 
     private var sortedSyllables: [String] {
@@ -619,6 +711,8 @@ private struct FullScreenSyllablePickerView: View {
     let sortedSyllables: [String]
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(PurchaseManager.self) private var purchaseManager
+    @State private var isPaywallPresented = false
 
     var body: some View {
         NavigationStack {
@@ -655,9 +749,14 @@ private struct FullScreenSyllablePickerView: View {
                                 SyllableChip(
                                     syllable: syllable,
                                     isSelected: viewModel.isSyllableSelected(syllable),
+                                    isLocked: isLockedSyllable(syllable),
                                     isDisabled: viewModel.isCreating
                                 ) {
-                                    viewModel.toggleSyllable(syllable)
+                                    if isLockedSyllable(syllable) {
+                                        isPaywallPresented = true
+                                    } else {
+                                        viewModel.toggleSyllable(syllable)
+                                    }
                                 }
                             }
                         }
@@ -685,6 +784,9 @@ private struct FullScreenSyllablePickerView: View {
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                 }
             }
+            .sheet(isPresented: $isPaywallPresented) {
+                PaywallView()
+            }
         }
     }
 
@@ -705,6 +807,22 @@ private struct FullScreenSyllablePickerView: View {
         case .automatic, .automaticShared:
             return false
         }
+    }
+
+    private var restrictedSyllables: Set<String>? {
+        guard !purchaseManager.isUnlocked, let preset = viewModel.activeSoundStylePreset else {
+            return nil
+        }
+
+        return preset.availableSyllables(
+            for: viewModel.nameType,
+            allowedSyllables: Set(sortedSyllables)
+        )
+    }
+
+    private func isLockedSyllable(_ syllable: String) -> Bool {
+        guard let restrictedSyllables else { return false }
+        return !restrictedSyllables.contains(syllable)
     }
 }
 
