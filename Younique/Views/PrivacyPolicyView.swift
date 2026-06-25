@@ -63,7 +63,7 @@ struct PrivacyPolicyView: View {
                         )
 
                         Text("Laatste update: 25 juni 2026")
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .font(.footnote.weight(.medium))
                             .foregroundStyle(Theme.inkMuted)
                             .padding(.top, 8)
                     }
@@ -84,11 +84,11 @@ struct PrivacyPolicyView: View {
     private func section(title: String, body: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.system(size: 17, weight: .semibold, design: .serif))
+                .font(.headline.weight(.semibold))
                 .foregroundStyle(Theme.ink)
 
             Text(body)
-                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .font(.body.weight(.medium))
                 .foregroundStyle(Theme.ink.opacity(0.78))
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -98,7 +98,7 @@ struct PrivacyPolicyView: View {
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                .stroke(Theme.border, lineWidth: 1)
         }
     }
 }

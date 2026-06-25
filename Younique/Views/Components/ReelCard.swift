@@ -12,29 +12,32 @@ struct ReelCard: View {
     let isSpinning: Bool
     let reelCount: ReelCount
 
+    @ScaledMetric(relativeTo: .title2) private var scaledHeight: CGFloat = 124
+    @ScaledMetric(relativeTo: .title2) private var scaledFontSize: CGFloat = 36
+
     private var height: CGFloat {
         switch reelCount {
         case .two:
-            return 124
+            return scaledHeight
         case .three:
-            return 120
+            return scaledHeight - 4
         case .four:
-            return 112
+            return scaledHeight - 12
         case .five:
-            return 102
+            return scaledHeight - 22
         }
     }
 
     private var fontSize: CGFloat {
         switch reelCount {
         case .two:
-            return 36
+            return scaledFontSize
         case .three:
-            return 34
+            return scaledFontSize - 2
         case .four:
-            return 30
+            return scaledFontSize - 6
         case .five:
-            return 25
+            return scaledFontSize - 11
         }
     }
 
@@ -44,7 +47,7 @@ struct ReelCard: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            Color(red: 1.00, green: 0.98, blue: 0.94),
+                            Theme.cardTop,
                             Theme.card
                         ],
                         startPoint: .topLeading,
@@ -69,5 +72,8 @@ struct ReelCard: View {
         .scaleEffect(isSpinning ? 0.94 : 1)
         .shadow(color: Theme.ink.opacity(isSpinning ? 0.04 : 0.12), radius: isSpinning ? 8 : 16, y: isSpinning ? 4 : 10)
         .animation(.spring(response: 0.45, dampingFraction: 0.62), value: isSpinning)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Positie")
+        .accessibilityValue(isSpinning ? "Draait" : syllable)
     }
 }

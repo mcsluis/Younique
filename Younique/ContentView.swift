@@ -7,9 +7,11 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query private var favorites: [FavoriteName]
 
     @State private var viewModel = NameGeneratorViewModel()
@@ -35,14 +37,7 @@ struct ContentView: View {
                     backgroundGradient
                         .blur(radius: viewModel.isOverlayPresented ? 10 : 0)
 
-                    VStack(spacing: 20) {
-                        controlsSection
-                        Spacer(minLength: 0)
-                        createButton
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 24)
-                    .padding(.bottom, 20)
+                    homeContent
                     .frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
                     .blur(radius: viewModel.isOverlayPresented ? 12 : 0)
                     .allowsHitTesting(!viewModel.isOverlayPresented)
@@ -73,6 +68,8 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .accessibilityLabel("Open Youniquelist")
+                    .accessibilityHint("Toont je bewaarde favorieten.")
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -82,6 +79,7 @@ struct ContentView: View {
                         Image(systemName: "gearshape")
                             .foregroundStyle(Theme.accent)
                     }
+                    .accessibilityLabel("Open instellingen")
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -91,6 +89,7 @@ struct ContentView: View {
                         Image(systemName: "info.circle")
                             .foregroundStyle(Theme.accent)
                     }
+                    .accessibilityLabel("Open uitleg")
                 }
             }
             .sheet(isPresented: $isInfoPresented) {
@@ -136,6 +135,30 @@ struct ContentView: View {
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
+    }
+
+    @ViewBuilder
+    private var homeContent: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: 20) {
+                    controlsSection
+                    createButton
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 24)
+                .padding(.bottom, 20)
+            }
+        } else {
+            VStack(spacing: 20) {
+                controlsSection
+                Spacer(minLength: 0)
+                createButton
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 24)
+            .padding(.bottom, 20)
+        }
     }
 
     private var controlsSection: some View {
@@ -226,11 +249,13 @@ struct ContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                     .overlay {
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(Color.white.opacity(0.6), lineWidth: 1)
+                            .stroke(Theme.borderStrong, lineWidth: 1)
                     }
                 }
                 .disabled(viewModel.isCreating)
                 .buttonStyle(.plain)
+                .accessibilityLabel("Kies lettergreepmodus")
+                .accessibilityValue(viewModel.selectionMode.title)
 
                 Text(viewModel.selectionMode.detail)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
@@ -271,12 +296,12 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
                     .background(
-                        isSelected ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(.white.opacity(0.55))
+                        isSelected ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(Theme.surfaceSoft)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .overlay {
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .stroke(Color.white.opacity(isSelected ? 0 : 0.5), lineWidth: 1)
+                            .stroke(isSelected ? Color.clear : Theme.border, lineWidth: 1)
                     }
                 }
                 .buttonStyle(.plain)
@@ -318,11 +343,13 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Color.white.opacity(0.6), lineWidth: 1)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
                 }
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isCreating)
+            .accessibilityLabel("Verfijn stijl")
+            .accessibilityValue(isFilterSectionExpanded ? "Uitgeklapt" : "Ingeklapt")
 
             if isFilterSectionExpanded {
                 Text("Kies alleen de klankgroepen die je liever niet terugziet. Dit is optioneel en werkt alleen in de automatische modi.")
@@ -370,11 +397,12 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .stroke(Color.white.opacity(0.6), lineWidth: 1)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
                 }
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isCreating)
+            .accessibilityLabel("Open handmatige lettergreepselectie")
         }
     }
 
@@ -405,6 +433,7 @@ struct ContentView: View {
         }
         .disabled(viewModel.isCreating || !viewModel.canGenerate)
         .opacity((viewModel.isCreating || !viewModel.canGenerate) ? 0.7 : 1)
+        .accessibilityHint("Genereert een nieuwe naam op basis van je huidige keuzes.")
     }
 
     private var filterSummaryText: String {
@@ -420,7 +449,7 @@ struct ContentView: View {
             return "Kies voor iedere positie de gewenste lettergrepen"
         }
 
-        return "Open lettergreepkeuze fullscreen"
+        return "Kies hier je lettergrepen"
     }
 
     private var sortedSyllables: [String] {
@@ -443,7 +472,7 @@ struct ContentView: View {
 
     private var resultOverlay: some View {
         ZStack {
-            Color.black.opacity(0.24)
+            Theme.overlayScrim
                 .ignoresSafeArea()
 
             VStack(spacing: 18) {
@@ -455,13 +484,14 @@ struct ContentView: View {
                             .font(.system(size: 14, weight: .bold))
                             .foregroundStyle(Theme.ink.opacity(0.7))
                             .frame(width: 32, height: 32)
-                            .background(.white.opacity(0.7))
+                            .background(Theme.surfaceStrong)
                             .clipShape(Circle())
                     }
                     .buttonStyle(.plain)
                     .disabled(viewModel.isCreating)
                     .opacity(viewModel.isCreating ? 0 : 1)
                     .animation(.easeInOut(duration: 0.2), value: viewModel.isCreating)
+                    .accessibilityLabel("Sluit naamoverlay")
 
                     Spacer()
 
@@ -475,11 +505,12 @@ struct ContentView: View {
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundStyle(Theme.ink.opacity(0.7))
                                 .frame(width: 32, height: 32)
-                                .background(.white.opacity(0.7))
+                                .background(Theme.surfaceStrong)
                                 .clipShape(Circle())
                         }
                         .buttonStyle(.plain)
                         .transition(.opacity.combined(with: .scale(scale: 0.7)))
+                        .accessibilityLabel("Deel \(name)")
 
                         Button {
                             toggleFavorite(name: name, syllables: viewModel.reels)
@@ -488,12 +519,13 @@ struct ContentView: View {
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundStyle(isFavorite(name) ? Theme.accent : Theme.ink.opacity(0.7))
                                 .frame(width: 32, height: 32)
-                                .background(.white.opacity(0.7))
+                                .background(Theme.surfaceStrong)
                                 .clipShape(Circle())
                                 .contentTransition(.symbolEffect(.replace))
                         }
                         .buttonStyle(.plain)
                         .transition(.opacity.combined(with: .scale(scale: 0.7)))
+                        .accessibilityLabel(isFavorite(name) ? "Verwijder \(name) uit favorieten" : "Bewaar \(name) als favoriet")
                     }
                 }
 
@@ -511,7 +543,7 @@ struct ContentView: View {
                             .foregroundStyle(Theme.inkSoft)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 5)
-                            .background(.white.opacity(0.55))
+                            .background(Theme.surfaceSoft)
                             .clipShape(Capsule())
                     }
                     .transition(.opacity.combined(with: .offset(y: 8)))
@@ -566,7 +598,7 @@ struct ContentView: View {
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 30, style: .continuous)
-                    .stroke(Color.white.opacity(0.45), lineWidth: 1)
+                    .stroke(Theme.border, lineWidth: 1)
             }
             .shadow(color: .black.opacity(0.18), radius: 26, y: 14)
             .padding(.horizontal, 20)
@@ -658,7 +690,7 @@ private struct FullScreenSyllablePickerView: View {
 
     private var introText: String {
         if viewModel.selectionMode == .perReelManual {
-            return "Kies per positie welke lettergrepen beschikbaar zijn."
+            return "Kies hier je lettergrepen"
         }
 
         return "Kies fullscreen welke lettergrepen in de generator mogen terugkomen."
@@ -677,21 +709,89 @@ private struct FullScreenSyllablePickerView: View {
 }
 
 enum Theme {
-    static let creamTop = Color(red: 0.98, green: 0.94, blue: 0.87)
-    static let creamMid = Color(red: 0.95, green: 0.86, blue: 0.81)
-    static let sageBottom = Color(red: 0.88, green: 0.91, blue: 0.85)
+    static let creamTop = Color(
+        light: UIColor(red: 0.98, green: 0.94, blue: 0.87, alpha: 1),
+        dark: UIColor(red: 0.12, green: 0.10, blue: 0.09, alpha: 1)
+    )
+    static let creamMid = Color(
+        light: UIColor(red: 0.95, green: 0.86, blue: 0.81, alpha: 1),
+        dark: UIColor(red: 0.16, green: 0.13, blue: 0.12, alpha: 1)
+    )
+    static let sageBottom = Color(
+        light: UIColor(red: 0.88, green: 0.91, blue: 0.85, alpha: 1),
+        dark: UIColor(red: 0.13, green: 0.17, blue: 0.15, alpha: 1)
+    )
 
-    static let surface = Color.white.opacity(0.72)
-    static let card = Color(red: 0.99, green: 0.96, blue: 0.91)
+    static let surface = Color(
+        light: UIColor(white: 1.0, alpha: 0.72),
+        dark: UIColor(red: 0.18, green: 0.16, blue: 0.15, alpha: 0.84)
+    )
+    static let surfaceStrong = Color(
+        light: UIColor(white: 1.0, alpha: 0.88),
+        dark: UIColor(red: 0.23, green: 0.21, blue: 0.20, alpha: 0.94)
+    )
+    static let surfaceSoft = Color(
+        light: UIColor(white: 1.0, alpha: 0.55),
+        dark: UIColor(red: 0.18, green: 0.16, blue: 0.15, alpha: 0.70)
+    )
+    static let surfaceMuted = Color(
+        light: UIColor(white: 1.0, alpha: 0.50),
+        dark: UIColor(red: 0.16, green: 0.14, blue: 0.13, alpha: 0.60)
+    )
+    static let card = Color(
+        light: UIColor(red: 0.99, green: 0.96, blue: 0.91, alpha: 1),
+        dark: UIColor(red: 0.24, green: 0.21, blue: 0.19, alpha: 1)
+    )
+    static let cardTop = Color(
+        light: UIColor(red: 1.00, green: 0.98, blue: 0.94, alpha: 1),
+        dark: UIColor(red: 0.28, green: 0.25, blue: 0.23, alpha: 1)
+    )
 
-    static let ink = Color(red: 0.20, green: 0.16, blue: 0.13)
-    static let inkSoft = Color(red: 0.20, green: 0.16, blue: 0.13).opacity(0.62)
-    static let inkMuted = Color(red: 0.20, green: 0.16, blue: 0.13).opacity(0.46)
+    static let ink = Color(
+        light: UIColor(red: 0.20, green: 0.16, blue: 0.13, alpha: 1),
+        dark: UIColor(red: 0.95, green: 0.92, blue: 0.88, alpha: 1)
+    )
+    static let inkSoft = Color(
+        light: UIColor(red: 0.20, green: 0.16, blue: 0.13, alpha: 0.62),
+        dark: UIColor(red: 0.95, green: 0.92, blue: 0.88, alpha: 0.68)
+    )
+    static let inkMuted = Color(
+        light: UIColor(red: 0.20, green: 0.16, blue: 0.13, alpha: 0.46),
+        dark: UIColor(red: 0.95, green: 0.92, blue: 0.88, alpha: 0.48)
+    )
 
-    static let accent = Color(red: 0.79, green: 0.48, blue: 0.39)
-    static let accentSoft = Color(red: 0.87, green: 0.65, blue: 0.55)
+    static let accent = Color(
+        light: UIColor(red: 0.79, green: 0.48, blue: 0.39, alpha: 1),
+        dark: UIColor(red: 0.89, green: 0.63, blue: 0.53, alpha: 1)
+    )
+    static let accentSoft = Color(
+        light: UIColor(red: 0.87, green: 0.65, blue: 0.55, alpha: 1),
+        dark: UIColor(red: 0.72, green: 0.51, blue: 0.43, alpha: 1)
+    )
+
+    static let border = Color(
+        light: UIColor(white: 1.0, alpha: 0.50),
+        dark: UIColor(white: 1.0, alpha: 0.10)
+    )
+    static let borderStrong = Color(
+        light: UIColor(white: 1.0, alpha: 0.60),
+        dark: UIColor(white: 1.0, alpha: 0.14)
+    )
+    static let overlayScrim = Color(
+        light: UIColor(white: 0.0, alpha: 0.24),
+        dark: UIColor(white: 0.0, alpha: 0.46)
+    )
+}
+
+private extension Color {
+    init(light: UIColor, dark: UIColor) {
+        self.init(uiColor: UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark ? dark : light
+        })
+    }
 }
 
 #Preview {
     ContentView()
+        .environment(PurchaseManager())
 }

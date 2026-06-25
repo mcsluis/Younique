@@ -31,10 +31,13 @@ struct FilterChip: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(isExcluded ? Color.clear : Color.white.opacity(0.5), lineWidth: 1)
+                    .stroke(isExcluded ? Color.clear : Theme.border, lineWidth: 1)
             }
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
+        .accessibilityLabel(group.title)
+        .accessibilityValue(isExcluded ? "Verborgen" : "Zichtbaar")
+        .accessibilityHint(isDisabled ? "Nu niet beschikbaar." : "Dubbeltik om deze klankgroep te verbergen of weer toe te laten.")
     }
 }

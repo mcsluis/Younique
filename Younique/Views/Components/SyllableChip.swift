@@ -25,10 +25,13 @@ struct SyllableChip: View {
                 .clipShape(Capsule())
                 .overlay {
                     Capsule()
-                        .stroke(isSelected ? Color.clear : Color.white.opacity(0.55), lineWidth: 1)
+                        .stroke(isSelected ? Color.clear : Theme.borderStrong, lineWidth: 1)
                 }
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
+        .accessibilityLabel("Lettergreep \(syllable)")
+        .accessibilityValue(isSelected ? "Geselecteerd" : "Niet geselecteerd")
+        .accessibilityHint(isDisabled ? "Nu niet beschikbaar." : "Dubbeltik om de selectie te wijzigen.")
     }
 }

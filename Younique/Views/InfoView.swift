@@ -89,6 +89,7 @@ struct InfoView: View {
                         title: "Delen & bewaren",
                         lines: [
                             "Tik op het hartje om een naam aan je Youniquelist toe te voegen.",
+                            "Tik in de Youniquelist op een naam om een notitie toe te voegen — bv. 'favo van mama' of 'past mooi bij Vermeer'.",
                             "Tik op het deel-icoon (vierkant met pijl) om een naam direct door te sturen naar je partner via iMessage, WhatsApp of e-mail.",
                             "Met Premium synchroniseren je favorieten via iCloud automatisch naar je andere Apple-apparaten."
                         ]
@@ -123,12 +124,12 @@ struct InfoView: View {
     private func section(title: String, lines: [String]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
-                .font(.system(size: 20, weight: .semibold, design: .serif))
+                .font(.title3.weight(.semibold))
                 .foregroundStyle(Theme.ink)
 
             ForEach(lines, id: \.self) { line in
                 Text(line)
-                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .font(.body.weight(.medium))
                     .foregroundStyle(Theme.ink.opacity(0.78))
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -139,7 +140,7 @@ struct InfoView: View {
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                .stroke(Theme.border, lineWidth: 1)
         }
     }
 }

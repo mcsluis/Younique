@@ -12,6 +12,7 @@ struct ShortlistView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \FavoriteName.savedAt, order: .reverse) private var favorites: [FavoriteName]
+    @State private var selectedFavorite: FavoriteName?
 
     var body: some View {
         NavigationStack {
@@ -38,6 +39,9 @@ struct ShortlistView: View {
                     }
                     .tint(Theme.accent)
                 }
+            }
+            .sheet(item: $selectedFavorite) { favorite in
+                FavoriteDetailView(favorite: favorite)
             }
         }
     }
@@ -84,6 +88,20 @@ struct ShortlistView: View {
                 Text(NameProfile(syllables: favorite.syllables).summary)
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(Theme.inkSoft)
+
+                if !favorite.note.isEmpty {
+                    HStack(alignment: .top, spacing: 4) {
+                        Image(systemName: "text.quote")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.accent)
+                        Text(favorite.note)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(Theme.ink.opacity(0.78))
+                            .lineLimit(2)
+                            .italic()
+                    }
+                    .padding(.top, 2)
+                }
             }
 
             Spacer()
@@ -93,9 +111,11 @@ struct ShortlistView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(Theme.accent)
                     .frame(width: 38, height: 38)
-                    .background(.white.opacity(0.7))
+                    .background(Theme.surfaceStrong)
                     .clipShape(Circle())
             }
+            .accessibilityLabel("Deel \(favorite.name)")
+            .accessibilityHint("Opent het deelmenu voor deze naam.")
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
@@ -103,8 +123,15 @@ struct ShortlistView: View {
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                .stroke(Theme.border, lineWidth: 1)
         }
+        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .onTapGesture {
+            selectedFavorite = favorite
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityHint("Opent de details en notitie voor deze favoriet.")
     }
 
     private func shareText(for favorite: FavoriteName) -> String {
