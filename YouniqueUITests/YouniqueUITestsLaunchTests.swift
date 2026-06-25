@@ -20,6 +20,7 @@ final class YouniqueUITestsLaunchTests: XCTestCase {
     @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
+        app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
         app.launch()
 
         // Insert steps here to perform after app launch but before taking a screenshot,

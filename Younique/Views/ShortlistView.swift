@@ -66,13 +66,26 @@ struct ShortlistView: View {
 
     private var list: some View {
         List {
-            ForEach(favorites) { favorite in
-                row(for: favorite)
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+            Section {
+                ForEach(favorites) { favorite in
+                    row(for: favorite)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                }
+                .onDelete(perform: delete)
+            } header: {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Tik op een naam voor details")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.ink)
+
+                    Text("In het detailscherm vind je notities, delen en extra opties.")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(Theme.inkSoft)
+                }
+                .textCase(nil)
             }
-            .onDelete(perform: delete)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
@@ -106,16 +119,9 @@ struct ShortlistView: View {
 
             Spacer()
 
-            ShareLink(item: shareText(for: favorite)) {
-                Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(Theme.accent)
-                    .frame(width: 38, height: 38)
-                    .background(Theme.surfaceStrong)
-                    .clipShape(Circle())
-            }
-            .accessibilityLabel("Deel \(favorite.name)")
-            .accessibilityHint("Opent het deelmenu voor deze naam.")
+            Image(systemName: "chevron.right")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(Theme.inkSoft)
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
@@ -131,11 +137,7 @@ struct ShortlistView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
-        .accessibilityHint("Opent de details en notitie voor deze favoriet.")
-    }
-
-    private func shareText(for favorite: FavoriteName) -> String {
-        "Wat vind je van de naam \(favorite.name)?"
+        .accessibilityHint("Opent de details met notitie, delen en extra opties voor deze favoriet.")
     }
 
     private func delete(at offsets: IndexSet) {

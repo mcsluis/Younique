@@ -33,23 +33,26 @@ struct PaywallView: View {
                             .symbolEffect(.pulse)
 
                         VStack(spacing: 12) {
-                            Text("Ontgrendel langere namen")
+                            Text("Haal meer uit Younique")
                                 .font(.largeTitle.weight(.bold))
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(Theme.ink)
 
-                            Text("Met de eenmalige Premium-aankoop gebruik je 3, 4 of 5 posities en alle selectiemodi, en synchroniseren je favorieten via iCloud naar al je apparaten. Deelbaar met je gezin via Family Sharing.")
+                            Text("Ontgrendel langere namen, extra klankstijlen en volledige controle over de lettergreepselectie met een eenmalige aankoop.")
                                 .font(.body.weight(.medium))
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(Theme.inkSoft)
                         }
                         .padding(.horizontal, 24)
 
-                        VStack(alignment: .leading, spacing: 10) {
-                            featureRow(icon: "checkmark.seal.fill", text: "3, 4 en 5 posities + alle selectiemodi")
-                            featureRow(icon: "icloud.fill", text: "Favorieten synchroniseren via iCloud")
-                            featureRow(icon: "infinity", text: "Eenmalig betalen, voor altijd toegang")
-                            featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Family Sharing")
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("Wat je nu al gratis krijgt")
+                                .font(.headline.weight(.bold))
+                                .foregroundStyle(Theme.ink)
+
+                            featureRow(icon: "wand.and.stars", text: "Onbeperkt namen genereren met 2 posities")
+                            featureRow(icon: "slider.horizontal.3", text: "5 gratis klankstijlen om direct mee te spelen")
+                            featureRow(icon: "heart.fill", text: "Favorieten bewaren, notities maken en delen")
                         }
                         .padding(20)
                         .background(Theme.surfaceStrong)
@@ -57,6 +60,40 @@ struct PaywallView: View {
                         .overlay {
                             RoundedRectangle(cornerRadius: 22, style: .continuous)
                                 .stroke(Theme.border, lineWidth: 1)
+                        }
+                        .padding(.horizontal, 24)
+
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("Wat Premium toevoegt")
+                                .font(.headline.weight(.bold))
+                                .foregroundStyle(Theme.ink)
+
+                            featureRow(icon: "text.line.first.and.arrowtriangle.forward", text: "3, 4 en 5 posities voor langere en rijkere namen")
+                            featureRow(icon: "square.grid.3x3.fill", text: "Alle selectiemodi, inclusief lettergrepen per positie kiezen")
+                            featureRow(icon: "sparkles.rectangle.stack.fill", text: "3 extra premium klankstijlen voor meer richting en variatie")
+                            featureRow(icon: "icloud.fill", text: "Favorieten synchroniseren via iCloud op al je apparaten")
+                            featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Family Sharing")
+                            featureRow(icon: "infinity", text: "Eenmalig betalen, daarna blijvend ontgrendeld")
+                        }
+                        .padding(20)
+                        .background(Theme.surfaceStrong)
+                        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .stroke(Theme.border, lineWidth: 1)
+                        }
+                        .padding(.horizontal, 24)
+
+                        VStack(spacing: 6) {
+                            Text("Voor één kleine aankoop voelt de app veel vrijer en creatiever.")
+                                .font(.headline.weight(.semibold))
+                                .foregroundStyle(Theme.ink)
+                                .multilineTextAlignment(.center)
+
+                            Text("Ideaal als jullie meerdere richtingen willen verkennen zonder vast te zitten aan de basisinstellingen.")
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(Theme.inkSoft)
+                                .multilineTextAlignment(.center)
                         }
                         .padding(.horizontal, 24)
 
@@ -133,7 +170,7 @@ struct PaywallView: View {
 
     private var purchaseButtonText: String {
         if let displayPrice = purchaseManager.product?.displayPrice {
-            return "Ontgrendel voor \(displayPrice)"
+            return "Ontgrendel Premium voor \(displayPrice)"
         }
         return "Laden..."
     }

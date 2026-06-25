@@ -226,6 +226,38 @@ struct YouniqueTests {
         #expect(flattened.contains("son"))
     }
 
+    @Test
+    @MainActor
+    func warmSpanishPresetAvoidsEnglishTaggedSyllables() {
+        let allowed = Set(NameGenerator().allSyllables(for: .neutral))
+        let selected = SoundStylePreset.warmSpanish.availableSyllables(
+            for: .neutral,
+            allowedSyllables: allowed
+        )
+
+        let selectedModels = selected.compactMap(Syllable.withID)
+
+        #expect(!selectedModels.isEmpty)
+        #expect(selectedModels.allSatisfy { $0.styles.contains(.spanish) || $0.styles.contains(.latin) })
+        #expect(selectedModels.allSatisfy { !$0.styles.contains(.english) })
+    }
+
+    @Test
+    @MainActor
+    func classicEnglishPresetAvoidsSpanishTaggedSyllables() {
+        let allowed = Set(NameGenerator().allSyllables(for: .neutral))
+        let selected = SoundStylePreset.classicEnglish.availableSyllables(
+            for: .neutral,
+            allowedSyllables: allowed
+        )
+
+        let selectedModels = selected.compactMap(Syllable.withID)
+
+        #expect(!selectedModels.isEmpty)
+        #expect(selectedModels.allSatisfy { $0.styles.contains(.english) || $0.styles.contains(.elegant) })
+        #expect(selectedModels.allSatisfy { !$0.styles.contains(.spanish) })
+    }
+
     // MARK: - V/C-alternation regel
 
     @Test(arguments: ReelCount.allCases)

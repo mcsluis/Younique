@@ -20,6 +20,7 @@ struct ContentView: View {
     @State private var isSettingsPresented = false
     @State private var isPaywallPresented = false
     @State private var isFilterSectionExpanded = false
+    @State private var isAdvancedSheetPresented = false
     @State private var isSyllablePickerPresented = false
 
     @Environment(PurchaseManager.self) private var purchaseManager
@@ -63,7 +64,7 @@ struct ContentView: View {
                                     .foregroundStyle(.white)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
-                                    .background(Theme.ink)
+                                    .background(Theme.selectionFill)
                                     .clipShape(Capsule())
                             }
                         }
@@ -103,6 +104,15 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isPaywallPresented) {
                 PaywallView()
+            }
+            .sheet(isPresented: $isAdvancedSheetPresented) {
+                AdvancedSettingsSheetView(
+                    viewModel: viewModel,
+                    isPaywallPresented: $isPaywallPresented,
+                    isSyllablePickerPresented: $isSyllablePickerPresented
+                )
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
             }
             .fullScreenCover(isPresented: $isSyllablePickerPresented) {
                 FullScreenSyllablePickerView(
@@ -162,18 +172,29 @@ struct ContentView: View {
     }
 
     private var controlsSection: some View {
-        VStack(spacing: 14) {
-            VStack(spacing: 2) {
-                Text("Younique")
-                    .font(.system(size: 30, weight: .semibold, design: .serif))
-                    .foregroundStyle(Theme.ink)
+        VStack(spacing: 18) {
+            heroSection
+            baseSettingsSection
+            soundStyleSection
+            advancedSection
+        }
+    }
 
-                Text("Vind jullie unieke naam")
-                    .font(.system(size: 13, weight: .medium, design: .serif))
-                    .italic()
-                    .foregroundStyle(Theme.inkSoft)
-            }
+    private var heroSection: some View {
+        VStack(spacing: 2) {
+            Text("Younique")
+                .font(.system(size: 30, weight: .semibold, design: .serif))
+                .foregroundStyle(Theme.ink)
 
+            Text("Vind jullie unieke naam")
+                .font(.system(size: 13, weight: .medium, design: .serif))
+                .italic()
+                .foregroundStyle(Theme.inkSoft)
+        }
+    }
+
+    private var baseSettingsSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Naamtype")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -186,10 +207,6 @@ struct ContentView: View {
                 }
                 .pickerStyle(.segmented)
                 .disabled(viewModel.isCreating)
-
-                Text(viewModel.nameType.detail)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Theme.inkSoft)
             }
 
             VStack(alignment: .leading, spacing: 6) {
@@ -198,78 +215,18 @@ struct ContentView: View {
                     .foregroundStyle(Theme.ink)
 
                 reelCountPicker
-
-                Text(viewModel.reelCount.subtitle)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Theme.inkSoft)
             }
 
-            soundStyleSection
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Lettergrepen kiezen")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.ink)
-
-                Menu {
-                    ForEach(SyllableSelectionMode.allCases.reversed()) { mode in
-                        let isLocked = !purchaseManager.isUnlocked && mode != .automatic
-                        Button {
-                            if isLocked {
-                                isPaywallPresented = true
-                            } else {
-                                viewModel.selectionMode = mode
-                            }
-                        } label: {
-                            if mode == viewModel.selectionMode {
-                                Label(mode.title, systemImage: "checkmark")
-                            } else if isLocked {
-                                Label(mode.title, systemImage: "lock.fill")
-                            } else {
-                                Text(mode.title)
-                            }
-                        }
-                    }
-                } label: {
-                    HStack(spacing: 12) {
-                        Text(viewModel.selectionMode.title)
-                            .font(.system(size: 15, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Theme.ink)
-                            .lineLimit(2)
-                            .multilineTextAlignment(.leading)
-
-                        Spacer()
-
-                        Image(systemName: "chevron.up.chevron.down")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.accent)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Theme.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(Theme.borderStrong, lineWidth: 1)
-                    }
-                }
-                .disabled(viewModel.isCreating)
-                .buttonStyle(.plain)
-                .accessibilityLabel("Kies lettergreepmodus")
-                .accessibilityValue(viewModel.selectionMode.title)
-
-                Text(viewModel.selectionMode.detail)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Theme.inkSoft)
-                    .lineLimit(2)
-            }
-
-            if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
-                filterSection
-            } else {
-                syllableSelectionSection
-            }
+            Text(baseSettingsSummaryText)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
+        }
+        .padding(18)
+        .background(Theme.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .stroke(Theme.borderStrong, lineWidth: 1)
         }
     }
 
@@ -316,62 +273,26 @@ struct ContentView: View {
 
     private var filterSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Button {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
-                    isFilterSectionExpanded.toggle()
-                }
-            } label: {
-                HStack(spacing: 12) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("Verfijn stijl")
-                            .font(.system(size: 15, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Theme.ink)
+            Text("Verfijn stijl")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
 
-                        Text(filterSummaryText)
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundStyle(Theme.inkSoft)
-                    }
+            Text("Verberg alleen de klankgroepen die je liever niet hoort. Dit werkt in de automatische modi.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
 
-                    Spacer()
-
-                    Image(systemName: isFilterSectionExpanded ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(Theme.accent)
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Theme.surface)
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Theme.borderStrong, lineWidth: 1)
-                }
-            }
-            .buttonStyle(.plain)
-            .disabled(viewModel.isCreating)
-            .accessibilityLabel("Verfijn stijl")
-            .accessibilityValue(isFilterSectionExpanded ? "Uitgeklapt" : "Ingeklapt")
-
-            if isFilterSectionExpanded {
-                Text("Kies alleen de klankgroepen die je liever niet terugziet. Dit is optioneel en werkt alleen in de automatische modi.")
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Theme.inkSoft)
-
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                    ForEach(NameFilterGroup.allCases) { group in
-                        FilterChip(
-                            group: group,
-                            isExcluded: viewModel.excludedGroups.contains(group),
-                            isDisabled: viewModel.isCreating
-                        ) {
-                            viewModel.toggleGroup(group)
-                        }
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                ForEach(NameFilterGroup.allCases) { group in
+                    FilterChip(
+                        group: group,
+                        isExcluded: viewModel.excludedGroups.contains(group),
+                        isDisabled: viewModel.isCreating
+                    ) {
+                        viewModel.toggleGroup(group)
                     }
                 }
             }
         }
-        .animation(.spring(response: 0.3, dampingFraction: 0.85), value: isFilterSectionExpanded)
     }
 
     private var soundStyleSection: some View {
@@ -383,7 +304,7 @@ struct ContentView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(SoundStylePreset.allCases) { preset in
-                        soundStyleCard(for: preset)
+                        soundStyleChip(for: preset)
                     }
                 }
                 .padding(.vertical, 1)
@@ -395,9 +316,13 @@ struct ContentView: View {
         }
     }
 
-    private func soundStyleCard(for preset: SoundStylePreset) -> some View {
+    private func soundStyleChip(for preset: SoundStylePreset) -> some View {
         let isSelected = viewModel.activeSoundStylePreset == preset
         let isLocked = preset.isPremium && !purchaseManager.isUnlocked
+        let sampleLine = preset.accentLine(
+            for: viewModel.nameType,
+            allowedSyllables: Set(sortedSyllables)
+        )
 
         return Button {
             if isLocked {
@@ -406,46 +331,35 @@ struct ContentView: View {
                 viewModel.applySoundStylePreset(preset)
             }
         } label: {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: isSelected ? 5 : 0) {
                 HStack(spacing: 8) {
                     Text(preset.title)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.ink))
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .lineLimit(1)
 
-                    Spacer(minLength: 0)
-
-                    Image(systemName: isSelected ? "checkmark.circle.fill" : (isLocked ? "lock.fill" : "circle"))
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.accent.opacity(0.7)))
+                    if isLocked {
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 10, weight: .bold))
+                    } else if isSelected {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 10, weight: .bold))
+                    }
                 }
 
-                Text(preset.detail)
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundStyle(isSelected ? .white.opacity(0.86) : Theme.inkSoft)
-                    .lineLimit(3)
-
-                Text(preset.accentLine)
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundStyle(isSelected ? .white.opacity(0.78) : (isLocked ? Theme.inkSoft : Theme.accent))
-                    .lineLimit(1)
-
-                if isLocked {
-                    Text("Premium")
-                        .font(.system(size: 10, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.accent)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Theme.surfaceStrong)
-                        .clipShape(Capsule())
+                if isSelected && !sampleLine.isEmpty {
+                    Text(sampleLine)
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .lineLimit(1)
                 }
             }
-            .frame(width: 208, alignment: .leading)
+            .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.ink))
             .padding(.horizontal, 14)
-            .padding(.vertical, 14)
+            .padding(.vertical, 11)
             .background(isSelected ? Theme.accent : (isLocked ? Theme.surfaceSoft : Theme.surface))
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .clipShape(Capsule())
             .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                Capsule()
                     .stroke(isSelected ? Color.clear : Theme.borderStrong, lineWidth: 1)
             }
         }
@@ -454,6 +368,104 @@ struct ContentView: View {
         .accessibilityLabel(preset.title)
         .accessibilityValue(isLocked ? "Vergrendeld" : (isSelected ? "Geselecteerd" : "Niet geselecteerd"))
         .accessibilityHint(isLocked ? "Dubbeltik om Premium te bekijken." : "Dubbeltik om deze klankstijl toe te passen.")
+    }
+
+    private var advancedSection: some View {
+        Button {
+            isAdvancedSheetPresented = true
+        } label: {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Geavanceerd aanpassen")
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.ink)
+
+                    Text(advancedSummaryText)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(Theme.inkSoft)
+                        .lineLimit(2)
+                }
+
+                Spacer()
+
+                Image(systemName: "slider.horizontal.3")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Theme.accent)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Theme.surface)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(Theme.borderStrong, lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(viewModel.isCreating)
+        .accessibilityLabel("Geavanceerd aanpassen")
+        .accessibilityHint("Opent extra instellingen in een apart paneel.")
+    }
+
+    private var advancedModeSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Lettergreepmodus")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+
+            Menu {
+                ForEach(SyllableSelectionMode.allCases.reversed()) { mode in
+                    let isLocked = !purchaseManager.isUnlocked && mode != .automatic
+                    Button {
+                        if isLocked {
+                            isPaywallPresented = true
+                        } else {
+                            viewModel.selectionMode = mode
+                        }
+                    } label: {
+                        if mode == viewModel.selectionMode {
+                            Label(mode.title, systemImage: "checkmark")
+                        } else if isLocked {
+                            Label(mode.title, systemImage: "lock.fill")
+                        } else {
+                            Text(mode.title)
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Text(viewModel.selectionMode.title)
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.ink)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.surfaceStrong)
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
+                }
+            }
+            .disabled(viewModel.isCreating)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Kies lettergreepmodus")
+            .accessibilityValue(viewModel.selectionMode.title)
+
+            Text(viewModel.selectionMode.detail)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
+        }
     }
 
     private var syllableSelectionSection: some View {
@@ -522,7 +534,7 @@ struct ContentView: View {
 
     private var filterSummaryText: String {
         if viewModel.excludedGroups.isEmpty {
-            return "Optioneel: verberg klankgroepen die je niet wilt horen"
+            return "Geen klankgroepen verborgen"
         }
 
         return "\(viewModel.excludedGroups.count) klankgroepen verborgen"
@@ -538,10 +550,28 @@ struct ContentView: View {
 
     private var soundStyleDetailText: String {
         if let preset = viewModel.activeSoundStylePreset {
-            return "\(preset.title) zet meteen een bijpassende lettergreepselectie klaar."
+            return preset.baseDetail
         }
 
-        return "Kies een voorselectie en verfijn daarna verder via de lettergreepmodus."
+        return "Kies een klankstijl om de generator meer richting te geven."
+    }
+
+    private var baseSettingsSummaryText: String {
+        "\(viewModel.nameType.detail) \(viewModel.reelCount.subtitle)"
+    }
+
+    private var advancedSummaryText: String {
+        var parts = [viewModel.selectionMode.title]
+
+        if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
+            parts.append(filterSummaryText)
+        } else if viewModel.selectionMode == .perReelManual {
+            parts.append("Fullscreen selectie per positie")
+        } else {
+            parts.append("Handmatige lettergreepselectie")
+        }
+
+        return parts.joined(separator: " • ")
     }
 
     private var sortedSyllables: [String] {
@@ -703,6 +733,178 @@ struct ContentView: View {
                 (old == nil && new != nil) ? .success : nil
             }
         }
+    }
+}
+
+private struct AdvancedSettingsSheetView: View {
+    @Bindable var viewModel: NameGeneratorViewModel
+    @Binding var isPaywallPresented: Bool
+    @Binding var isSyllablePickerPresented: Bool
+
+    @Environment(\.dismiss) private var dismiss
+    @Environment(PurchaseManager.self) private var purchaseManager
+
+    var body: some View {
+        NavigationStack {
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 18) {
+                    advancedModeSection
+
+                    if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
+                        filterSection
+                    } else {
+                        syllableSelectionSection
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 24)
+                .padding(.bottom, 32)
+            }
+            .background(
+                LinearGradient(
+                    colors: [Theme.creamTop, Theme.creamMid, Theme.sageBottom],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+            )
+            .navigationTitle("Geavanceerd")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Klaar") {
+                        dismiss()
+                    }
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                }
+            }
+        }
+    }
+
+    private var advancedModeSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Lettergreepmodus")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+
+            Menu {
+                ForEach(SyllableSelectionMode.allCases.reversed()) { mode in
+                    let isLocked = !purchaseManager.isUnlocked && mode != .automatic
+                    Button {
+                        if isLocked {
+                            dismiss()
+                            isPaywallPresented = true
+                        } else {
+                            viewModel.selectionMode = mode
+                        }
+                    } label: {
+                        if mode == viewModel.selectionMode {
+                            Label(mode.title, systemImage: "checkmark")
+                        } else if isLocked {
+                            Label(mode.title, systemImage: "lock.fill")
+                        } else {
+                            Text(mode.title)
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Text(viewModel.selectionMode.title)
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.ink)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
+                }
+            }
+            .disabled(viewModel.isCreating)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Kies lettergreepmodus")
+            .accessibilityValue(viewModel.selectionMode.title)
+
+            Text(viewModel.selectionMode.detail)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
+        }
+    }
+
+    private var filterSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Verfijn stijl")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+
+            Text("Verberg alleen de klankgroepen die je liever niet hoort. Dit werkt in de automatische modi.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.inkSoft)
+
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                ForEach(NameFilterGroup.allCases) { group in
+                    FilterChip(
+                        group: group,
+                        isExcluded: viewModel.excludedGroups.contains(group),
+                        isDisabled: viewModel.isCreating
+                    ) {
+                        viewModel.toggleGroup(group)
+                    }
+                }
+            }
+        }
+    }
+
+    private var syllableSelectionSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button {
+                dismiss()
+                isSyllablePickerPresented = true
+            } label: {
+                HStack(spacing: 14) {
+                    Text(manualSelectionHeadline)
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.ink)
+
+                    Spacer()
+
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
+                }
+            }
+            .buttonStyle(.plain)
+            .disabled(viewModel.isCreating)
+            .accessibilityLabel("Open handmatige lettergreepselectie")
+        }
+    }
+
+    private var manualSelectionHeadline: String {
+        if viewModel.selectionMode == .perReelManual {
+            return "Kies voor iedere positie de gewenste lettergrepen"
+        }
+
+        return "Kies hier je lettergrepen"
     }
 }
 
@@ -885,6 +1087,10 @@ enum Theme {
     static let accentSoft = Color(
         light: UIColor(red: 0.87, green: 0.65, blue: 0.55, alpha: 1),
         dark: UIColor(red: 0.72, green: 0.51, blue: 0.43, alpha: 1)
+    )
+    static let selectionFill = Color(
+        light: UIColor(red: 0.20, green: 0.16, blue: 0.13, alpha: 1),
+        dark: UIColor(red: 0.24, green: 0.19, blue: 0.17, alpha: 0.98)
     )
 
     static let border = Color(

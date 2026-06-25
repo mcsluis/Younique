@@ -25,6 +25,7 @@ final class YouniqueUITests: XCTestCase {
     @MainActor
     func testAppLaunchesToHomepage() throws {
         let app = XCUIApplication()
+        app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
         app.launch()
 
         // App-titel zichtbaar
@@ -33,33 +34,31 @@ final class YouniqueUITests: XCTestCase {
         // Default section labels aanwezig
         XCTAssertTrue(app.staticTexts["Naamtype"].exists)
         XCTAssertTrue(app.staticTexts["Aantal posities"].exists)
-        XCTAssertTrue(app.staticTexts["Lettergrepen kiezen"].exists)
+        XCTAssertTrue(app.staticTexts["Klankstijl"].exists)
+        XCTAssertTrue(app.staticTexts["Geavanceerd aanpassen"].exists)
     }
 
     @MainActor
     func testDiscoverButtonOpensOverlay() throws {
         let app = XCUIApplication()
+        app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
         app.launch()
 
         let discoverButton = app.buttons["Ontdek een naam"]
         XCTAssertTrue(discoverButton.waitForExistence(timeout: 5))
         discoverButton.tap()
 
-        // Wacht tot de slot-machine animatie klaar is en de naam zichtbaar wordt.
-        // De animatie duurt enkele seconden afhankelijk van aantal reels.
-        Thread.sleep(forTimeInterval: 4)
-
-        // De heart-knop (favoriet toggle) of het kruisje moet bestaan na completion.
-        // We checken op "Nog een keer draaien" (toverstaf-knop accessibility label).
         let wandButton = app.buttons["Nog een keer draaien"]
-        XCTAssertTrue(wandButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(wandButton.waitForExistence(timeout: 10))
     }
 
     @MainActor
     func testLaunchPerformance() throws {
         // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
+            let app = XCUIApplication()
+            app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
+            app.launch()
         }
     }
 }

@@ -21,9 +21,9 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
 
     var isPremium: Bool {
         switch self {
-        case .softLatin, .stoerKort, .freshModern, .romantic:
+        case .softLatin, .stoerKort, .freshModern, .warmSpanish, .romantic:
             return false
-        case .warmSpanish, .dreamySoft, .powerfulBold, .classicEnglish:
+        case .dreamySoft, .powerfulBold, .classicEnglish:
             return true
         }
     }
@@ -49,7 +49,7 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         }
     }
 
-    var detail: String {
+    var baseDetail: String {
         switch self {
         case .softLatin:
             return "Vloeiende openers, zachte bruggen en open eindklanken."
@@ -70,78 +70,93 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         }
     }
 
-    var accentLine: String {
+    var primaryTags: Set<SoundStyleTag> {
         switch self {
         case .softLatin:
-            return "la, mi, na, ra, el, en"
+            return [.latin, .soft]
         case .stoerKort:
-            return "ka, ke, no, ro, ash, von"
+            return [.bold, .modern]
         case .freshModern:
-            return "ka, li, mi, no, vi, ya"
+            return [.modern, .unisex]
         case .warmSpanish:
-            return "cha, la, lo, ra, ro, sa"
+            return [.spanish, .latin]
         case .dreamySoft:
-            return "ah, lu, mel, na, sha, ya"
+            return [.soft, .romantic]
         case .powerfulBold:
-            return "ash, ber, dev, kel, ro, von"
+            return [.bold]
         case .romantic:
-            return "ah, el, la, na, ri, ya"
+            return [.romantic, .soft]
         case .classicEnglish:
-            return "ash, ley, lyn, son, tay, que"
+            return [.english, .elegant]
         }
     }
 
-    var includedSyllables: [Syllable] {
+    var secondaryTags: Set<SoundStyleTag> {
         switch self {
         case .softLatin:
-            return [
-                .a, .ah, .el, .en, .i, .la, .le, .li, .lu, .ma, .mel,
-                .mi, .na, .ni, .o, .ra, .ri, .sa, .sha, .ta, .ya
-            ]
+            return [.romantic, .elegant]
         case .stoerKort:
-            return [
-                .ash, .bo, .da, .de, .di, .do, .ka, .ke, .ki, .no,
-                .on, .ra, .ro, .ta, .ty, .va, .vi, .von
-            ]
+            return [.unisex]
         case .freshModern:
-            return [
-                .a, .ce, .el, .ka, .ki, .la, .li, .mi, .na, .no,
-                .ra, .ri, .sha, .ta, .va, .vi, .ya, .you
-            ]
+            return [.soft]
         case .warmSpanish:
-            return [
-                .a, .ce, .cha, .da, .de, .di, .el, .en, .la, .lo,
-                .ma, .na, .o, .ra, .ri, .ro, .sa, .ta, .ya
-            ]
+            return [.romantic, .soft]
         case .dreamySoft:
-            return [
-                .a, .ah, .el, .en, .ey, .i, .la, .le, .lu, .mel,
-                .mi, .na, .ney, .ni, .ra, .ri, .sha, .ya
-            ]
+            return [.latin, .elegant]
         case .powerfulBold:
-            return [
-                .ash, .ber, .bo, .dev, .fan, .ka, .kel, .no, .on, .ra,
-                .rell, .ris, .ro, .ste, .ta, .ty, .va, .von, .za
-            ]
+            return [.modern, .unisex]
         case .romantic:
-            return [
-                .a, .ah, .ce, .el, .en, .ey, .la, .le, .li, .na,
-                .ra, .ri, .sa, .sha, .ta, .ya
-            ]
+            return [.soft, .latin]
         case .classicEnglish:
-            return [
-                .ash, .ber, .brit, .ce, .cha, .el, .en, .ey, .jay, .kel,
-                .ley, .lin, .lyn, .lynn, .ney, .que, .sha, .son, .tay
-            ]
+            return [.romantic]
+        }
+    }
+
+    var excludedTags: Set<SoundStyleTag> {
+        switch self {
+        case .softLatin:
+            return [.english, .bold]
+        case .stoerKort:
+            return [.romantic, .english]
+        case .freshModern:
+            return [.english, .spanish]
+        case .warmSpanish:
+            return [.english]
+        case .dreamySoft:
+            return [.bold]
+        case .powerfulBold:
+            return [.soft, .romantic]
+        case .romantic:
+            return [.bold]
+        case .classicEnglish:
+            return [.spanish]
         }
     }
 
     func availableSyllables(for nameType: NameType, allowedSyllables: Set<String>) -> Set<String> {
-        let preferred = Set(includedSyllables.map(\.rawValue))
-        let available = preferred.intersection(allowedSyllables)
+        let eligible = Syllable.all.filter { syllable in
+            allowedSyllables.contains(syllable.text)
+            && syllable.nameTypes.contains(nameType)
+            && syllable.styles.isDisjoint(with: excludedTags)
+        }
 
-        if !available.isEmpty {
-            return available
+        let ranked = eligible.compactMap { syllable -> (String, Int)? in
+            let primaryMatches = syllable.styles.intersection(primaryTags).count
+            let secondaryMatches = syllable.styles.intersection(secondaryTags).count
+            let score = (primaryMatches * 3) + secondaryMatches
+
+            guard score > 0 else { return nil }
+            return (syllable.text, score)
+        }
+
+        let preferred = Set(ranked.filter { $0.1 >= 4 }.map(\.0))
+        if !preferred.isEmpty {
+            return preferred
+        }
+
+        let fallback = Set(ranked.map(\.0))
+        if !fallback.isEmpty {
+            return fallback
         }
 
         switch nameType {
@@ -152,5 +167,32 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .neutral:
             return ["ka", "lo", "mi", "ra"]
         }
+    }
+
+    @MainActor
+    func detailText(for nameType: NameType, allowedSyllables: Set<String>) -> String {
+        let samples = sampleSyllables(for: nameType, allowedSyllables: allowedSyllables)
+        guard !samples.isEmpty else { return baseDetail }
+        return "\(baseDetail) Bijvoorbeeld: \(samples.joined(separator: ", "))."
+    }
+
+    @MainActor
+    func accentLine(for nameType: NameType, allowedSyllables: Set<String>) -> String {
+        sampleSyllables(for: nameType, allowedSyllables: allowedSyllables).joined(separator: ", ")
+    }
+
+    @MainActor
+    private func sampleSyllables(for nameType: NameType, allowedSyllables: Set<String>) -> [String] {
+        let selected = availableSyllables(for: nameType, allowedSyllables: allowedSyllables)
+        let models = selected.compactMap(Syllable.withID)
+
+        let sorted = models.sorted { lhs, rhs in
+            if lhs.weight == rhs.weight {
+                return lhs.text.localizedCaseInsensitiveCompare(rhs.text) == .orderedAscending
+            }
+            return lhs.weight > rhs.weight
+        }
+
+        return Array(sorted.prefix(6).map(\.text))
     }
 }

@@ -29,7 +29,7 @@ struct SyllableChip: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)
-                .background(isSelected ? Theme.ink : (isLocked ? Theme.surfaceSoft : Theme.surface))
+                .background(isSelected ? Theme.selectionFill : (isLocked ? Theme.surfaceSoft : Theme.surface))
                 .clipShape(Capsule())
                 .overlay {
                     Capsule()

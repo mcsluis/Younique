@@ -18,6 +18,10 @@ struct YouniqueApp: App {
         AppearancePreference(rawValue: appearancePreferenceRaw) ?? .system
     }
 
+    private var shouldSkipOnboardingForUITests: Bool {
+        ProcessInfo.processInfo.arguments.contains("UI_TEST_SKIP_ONBOARDING")
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -25,7 +29,7 @@ struct YouniqueApp: App {
                 .preferredColorScheme(appearancePreference.colorScheme)
                 .fullScreenCover(
                     isPresented: Binding(
-                        get: { !hasSeenOnboarding },
+                        get: { !hasSeenOnboarding && !shouldSkipOnboardingForUITests },
                         set: { newValue in
                             if !newValue {
                                 hasSeenOnboarding = true
