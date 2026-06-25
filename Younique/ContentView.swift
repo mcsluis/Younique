@@ -542,10 +542,10 @@ struct ContentView: View {
 
     private var manualSelectionHeadline: String {
         if viewModel.selectionMode == .perReelManual {
-            return "Kies voor iedere positie de gewenste lettergrepen"
+            return "Kies per positie je lettergrepen"
         }
 
-        return "Kies hier je lettergrepen"
+        return "Open de lettergreep-selector"
     }
 
     private var soundStyleDetailText: String {
@@ -553,7 +553,7 @@ struct ContentView: View {
             return preset.baseDetail
         }
 
-        return "Kies een klankstijl om de generator meer richting te geven."
+        return "Kies een stijl om de generator meer richting te geven."
     }
 
     private var baseSettingsSummaryText: String {
@@ -566,9 +566,9 @@ struct ContentView: View {
         if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
             parts.append(filterSummaryText)
         } else if viewModel.selectionMode == .perReelManual {
-            parts.append("Fullscreen selectie per positie")
+            parts.append("Selectie per positie")
         } else {
-            parts.append("Handmatige lettergreepselectie")
+            parts.append("Handmatige selectie")
         }
 
         return parts.joined(separator: " • ")

@@ -60,11 +60,11 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .warmSpanish:
             return "Warme, ritmische klanken met open eindes en zonnige overgangen."
         case .dreamySoft:
-            return "Luchtige en vloeiende klanken voor een zachte, dromerige sfeer."
+            return "Luchtig en sierlijk: ijle openers en elegante eindes voor een dromerige sfeer."
         case .powerfulBold:
-            return "Meer pit, hardere starts en uitgesproken stukken in het midden."
+            return "Klassieke kracht: stevige starts en gedragen middenstukken, niet kort of edgy."
         case .romantic:
-            return "Zachter, melodischer en iets sierlijker in de afwerking."
+            return "Melodisch en mediterraan: zoete, vloeiende klanken met een sierlijke afwerking."
         case .classicEnglish:
             return "Meer Engelse staarten en een sierlijke, herkenbare klank."
         }
@@ -81,11 +81,11 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .warmSpanish:
             return [.spanish, .latin]
         case .dreamySoft:
-            return [.soft, .romantic]
+            return [.soft, .elegant]
         case .powerfulBold:
             return [.bold]
         case .romantic:
-            return [.romantic, .soft]
+            return [.romantic, .latin]
         case .classicEnglish:
             return [.english, .elegant]
         }
@@ -102,11 +102,11 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .warmSpanish:
             return [.romantic, .soft]
         case .dreamySoft:
-            return [.latin, .elegant]
+            return [.romantic]
         case .powerfulBold:
-            return [.modern, .unisex]
+            return [.unisex]
         case .romantic:
-            return [.soft, .latin]
+            return [.soft, .elegant]
         case .classicEnglish:
             return [.romantic]
         }
@@ -123,11 +123,11 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .warmSpanish:
             return [.english]
         case .dreamySoft:
-            return [.bold]
+            return [.bold, .latin]
         case .powerfulBold:
-            return [.soft, .romantic]
+            return [.soft, .romantic, .modern]
         case .romantic:
-            return [.bold]
+            return [.bold, .modern]
         case .classicEnglish:
             return [.spanish]
         }

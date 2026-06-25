@@ -298,20 +298,20 @@ private extension Syllable {
 
     static let endingIDs: Set<String> = [
         "a", "ah", "des", "do", "el", "en", "ey", "lyn", "lynn", "na", "no", "ny",
-        "o", "on", "que", "ra", "ro", "son", "ta", "x", "ya", "ali", "ana", "bea",
+        "o", "on", "que", "ra", "ro", "son", "ta", "x", "ya", "ali", "bea",
         "beth", "elle", "ing", "isa", "lou", "lux", "luz", "mia", "noe", "rey", "ria",
         "rio", "rose", "sage", "skye", "sol", "thor", "tor", "vik", "wren", "zev"
     ]
 
     static let latinIDs: Set<String> = [
-        "a", "ah", "ali", "ana", "bea", "bel", "car", "ce", "cha", "da", "de", "di",
+        "a", "ah", "ali", "bea", "bel", "car", "ce", "cha", "da", "de", "di",
         "el", "en", "isa", "la", "le", "li", "lo", "lou", "lu", "luz", "ma", "mar",
         "mel", "mi", "mia", "na", "nia", "noe", "o", "ra", "re", "ri", "ria", "rio",
         "ro", "sa", "sar", "se", "sha", "sia", "sol", "ta", "tia", "va", "ya"
     ]
 
     static let spanishIDs: Set<String> = [
-        "a", "ali", "ana", "bel", "car", "ce", "cha", "da", "de", "di", "el", "en",
+        "a", "ali", "bel", "car", "ce", "cha", "da", "de", "di", "el", "en",
         "isa", "la", "lo", "lou", "luz", "mar", "na", "noe", "o", "ra", "ri", "ria",
         "rio", "ro", "sa", "sar", "se", "sol", "ta", "tia", "ya"
     ]
@@ -362,7 +362,7 @@ private extension Syllable {
     ]
 
     static let flowStartIDs: Set<String> = [
-        "ali", "ana", "bea", "el", "elle", "isa", "la", "le", "li", "lu", "ma", "mel", "mi",
+        "ali", "bea", "el", "elle", "isa", "la", "le", "li", "lu", "ma", "mel", "mi",
         "mia", "na", "nia", "noe", "ra", "ria", "rose", "sa", "sha", "sol"
     ]
 

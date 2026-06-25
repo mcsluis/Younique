@@ -46,7 +46,7 @@ struct PaywallView: View {
                         .padding(.horizontal, 24)
 
                         VStack(alignment: .leading, spacing: 14) {
-                            Text("Wat je nu al gratis krijgt")
+                            Text("Altijd gratis")
                                 .font(.headline.weight(.bold))
                                 .foregroundStyle(Theme.ink)
 
@@ -64,40 +64,42 @@ struct PaywallView: View {
                         .padding(.horizontal, 24)
 
                         VStack(alignment: .leading, spacing: 14) {
-                            Text("Wat Premium toevoegt")
-                                .font(.headline.weight(.bold))
-                                .foregroundStyle(Theme.ink)
+                            HStack(spacing: 8) {
+                                Text("Met Premium krijg je erbij")
+                                    .font(.headline.weight(.bold))
+                                    .foregroundStyle(Theme.ink)
+
+                                Spacer()
+
+                                Image(systemName: "sparkles")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(Theme.accent)
+                            }
 
                             featureRow(icon: "text.line.first.and.arrowtriangle.forward", text: "3, 4 en 5 posities voor langere en rijkere namen")
                             featureRow(icon: "square.grid.3x3.fill", text: "Alle selectiemodi, inclusief lettergrepen per positie kiezen")
                             featureRow(icon: "sparkles.rectangle.stack.fill", text: "3 extra premium klankstijlen voor meer richting en variatie")
                             featureRow(icon: "icloud.fill", text: "Favorieten synchroniseren via iCloud op al je apparaten")
-                            featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Family Sharing")
-                            featureRow(icon: "infinity", text: "Eenmalig betalen, daarna blijvend ontgrendeld")
+                            featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Apple Family Sharing")
                         }
                         .padding(20)
                         .background(Theme.surfaceStrong)
                         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                         .overlay {
                             RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .stroke(Theme.border, lineWidth: 1)
+                                .stroke(Theme.accent.opacity(0.55), lineWidth: 1.5)
+                        }
+                        .shadow(color: Theme.accent.opacity(0.18), radius: 16, y: 8)
+                        .padding(.horizontal, 24)
+
+                        HStack(spacing: 8) {
+                            trustPill(icon: "checkmark.circle.fill", text: "Eénmalig")
+                            trustPill(icon: "xmark.circle.fill", text: "Geen abo")
+                            trustPill(icon: "person.2.fill", text: "Familie")
                         }
                         .padding(.horizontal, 24)
 
-                        VStack(spacing: 6) {
-                            Text("Voor één kleine aankoop voelt de app veel vrijer en creatiever.")
-                                .font(.headline.weight(.semibold))
-                                .foregroundStyle(Theme.ink)
-                                .multilineTextAlignment(.center)
-
-                            Text("Ideaal als jullie meerdere richtingen willen verkennen zonder vast te zitten aan de basisinstellingen.")
-                                .font(.subheadline.weight(.medium))
-                                .foregroundStyle(Theme.inkSoft)
-                                .multilineTextAlignment(.center)
-                        }
-                        .padding(.horizontal, 24)
-
-                        VStack(spacing: 14) {
+                        VStack(spacing: 10) {
                             Button {
                                 Task { await purchaseManager.purchase() }
                             } label: {
@@ -121,18 +123,24 @@ struct PaywallView: View {
                                     )
                                 )
                                 .clipShape(Capsule())
+                                .shadow(color: Theme.accent.opacity(0.32), radius: 14, y: 6)
                             }
                             .disabled(purchaseManager.product == nil || purchaseManager.isPurchasing)
                             .opacity((purchaseManager.product == nil || purchaseManager.isPurchasing) ? 0.7 : 1)
+
+                            Text("Veilig betalen via de App Store.")
+                                .font(.footnote.weight(.medium))
+                                .foregroundStyle(Theme.inkMuted)
 
                             Button {
                                 Task { await purchaseManager.restore() }
                             } label: {
                                 Text("Herstel aankopen")
-                                    .font(.body.weight(.semibold))
+                                    .font(.subheadline.weight(.semibold))
                                     .foregroundStyle(Theme.inkSoft)
                             }
                             .disabled(purchaseManager.isPurchasing)
+                            .padding(.top, 4)
                         }
                         .padding(.horizontal, 24)
                         .padding(.bottom, 16)
@@ -185,6 +193,28 @@ struct PaywallView: View {
                 .font(.body.weight(.medium))
                 .foregroundStyle(Theme.ink)
             Spacer()
+        }
+    }
+
+    private func trustPill(icon: String, text: String) -> some View {
+        HStack(spacing: 5) {
+            Image(systemName: icon)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(Theme.accent)
+            Text(text)
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(Theme.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .fixedSize(horizontal: false, vertical: false)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 7)
+        .frame(maxWidth: .infinity)
+        .background(Theme.surfaceSoft)
+        .clipShape(Capsule())
+        .overlay {
+            Capsule().stroke(Theme.border, lineWidth: 1)
         }
     }
 }
