@@ -1,0 +1,41 @@
+{
+  "identifier" : "C9A9D1E2-A4FB-4E12-AB17-2D2EE9B68B7A",
+  "nonRenewingSubscriptions" : [
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "5AB8C234-7E54-4567-8C9A-1B2D3E4F5A6B",
+      "localizations" : [
+        {
+          "description" : "Gebruik 3, 4 of 5 posities voor uitgebreidere namen.",
+          "displayName" : "Younique Premium",
+          "locale" : "nl_NL"
+        },
+        {
+          "description" : "Use 3, 4 or 5 positions for longer, richer names.",
+          "displayName" : "Younique Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.mcs.younique.unlock_full",
+      "referenceName" : "Younique Premium Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "nl_NL",
+    "_storefront" : "NLD",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
