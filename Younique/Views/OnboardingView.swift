@@ -234,7 +234,7 @@ struct OnboardingView: View {
             VStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 10) {
                     premiumRow(icon: "sparkles", text: "Meer posities voor langere namen")
-                    premiumRow(icon: "slider.horizontal.3", text: "Alle selectiemodi vrijspelen")
+                    premiumRow(icon: "slider.horizontal.3", text: "Alle selectiemodi beschikbaar")
                     premiumRow(icon: "icloud.fill", text: "Favorieten op al je apparaten")
                     premiumRow(icon: "person.2.fill", text: "Family Sharing inbegrepen")
                 }

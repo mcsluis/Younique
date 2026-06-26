@@ -33,12 +33,12 @@ struct PaywallView: View {
                             .symbolEffect(.pulse)
 
                         VStack(spacing: 12) {
-                            Text("Haal meer uit Younique")
+                            Text("Vind die ene perfecte naam")
                                 .font(.largeTitle.weight(.bold))
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(Theme.ink)
 
-                            Text("Ontgrendel langere namen, extra klankstijlen en volledige controle over de lettergreepselectie met een eenmalige aankoop.")
+                            Text("Meer ruimte voor langere, rijkere namen — en jullie favorieten op alle apparaten zodat je samen kunt kiezen.")
                                 .font(.body.weight(.medium))
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(Theme.inkSoft)
@@ -65,22 +65,20 @@ struct PaywallView: View {
 
                         VStack(alignment: .leading, spacing: 14) {
                             HStack(spacing: 8) {
+                                Image(systemName: "crown.fill")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(Theme.accent)
+
                                 Text("Met Premium krijg je erbij")
                                     .font(.headline.weight(.bold))
                                     .foregroundStyle(Theme.ink)
 
                                 Spacer()
-
-                                Image(systemName: "sparkles")
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundStyle(Theme.accent)
                             }
 
                             featureRow(icon: "text.line.first.and.arrowtriangle.forward", text: "3, 4 en 5 posities voor langere en rijkere namen")
-                            featureRow(icon: "square.grid.3x3.fill", text: "Alle selectiemodi, inclusief lettergrepen per positie kiezen")
-                            featureRow(icon: "sparkles.rectangle.stack.fill", text: "3 extra premium klankstijlen voor meer richting en variatie")
-                            featureRow(icon: "icloud.fill", text: "Favorieten synchroniseren via iCloud op al je apparaten")
-                            featureRow(icon: "person.2.fill", text: "Deelbaar met je gezin via Apple Family Sharing")
+                            featureRow(icon: "square.grid.3x3.fill", text: "Volledige controle: alle selectiemodi en alle 8 klankstijlen")
+                            featureRow(icon: "icloud.fill", text: "Op al je apparaten — en deelbaar met je gezin via Apple Family Sharing")
                         }
                         .padding(20)
                         .background(Theme.surfaceStrong)
@@ -141,6 +139,15 @@ struct PaywallView: View {
                             }
                             .disabled(purchaseManager.isPurchasing)
                             .padding(.top, 4)
+
+                            Button {
+                                dismiss()
+                            } label: {
+                                Text("Misschien later")
+                                    .font(.subheadline.weight(.medium))
+                                    .foregroundStyle(Theme.inkMuted)
+                            }
+                            .padding(.top, 2)
                         }
                         .padding(.horizontal, 24)
                         .padding(.bottom, 16)
