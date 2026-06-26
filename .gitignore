@@ -43,3 +43,6 @@ fastlane/test_output
 
 # Local handoff notes
 CODEX_TODO.txt
+
+# Generated translation CSV (use Scripts/translations.py)
+translations.csv
