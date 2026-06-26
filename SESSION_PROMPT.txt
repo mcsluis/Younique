@@ -1,0 +1,29 @@
+DEFAULT SESSIE PROMPT — KOPIEER DIT BIJ ELKE NIEUWE CHAT
+========================================================
+
+Lees eerst PROJECT.txt (statische context: tech stack, conventies, architectuur)
+en daarna STATUS.txt (laatste commits, openstaande todo's, recente sessie).
+
+Werk daarna aan de taak die ik je geef. Tijdens en na de sessie:
+
+- Gebruik xcode-tools MCP voor alle source-file operaties binnen Younique/.
+  Bash alleen voor git, Scripts/translations.py, docs/, en project-root files.
+- Bij UI/SwiftUI werk: BuildProject draaien voordat je commit; bij generator-
+  of model-werk ook RunAllTests.
+- Bij elke commit: werk STATUS.txt bij (laatste commits, recent gebeurd,
+  evt. wijzigingen aan openstaande punten) en commit dat in dezelfde commit.
+- Aan het einde van de sessie: zorg dat STATUS.txt accuraat is, ook als er
+  niet gecommit is — schrijf dan in "Recent gebeurd" wat er staat te
+  committen.
+- Niet pushen zonder dat ik dat expliciet vraag.
+- Niet aan pbxproj zitten zonder mijn akkoord — vragen of via Xcode UI laten.
+
+Reageer kort en zakelijk in het Nederlands. Voor open vragen ("wat zou jij
+doen?", "wat is X?"): geef 2-3 zinnen met aanbeveling + tradeoff, niet meteen
+implementeren. Voor concrete opdrachten: gewoon doen.
+
+Verwijs naar files met pad:regel (bv. Younique/Views/PaywallView.swift:42)
+zodat ik snel kan navigeren in Xcode.
+
+Mijn taak voor deze sessie:
+[hier zet ik wat ik wil doen]

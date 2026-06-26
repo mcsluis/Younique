@@ -1,0 +1,88 @@
+YOUNIQUE — CURRENT STATUS
+=========================
+Dynamisch document. Bijwerken bij elke commit en aan het einde van elke sessie.
+Voor architectuur en conventies: zie PROJECT.txt.
+
+LAATST BIJGEWERKT
+-----------------
+2026-06-26  (sessie: paywall refresh + handoff docs cleanup)
+
+BRANCH STATE
+------------
+Branch: main
+5 commits ahead of origin/main — nog niet gepushed.
+
+RECENT COMMITS (top 6)
+----------------------
+6ad1528  Refresh paywall copy and clean up handoff docs
+97dd86d  Style Advanced sheet Done button as glass pill
+a1d1524  Polish home and settings UI
+0ed091e  Add CSV translation export/import script
+0be478d  Tune preset distinction and syllable weighting
+6575f02  Polish home flow and runtime language switching
+
+WAT IS RECENT GEBEURD
+---------------------
+- Volledige NL→EN localisatie afgerond met Localizable.xcstrings; pbxproj
+  bijgewerkt met developmentRegion=nl en knownRegions=nl,en,Base (handmatig
+  via Xcode UI door user).
+- Generator-tuning ronde 1: PowerfulBold uitgebreid (modern niet meer excluded),
+  DreamySoft secondaryTags=[romantic,unisex], signatureIDs opgeschoond (geen
+  la/mi/ra meer; blair/jax/luz/noe/sve/thor toegevoegd), modernIDs zonder vik,
+  accentIDs uitgebreid met ali/rey/rio.
+- Scripts/translations.py: CSV export/import voor Localizable.xcstrings — zodat
+  vertalingen in Numbers gereviewd kunnen worden. translations.csv staat in
+  .gitignore. Import schrijft alleen bij echte wijzigingen.
+- Home UI polish: Lettertype-picker is nu een sub-menu Picker (consistent met
+  Kleurmodus + Taal), met een gecentreerde live-preview rij eronder.
+  Toelichtingen in baseSettings en soundStyle staan nu direct op outer card
+  (geen nested blokjes), met 8pt extra top-padding. Badge op Geavanceerd-knop
+  is "Auto" / "Handmatig" (was misleidend "Pro").
+- Advanced sheet Done-button is nu een handmatige Capsule + .ultraThinMaterial
+  pill (matcht de Liquid Glass styling van de syllable picker).
+- Paywall refresh: emotionele kop "Vind die ene perfecte naam", 5→3 grouped
+  Premium bullets, crown.fill badge, en subtiele "Misschien later" knop onder
+  Herstel aankopen.
+
+OPEN PUNTEN (TODO)
+------------------
+1. USER ACTION — Handmatige test op echte device:
+   - Generator output per preset (klinken ze onderscheidend?).
+   - 5-positie names: voldoende accent-variatie?
+   - Premium-switching: preset-gedrag bij nametype-wissel, toggle-off.
+   - Hele UI in NL én EN doorlopen (taalwissel via Settings).
+   - Paywall flow + "Misschien later" knop.
+
+2. USER ACTION — Translation review:
+   Run: python3 Scripts/translations.py export
+   Edit translations.csv in Numbers (NL of EN aanpassen waar nodig).
+   Run: python3 Scripts/translations.py import
+   Tip: alleen import schrijft als er wijzigingen zijn — no-op is veilig.
+
+3. App Store afronding (laatste mile vóór ship):
+   - App icon polish + alle benodigde sizes (Assets.xcassets).
+   - Screenshots in NL én EN voor 6.9", 6.7", 6.1", iPad varianten.
+   - App Store Connect: metadata, beschrijving, keywords, leeftijdscategorie,
+     privacy URLs (docs/privacy.html via GitHub Pages).
+   - Listing copy + promotional text.
+   - StoreKit production product matching Configuration.storekit.
+   - Eventuele extra screenshot generator / fastlane setup.
+
+4. Tweaks na handmatige test (komen waarschijnlijk uit punt 1):
+   - Mogelijk extra preset / syllable tuning rondes.
+   - Eventueel copy tweaks die uit translation review komen.
+   - Eventueel paywall tweaks na review.
+
+BEKENDE CAVEATS
+---------------
+- pbxproj: developmentRegion=nl, knownRegions=nl,en,Base. Niet zonder akkoord
+  aanpassen (build/lokalisatie breekt anders).
+- translations.csv staat in .gitignore — gegenereerd bestand.
+- Eerste echte import via translations.py geeft eenmalig cosmetische diff
+  (lege {} blocks worden compacter); daarna stabiel.
+- UI tests gebruiken accessibility identifiers, NIET tekstmatch. Bij refactor
+  van die buttons: identifier behouden.
+- Codex (parallel agent) commit soms grotere refactors — altijd `git diff`
+  bekijken voor commit van zijn werk en samenvattingen toevoegen.
+- Liquid Glass toolbar pills renderen automatisch in fullScreenCover ZONDER
+  navigationTitle. Met navigationTitle → flat. Workaround = handmatige Capsule.

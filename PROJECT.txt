@@ -1,0 +1,159 @@
+YOUNIQUE — PROJECT CONTEXT
+==========================
+Statisch document. Wijzigt alleen als architectuur, conventies of stack veranderen.
+Voor "wat is recent gebeurd en wat staat er nog te doen": zie STATUS.txt.
+
+WAT IS YOUNIQUE
+---------------
+iOS-app voor (aanstaande) ouders die op zoek zijn naar een unieke babynaam.
+De app combineert zorgvuldig getagde lettergrepen via een slot-machine UI tot een
+voornaam. De gebruiker kiest een naamtype (meisje/jongen/neutraal), aantal posities
+(2–5) en een optionele klankstijl ("preset"); de generator levert dan een naam.
+
+Doelgroep: Nederlands sprekende ouders, met EN als secundaire taal.
+Monetisatie: vrije laag (2 posities, basis-presets) + eenmalige Premium (€1,99).
+
+TECH STACK
+----------
+- iOS 26 minimum target (Liquid Glass design).
+- SwiftUI exclusief — geen UIKit, geen Combine.
+- Async/await voor concurrency; geen reactive streams.
+- SwiftData voor favorites (FavoriteName).
+- iCloud / CloudKit voor sync van favorites (Premium).
+- StoreKit 2 voor IAP. Apple Family Sharing inbegrepen.
+- Testing framework (Swift Testing) voor unit tests. XCUIAutomation voor UI tests.
+- Localization via Apple String Catalog (Localizable.xcstrings).
+
+PROJECT STRUCTUUR (binnen Younique/)
+------------------------------------
+Younique/                                  app target root
+  YouniqueApp.swift                        @main, root view, language bootstrap
+  ContentView.swift                        homepage + advanced sheet + syllable picker + Theme
+  Localizable.xcstrings                    NL is source language; EN is translation
+  Configuration.storekit                   IAP test product
+  Younique.entitlements                    CloudKit + Family Sharing
+  Info.plist
+  Assets.xcassets                          app icon, accent color, launch background
+
+  Models/
+    NameType.swift                         girl / boy / neutral
+    ReelCount.swift                        2/3/4/5 posities (2 = free, rest = Premium)
+    SyllableSelectionMode.swift            automatic + 4 handmatige varianten
+    NameFilterGroup.swift                  hoofdgroepen om uit te sluiten
+    SoundStylePreset.swift                 8 presets (5 free + 3 premium)
+    SoundStyleTag.swift                    tags voor syllable matching
+    SyllableRole.swift                     lead / bridge / core / accent / ending
+    Syllable.swift                         ~130 syllables met metadata + role/style/group/weight
+    NameGenerator{ViewModel}.swift         generator service + view-state
+    NameProfile.swift                      derived summary (X lettergrepen · zacht/firm)
+    GeneratedName.swift, FavoriteName.swift  data types
+    AppearancePreference.swift             system / licht / donker
+    AppLanguagePreference.swift            system / Nederlands / English
+    BundleLanguage.swift                   runtime language override helper
+    DisplayFont.swift                      6 fonts voor de generated name display
+
+  Views/
+    OnboardingView.swift                   3-page intro, AppStorage gated
+    PaywallView.swift                      premium upsell
+    SettingsView.swift                     fonts, color mode, language, premium, privacy
+    ShortlistView.swift                    Youniquelist (favorites list)
+    FavoriteDetailView.swift               note + share + delete per favorite
+    InfoView.swift                         long-form app help
+    PrivacyPolicyView.swift                privacy policy
+    Components/
+      FilterChip.swift, ReelCard.swift, SyllableChip.swift
+
+  Services/
+    NameGenerator.swift                    pool building + weighted choice
+    PurchaseManager.swift                  StoreKit observer + restore
+
+YouniqueTests/                             Swift Testing unit tests (generator/filters/presets)
+YouniqueUITests/                           XCUI tests — uses accessibility identifiers
+                                           (discoverButton, spinAgainButton)
+Scripts/
+  translations.py                          CSV export/import voor Localizable.xcstrings
+docs/
+  privacy.html, privacy-en.html            GitHub Pages privacy policy (NL + EN met lang switcher)
+
+BUILD & TEST
+------------
+Gebruik exclusief de xcode-tools MCP commands:
+- BuildProject                             volledige build
+- RunAllTests                              actieve test plan
+- XcodeRefreshCodeIssuesInFile <pad>       snelle diagnose per file (~ live diagnostics)
+- ExecuteSnippet, RenderPreview            voor ad-hoc experimenten
+- XcodeRead / XcodeWrite / XcodeUpdate     voor file ops binnen het project
+
+LOKAAL filesystem (Bash) alleen voor git, scripts/translations.py, docs/, en
+project-root files. NIET voor source files binnen Younique/Younique/.
+
+CODE CONVENTIES
+---------------
+- PascalCase voor types; camelCase voor properties/methods.
+- 4-space indentatie.
+- `@State private var` voor SwiftUI state; `let` voor constants.
+- Views conformeren aan View, UI in `body`.
+- Strong typing, geen force-unwrap.
+- Minimal comments: alleen WHY voor non-obvious; geen WHAT/PR-context/historie.
+- Geen Combine; gebruik Swift concurrency (async/await, Task, @Observable).
+- @Observable / @Bindable voor view-model state.
+- Swift Testing voor unit tests; XCUI voor UI tests.
+
+LOCALIZATION CONVENTIES
+-----------------------
+- Source language = nl (in pbxproj: developmentRegion = nl).
+- knownRegions = nl, en, Base.
+- Localizable.xcstrings is single source of truth. Keys ZIJN de NL strings.
+- SwiftUI Text("...") en Button("...") gebruiken LocalizedStringKey overload
+  automatisch — niets te doen.
+- Voor String properties (zoals enum.title) gebruik je:
+    Bundle.appLocalizedString("Naamtype")
+  in plaats van String(localized: "..."). Dit respecteert de in-app taalkeuze
+  (BundleLanguage runtime override) en is identiek aan Apple's helper bij default.
+- Voor interpolated strings: gebruik String(format:) met %lld / %@ placeholders.
+- Voor private helper-functies die views renderen: parameter type = LocalizedStringKey.
+- UI test labels gebruiken accessibility identifiers — geen tekstmatch.
+
+GENERATOR ARCHITECTUUR
+----------------------
+- Syllable (~130) heeft tags voor: roles, styles (latin/spanish/english/modern/soft/
+  bold/romantic/elegant/unisex), nametypes, groups, weight (signature 1.25 / rare 0.75).
+- NameGenerator.reelOptions(...) levert per positie een pool van candidate syllables
+  op basis van mode + filters + nametype + included syllables (handmatig).
+- randomName(...) doet weighted choice + vowel/consonant alternation + dedup over
+  laatste 30 namen.
+- SoundStylePreset kent primaryTags (×3), secondaryTags (×1), excludedTags. Score
+  ≥4 → preferred pool; anders fallback ranked.
+- ViewModel.applySoundStylePreset reset state en zet selectionMode=sharedManual met
+  de preset-syllables. Toggle-off via tweede tap clears.
+- Naamtype-wissel met actieve preset hertoepast de preset op nieuwe nametype.
+
+UX PATTERNS
+-----------
+- Theme is bottom van ContentView.swift (cream gradient, accent rood-bruin, ink, surfaces).
+- Sheet voor Advanced (med + large detents); fullScreenCover voor syllable picker.
+- iOS 26 Liquid Glass: toolbar buttons renderen automatisch als pill in fullScreenCover
+  ZONDER navigationTitle. Met navigationTitle → flat tekst. Workaround: handmatige
+  Capsule + .ultraThinMaterial background voor consistente pill-look.
+- Accessibility identifiers op key actions ("discoverButton", "spinAgainButton") zodat
+  UI tests taal-onafhankelijk zijn.
+- Onboarding gated via AppStorage("hasSeenOnboarding"). UI tests skippen via launch
+  argument "UI_TEST_SKIP_ONBOARDING".
+
+KEY FILES OM EERST TE LEZEN BIJ NIEUWE TAAK
+-------------------------------------------
+1. STATUS.txt                              waar staan we nu, wat is laatst gedaan
+2. ContentView.swift                       homepage flow + Theme
+3. PaywallView.swift                       voor IAP/Premium werk
+4. SoundStylePreset.swift + Syllable.swift voor generator-tuning
+5. SettingsView.swift                      voor settings/font/taal werk
+6. NameGeneratorViewModel.swift            voor selectionMode + preset gedrag
+
+NIET DOEN
+---------
+- Geen pbxproj edits zonder expliciete user-akkoord (developmentRegion,
+  knownRegions, build settings). Vragen of via Xcode UI laten doen.
+- Geen Combine introduceren.
+- Geen pushes zonder user-akkoord.
+- Geen syllable IDs vertalen (la, mi, etc. blijven taal-agnostisch).
+- Geen "Younique" of "Youniquelist" hernoemen.
