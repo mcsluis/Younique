@@ -102,7 +102,7 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .warmSpanish:
             return [.romantic, .soft]
         case .dreamySoft:
-            return [.romantic]
+            return [.romantic, .unisex]
         case .powerfulBold:
             return [.unisex]
         case .romantic:
@@ -125,7 +125,7 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
         case .dreamySoft:
             return [.bold, .latin]
         case .powerfulBold:
-            return [.soft, .romantic, .modern]
+            return [.soft, .romantic]
         case .romantic:
             return [.bold, .modern]
         case .classicEnglish:

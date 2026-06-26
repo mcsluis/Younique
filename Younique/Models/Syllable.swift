@@ -290,10 +290,10 @@ private extension Syllable {
     ]
 
     static let accentIDs: Set<String> = [
-        "a", "ah", "ce", "da", "el", "en", "ey", "ley", "lyn", "lynn", "na", "nay",
-        "ney", "ni", "o", "on", "ra", "ri", "ro", "sha", "shan", "ta", "tin", "ya",
-        "bea", "elle", "isa", "lou", "luz", "mia", "nia", "noe", "ria", "rose", "sage",
-        "sar", "sia", "sol", "tia"
+        "a", "ah", "ali", "ce", "da", "el", "en", "ey", "ley", "lyn", "lynn", "na",
+        "nay", "ney", "ni", "o", "on", "ra", "rey", "ri", "rio", "ro", "sha", "shan",
+        "ta", "tin", "ya", "bea", "elle", "isa", "lou", "luz", "mia", "nia", "noe",
+        "ria", "rose", "sage", "sar", "sia", "sol", "tia"
     ]
 
     static let endingIDs: Set<String> = [
@@ -324,7 +324,7 @@ private extension Syllable {
 
     static let modernIDs: Set<String> = [
         "ash", "blair", "cy", "dev", "jax", "kai", "ki", "lux", "max", "mia", "noe",
-        "ria", "sage", "skye", "ty", "va", "vi", "vik", "wren", "x", "ya", "you", "za", "zev"
+        "ria", "sage", "skye", "ty", "va", "vi", "wren", "x", "ya", "you", "za", "zev"
     ]
 
     static let softIDs: Set<String> = [
@@ -395,8 +395,8 @@ private extension Syllable {
     ]
 
     static let signatureIDs: Set<String> = [
-        "ash", "ce", "cha", "el", "kel", "la", "ley", "lou", "mar", "mi", "ra", "rio", "rose",
-        "sage", "sha", "sol", "tor", "vi", "wren", "zev"
+        "ash", "blair", "ce", "cha", "el", "jax", "kel", "ley", "lou", "luz", "mar",
+        "noe", "rio", "rose", "sage", "sha", "sol", "sve", "thor", "tor", "vi", "wren", "zev"
     ]
 
     static let rareIDs: Set<String> = [
