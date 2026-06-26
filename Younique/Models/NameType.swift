@@ -17,22 +17,22 @@ enum NameType: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .girl:
-            return String(localized: "Meisjesnaam")
+            return Bundle.appLocalizedString("Meisjesnaam")
         case .boy:
-            return String(localized: "Jongensnaam")
+            return Bundle.appLocalizedString("Jongensnaam")
         case .neutral:
-            return String(localized: "Neutraal")
+            return Bundle.appLocalizedString("Neutraal")
         }
     }
 
     var detail: String {
         switch self {
         case .girl:
-            return String(localized: "Zachtere openers en meer open, vloeiende eindklanken.")
+            return Bundle.appLocalizedString("Zachtere openers en meer open, vloeiende eindklanken.")
         case .boy:
-            return String(localized: "Stevigere starts en meer gesloten of harde eindklanken.")
+            return Bundle.appLocalizedString("Stevigere starts en meer gesloten of harde eindklanken.")
         case .neutral:
-            return String(localized: "Een gemengde pool zonder specifieke klankaanpassingen.")
+            return Bundle.appLocalizedString("Een gemengde pool zonder specifieke klankaanpassingen.")
         }
     }
 }

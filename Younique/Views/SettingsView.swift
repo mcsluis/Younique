@@ -30,7 +30,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Premium") {
+                Section {
                     if purchaseManager.isUnlocked {
                         HStack {
                             Image(systemName: "checkmark.seal.fill")
@@ -75,9 +75,13 @@ struct SettingsView: View {
                         }
                     }
                     .buttonStyle(.plain)
+                } header: {
+                    Text("Premium")
+                } footer: {
+                    Text("Premium is een eenmalige aankoop en wordt automatisch hersteld via je Apple-account.")
                 }
 
-                Section("Lettertype gegenereerde naam") {
+                Section {
                     ForEach(DisplayFont.allCases) { option in
                         Button {
                             displayFontRaw = option.rawValue
@@ -108,9 +112,13 @@ struct SettingsView: View {
                         .buttonStyle(.plain)
                         .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                     }
+                } header: {
+                    Text("Lettertype gegenereerde naam")
+                } footer: {
+                    Text("Dit lettertype wordt gebruikt zodra je een naam opent in het resultaat.")
                 }
 
-                Section("Weergave") {
+                Section {
                     Picker("Kleurmodus", selection: $appearancePreferenceRaw) {
                         ForEach(AppearancePreference.allCases) { option in
                             Text(option.title).tag(option.rawValue)
@@ -122,6 +130,10 @@ struct SettingsView: View {
                             Text(option.title).tag(option.rawValue)
                         }
                     }
+                } header: {
+                    Text("Weergave")
+                } footer: {
+                    Text("Wijzigingen in kleur en taal worden direct in de app toegepast.")
                 }
 
                 Section("Over") {
@@ -186,6 +198,10 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $isPrivacyPolicyPresented) {
                 PrivacyPolicyView()
+            }
+            .onChange(of: appLanguagePreferenceRaw) { _, newValue in
+                let preference = AppLanguagePreference(rawValue: newValue) ?? .system
+                Bundle.setAppLanguage(preference.languageCode)
             }
         }
     }

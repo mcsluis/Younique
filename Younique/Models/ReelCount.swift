@@ -18,13 +18,13 @@ enum ReelCount: Int, CaseIterable, Identifiable {
     var subtitle: String {
         switch self {
         case .two:
-            return String(localized: "Een snelle combinatie van start en einde voor ultrakorte namen.")
+            return Bundle.appLocalizedString("Een snelle combinatie van start en einde voor ultrakorte namen.")
         case .three:
-            return String(localized: "Start, kern en einde voor korte namen zoals Delano of Keano.")
+            return Bundle.appLocalizedString("Start, kern en einde voor korte namen zoals Delano of Keano.")
         case .four:
-            return String(localized: "Een extra verbindingspositie maakt langere en vloeiendere namen mogelijk.")
+            return Bundle.appLocalizedString("Een extra verbindingspositie maakt langere en vloeiendere namen mogelijk.")
         case .five:
-            return String(localized: "Twee tussenposities geven de meest uitgesponnen combinaties in deze stijl.")
+            return Bundle.appLocalizedString("Twee tussenposities geven de meest uitgesponnen combinaties in deze stijl.")
         }
     }
 }

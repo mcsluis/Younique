@@ -15,9 +15,9 @@ struct NameProfile {
 
         var label: String {
             switch self {
-            case .soft: return String(localized: "zacht")
-            case .firm: return String(localized: "stevig")
-            case .mixed: return String(localized: "gemengd")
+            case .soft: return Bundle.appLocalizedString("zacht")
+            case .firm: return Bundle.appLocalizedString("stevig")
+            case .mixed: return Bundle.appLocalizedString("gemengd")
             }
         }
     }
@@ -32,8 +32,8 @@ struct NameProfile {
 
     var summary: String {
         let unit = syllableCount == 1
-            ? String(localized: "lettergreep")
-            : String(localized: "lettergrepen")
+            ? Bundle.appLocalizedString("lettergreep")
+            : Bundle.appLocalizedString("lettergrepen")
         return "\(syllableCount) \(unit) · \(mood.label)"
     }
 

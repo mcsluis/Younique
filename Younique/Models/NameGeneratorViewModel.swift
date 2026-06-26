@@ -30,6 +30,12 @@ final class NameGeneratorViewModel {
     var nameType: NameType = .neutral {
         didSet {
             guard !isCreating else { return }
+
+            if let activeSoundStylePreset {
+                applySoundStylePreset(activeSoundStylePreset, allowToggleOff: false)
+                return
+            }
+
             sanitizeSelectionsForCurrentNameType()
             syncActiveSoundStylePreset()
             resetGeneratedState()
@@ -110,34 +116,34 @@ final class NameGeneratorViewModel {
 
     var roleExplanation: String {
         if selectionMode == .distributedManual {
-            return String(localized: "Handmatige selectie met positieverdeling: alleen jouw gekozen lettergrepen worden gebruikt, verdeeld per positie.")
+            return Bundle.appLocalizedString("Handmatige selectie met positieverdeling: alleen jouw gekozen lettergrepen worden gebruikt, verdeeld per positie.")
         }
 
         if selectionMode == .sharedManual {
-            return String(localized: "Handmatige selectie zonder positieverdeling: elke positie gebruikt dezelfde gekozen lettergrepen.")
+            return Bundle.appLocalizedString("Handmatige selectie zonder positieverdeling: elke positie gebruikt dezelfde gekozen lettergrepen.")
         }
 
         if selectionMode == .perReelManual {
-            return String(localized: "Volledig handmatig: per positie bepaal je zelf welke lettergrepen beschikbaar zijn.")
+            return Bundle.appLocalizedString("Volledig handmatig: per positie bepaal je zelf welke lettergrepen beschikbaar zijn.")
         }
 
         if selectionMode == .automaticShared {
-            return String(localized: "Vrije stand: elke positie gebruikt dezelfde volledige lettergreep-pool, dus herhaling mag.")
+            return Bundle.appLocalizedString("Vrije stand: elke positie gebruikt dezelfde volledige lettergreep-pool, dus herhaling mag.")
         }
 
         if !excludedGroups.isEmpty {
-            return String(localized: "Gefilterd op hoofdgroepen: de positieverdeling blijft actief, maar uitgesloten klankfamilies worden overgeslagen.")
+            return Bundle.appLocalizedString("Gefilterd op hoofdgroepen: de positieverdeling blijft actief, maar uitgesloten klankfamilies worden overgeslagen.")
         }
 
         switch reelCount {
         case .two:
-            return String(localized: "Verdeling: een beginpositie en een eindpositie voor korte, directe namen.")
+            return Bundle.appLocalizedString("Verdeling: een beginpositie en een eindpositie voor korte, directe namen.")
         case .three:
-            return String(localized: "Verdeling: een beginpositie, een volle middenpositie en een duidelijke eindpositie.")
+            return Bundle.appLocalizedString("Verdeling: een beginpositie, een volle middenpositie en een duidelijke eindpositie.")
         case .four:
-            return String(localized: "Verdeling: begin, verbinding, kern en eindklank voor langere maar nog vloeiende namen.")
+            return Bundle.appLocalizedString("Verdeling: begin, verbinding, kern en eindklank voor langere maar nog vloeiende namen.")
         case .five:
-            return String(localized: "Verdeling: begin, brug, kern, extra kleur en een sterke afsluiter.")
+            return Bundle.appLocalizedString("Verdeling: begin, brug, kern, extra kleur en een sterke afsluiter.")
         }
     }
 
@@ -171,6 +177,15 @@ final class NameGeneratorViewModel {
     }
 
     func applySoundStylePreset(_ preset: SoundStylePreset) {
+        applySoundStylePreset(preset, allowToggleOff: true)
+    }
+
+    private func applySoundStylePreset(_ preset: SoundStylePreset, allowToggleOff: Bool) {
+        if allowToggleOff, activeSoundStylePreset == preset {
+            clearSoundStylePreset()
+            return
+        }
+
         let allowedSyllables = Set(allSyllables)
         let presetSelection = preset.availableSyllables(for: nameType, allowedSyllables: allowedSyllables)
 
@@ -199,11 +214,18 @@ final class NameGeneratorViewModel {
     func selectedCountText() -> String {
         switch selectionMode {
         case .sharedManual, .distributedManual:
-            return String(localized: "Geselecteerd: \(selectedSyllables.count)")
+            return String(
+                format: Bundle.appLocalizedString("Geselecteerd: %lld"),
+                selectedSyllables.count
+            )
         case .perReelManual:
             let count = (perReelSelectedSyllables[activeReelSelectionIndex] ?? []).count
             let position = activeReelSelectionIndex + 1
-            return String(localized: "Positie \(position): \(count) geselecteerd")
+            return String(
+                format: Bundle.appLocalizedString("Positie %lld: %lld geselecteerd"),
+                position,
+                count
+            )
         case .automatic, .automaticShared:
             return ""
         }
@@ -303,6 +325,18 @@ final class NameGeneratorViewModel {
         reels = []
         spinningReels = []
         isOverlayPresented = false
+    }
+
+    private func clearSoundStylePreset() {
+        isApplyingSoundStylePreset = true
+        excludedGroups.removeAll()
+        selectedSyllables.removeAll()
+        perReelSelectedSyllables.removeAll()
+        activeReelSelectionIndex = 0
+        selectionMode = .automatic
+        activeSoundStylePreset = nil
+        isApplyingSoundStylePreset = false
+        resetGeneratedState()
     }
 
     private func sanitizeSelectionsForCurrentNameType() {

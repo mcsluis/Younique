@@ -31,42 +31,42 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .softLatin:
-            return String(localized: "Zacht & Latijn")
+            return Bundle.appLocalizedString("Zacht & Latijn")
         case .stoerKort:
-            return String(localized: "Stoer & kort")
+            return Bundle.appLocalizedString("Stoer & kort")
         case .freshModern:
-            return String(localized: "Fris & modern")
+            return Bundle.appLocalizedString("Fris & modern")
         case .warmSpanish:
-            return String(localized: "Warm & Spaans")
+            return Bundle.appLocalizedString("Warm & Spaans")
         case .dreamySoft:
-            return String(localized: "Dromerig & zacht")
+            return Bundle.appLocalizedString("Dromerig & zacht")
         case .powerfulBold:
-            return String(localized: "Krachtig & uitgesproken")
+            return Bundle.appLocalizedString("Krachtig & uitgesproken")
         case .romantic:
-            return String(localized: "Romantisch")
+            return Bundle.appLocalizedString("Romantisch")
         case .classicEnglish:
-            return String(localized: "Klassiek Engels")
+            return Bundle.appLocalizedString("Klassiek Engels")
         }
     }
 
     var baseDetail: String {
         switch self {
         case .softLatin:
-            return String(localized: "Vloeiende openers, zachte bruggen en open eindklanken.")
+            return Bundle.appLocalizedString("Vloeiende openers, zachte bruggen en open eindklanken.")
         case .stoerKort:
-            return String(localized: "Compacte combinaties met stevigere starts en directe eindes.")
+            return Bundle.appLocalizedString("Compacte combinaties met stevigere starts en directe eindes.")
         case .freshModern:
-            return String(localized: "Helder, fris en geschikt voor moderne, korte naamcombinaties.")
+            return Bundle.appLocalizedString("Helder, fris en geschikt voor moderne, korte naamcombinaties.")
         case .warmSpanish:
-            return String(localized: "Warme, ritmische klanken met open eindes en zonnige overgangen.")
+            return Bundle.appLocalizedString("Warme, ritmische klanken met open eindes en zonnige overgangen.")
         case .dreamySoft:
-            return String(localized: "Luchtig en sierlijk: ijle openers en elegante eindes voor een dromerige sfeer.")
+            return Bundle.appLocalizedString("Luchtig en sierlijk: ijle openers en elegante eindes voor een dromerige sfeer.")
         case .powerfulBold:
-            return String(localized: "Klassieke kracht: stevige starts en gedragen middenstukken, niet kort of edgy.")
+            return Bundle.appLocalizedString("Klassieke kracht: stevige starts en gedragen middenstukken, niet kort of edgy.")
         case .romantic:
-            return String(localized: "Melodisch en mediterraan: zoete, vloeiende klanken met een sierlijke afwerking.")
+            return Bundle.appLocalizedString("Melodisch en mediterraan: zoete, vloeiende klanken met een sierlijke afwerking.")
         case .classicEnglish:
-            return String(localized: "Meer Engelse staarten en een sierlijke, herkenbare klank.")
+            return Bundle.appLocalizedString("Meer Engelse staarten en een sierlijke, herkenbare klank.")
         }
     }
 
@@ -173,7 +173,11 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
     func detailText(for nameType: NameType, allowedSyllables: Set<String>) -> String {
         let samples = sampleSyllables(for: nameType, allowedSyllables: allowedSyllables)
         guard !samples.isEmpty else { return baseDetail }
-        return String(localized: "\(baseDetail) Bijvoorbeeld: \(samples.joined(separator: ", ")).")
+        return String(
+            format: Bundle.appLocalizedString("%@ Bijvoorbeeld: %@."),
+            baseDetail,
+            samples.joined(separator: ", ")
+        )
     }
 
     @MainActor

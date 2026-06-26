@@ -19,30 +19,30 @@ enum SyllableSelectionMode: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .automatic:
-            return String(localized: "Geoptimaliseerd")
+            return Bundle.appLocalizedString("Geoptimaliseerd")
         case .automaticShared:
-            return String(localized: "Iedere positie, elke lettergreep")
+            return Bundle.appLocalizedString("Iedere positie, elke lettergreep")
         case .sharedManual:
-            return String(localized: "Elke gekozen lettergreep op alle posities")
+            return Bundle.appLocalizedString("Elke gekozen lettergreep op alle posities")
         case .distributedManual:
-            return String(localized: "Gekozen lettergrepen beschikbaar volgens de positiestructuur")
+            return Bundle.appLocalizedString("Gekozen lettergrepen beschikbaar volgens de positiestructuur")
         case .perReelManual:
-            return String(localized: "Zelf de lettergrepen per positie kiezen")
+            return Bundle.appLocalizedString("Zelf de lettergrepen per positie kiezen")
         }
     }
 
     var detail: String {
         switch self {
         case .automatic:
-            return String(localized: "De app kiest uit de pools en filters.")
+            return Bundle.appLocalizedString("De app kiest uit de pools en filters.")
         case .automaticShared:
-            return String(localized: "Elke positie gebruikt dezelfde volledige lettergreeppool.")
+            return Bundle.appLocalizedString("Elke positie gebruikt dezelfde volledige lettergreeppool.")
         case .sharedManual:
-            return String(localized: "Alle posities gebruiken dezelfde gekozen lettergrepen.")
+            return Bundle.appLocalizedString("Alle posities gebruiken dezelfde gekozen lettergrepen.")
         case .distributedManual:
-            return String(localized: "De gekozen lettergrepen worden verdeeld volgens de positiestructuur.")
+            return Bundle.appLocalizedString("De gekozen lettergrepen worden verdeeld volgens de positiestructuur.")
         case .perReelManual:
-            return String(localized: "Je kiest per positie apart welke lettergrepen beschikbaar zijn.")
+            return Bundle.appLocalizedString("Je kiest per positie apart welke lettergrepen beschikbaar zijn.")
         }
     }
 }

@@ -73,6 +73,15 @@ struct ContentView: View {
                     .accessibilityHint("Toont je bewaarde favorieten.")
                 }
 
+                ToolbarItem(placement: .principal) {
+                    Text("Younique")
+                        .font(.system(size: 24, weight: .semibold, design: .serif))
+                        .foregroundStyle(Theme.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .accessibilityAddTraits(.isHeader)
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         isSettingsPresented = true
@@ -130,6 +139,13 @@ struct ContentView: View {
                     }
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                actionSection
+                    .padding(.top, 8)
+                    .background(Color.clear)
+                    .blur(radius: viewModel.isOverlayPresented ? 12 : 0)
+                    .allowsHitTesting(!viewModel.isOverlayPresented)
+            }
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.86), value: viewModel.isOverlayPresented)
     }
@@ -153,50 +169,50 @@ struct ContentView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
                     controlsSection
-                    createButton
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 24)
-                .padding(.bottom, 20)
+                .padding(.top, 0)
+                .padding(.bottom, 180)
             }
         } else {
-            VStack(spacing: 20) {
+            VStack(spacing: 0) {
                 controlsSection
                 Spacer(minLength: 0)
-                createButton
             }
             .padding(.horizontal, 20)
-            .padding(.top, 24)
-            .padding(.bottom, 20)
+            .padding(.top, 0)
+            .padding(.bottom, 180)
         }
     }
 
     private var controlsSection: some View {
         VStack(spacing: 18) {
-            heroSection
             baseSettingsSection
             soundStyleSection
             advancedSection
         }
+        .layoutPriority(1)
     }
 
-    private var heroSection: some View {
-        VStack(spacing: 2) {
-            Text("Younique")
-                .font(.system(size: 30, weight: .semibold, design: .serif))
-                .foregroundStyle(Theme.ink)
+    private var actionSection: some View {
+        VStack(spacing: 10) {
+            createButton
 
             Text("Vind jullie unieke naam")
                 .font(.system(size: 13, weight: .medium, design: .serif))
                 .italic()
                 .foregroundStyle(Theme.inkSoft)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
         }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 8)
     }
 
     private var baseSettingsSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Naamtype")
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Kies naamtype en aantal posities")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.ink)
 
@@ -209,17 +225,24 @@ struct ContentView: View {
                 .disabled(viewModel.isCreating)
             }
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Aantal posities")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.ink)
+            reelCountPicker
 
-                reelCountPicker
+            HStack(spacing: 10) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Theme.accent)
+
+                Text(baseSettingsSummaryText)
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(Theme.inkSoft)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
             }
-
-            Text(baseSettingsSummaryText)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundStyle(Theme.inkSoft)
+            .frame(maxWidth: .infinity, minHeight: 62, alignment: .leading)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Theme.surfaceSoft)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
         .padding(18)
         .background(Theme.surface)
@@ -228,6 +251,7 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .stroke(Theme.borderStrong, lineWidth: 1)
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private var reelCountPicker: some View {
@@ -297,32 +321,63 @@ struct ContentView: View {
 
     private var soundStyleSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Klankstijl")
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundStyle(Theme.ink)
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Kies optioneel je klankstijl")
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Theme.ink)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(SoundStylePreset.allCases) { preset in
-                        soundStyleChip(for: preset)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(SoundStylePreset.allCases) { preset in
+                            soundStyleChip(for: preset)
+                        }
                     }
+                    .padding(.vertical, 1)
                 }
-                .padding(.vertical, 1)
             }
 
-            Text(soundStyleDetailText)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundStyle(Theme.inkSoft)
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: viewModel.activeSoundStylePreset == nil ? "wand.and.stars" : "waveform.path")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Theme.accent)
+                    .padding(.top, 2)
+
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(soundStyleDetailText)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(Theme.inkSoft)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .layoutPriority(1)
+
+                    if let accentLine = soundStyleAccentLine {
+                        Text(accentLine)
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundStyle(Theme.ink)
+                            .padding(.top, 10)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(minHeight: 60, alignment: .topLeading)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(Theme.surfaceSoft)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
+        .padding(18)
+        .background(Theme.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .stroke(Theme.borderStrong, lineWidth: 1)
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private func soundStyleChip(for preset: SoundStylePreset) -> some View {
         let isSelected = viewModel.activeSoundStylePreset == preset
         let isLocked = preset.isPremium && !purchaseManager.isUnlocked
-        let sampleLine = preset.accentLine(
-            for: viewModel.nameType,
-            allowedSyllables: Set(sortedSyllables)
-        )
 
         return Button {
             if isLocked {
@@ -331,26 +386,17 @@ struct ContentView: View {
                 viewModel.applySoundStylePreset(preset)
             }
         } label: {
-            VStack(alignment: .leading, spacing: isSelected ? 5 : 0) {
-                HStack(spacing: 8) {
-                    Text(preset.title)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                        .lineLimit(1)
+            HStack(spacing: 8) {
+                Text(preset.title)
+                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    .lineLimit(1)
 
-                    if isLocked {
-                        Image(systemName: "lock.fill")
-                            .font(.system(size: 10, weight: .bold))
-                    } else if isSelected {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 10, weight: .bold))
-                    }
-                }
-
-                if isSelected && !sampleLine.isEmpty {
-                    Text(sampleLine)
-                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.82))
-                        .lineLimit(1)
+                if isLocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 10, weight: .bold))
+                } else if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 10, weight: .bold))
                 }
             }
             .foregroundStyle(isSelected ? .white : (isLocked ? Theme.inkSoft : Theme.ink))
@@ -392,9 +438,19 @@ struct ContentView: View {
 
                 Spacer()
 
-                Image(systemName: "slider.horizontal.3")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(Theme.accent)
+                VStack(alignment: .trailing, spacing: 8) {
+                    Text(advancedModeBadgeText)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.accent)
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 5)
+                        .background(Theme.surfaceSoft)
+                        .clipShape(Capsule())
+
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
@@ -513,8 +569,8 @@ struct ContentView: View {
                 await viewModel.spinReels()
             }
         } label: {
-            Text("Ontdek een naam")
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+            Image(systemName: "wand.and.stars")
+                .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
@@ -539,19 +595,22 @@ struct ContentView: View {
 
     private var filterSummaryText: String {
         if viewModel.excludedGroups.isEmpty {
-            return String(localized: "Geen klankgroepen verborgen")
+            return Bundle.appLocalizedString("Geen klankgroepen verborgen")
         }
 
         let count = viewModel.excludedGroups.count
-        return String(localized: "\(count) klankgroepen verborgen")
+        return String(
+            format: Bundle.appLocalizedString("%lld klankgroepen verborgen"),
+            count
+        )
     }
 
     private var manualSelectionHeadline: String {
         if viewModel.selectionMode == .perReelManual {
-            return String(localized: "Kies per positie je lettergrepen")
+            return Bundle.appLocalizedString("Kies per positie je lettergrepen")
         }
 
-        return String(localized: "Open de lettergreep-selector")
+        return Bundle.appLocalizedString("Open de lettergreep-selector")
     }
 
     private var soundStyleDetailText: String {
@@ -559,7 +618,20 @@ struct ContentView: View {
             return preset.baseDetail
         }
 
-        return String(localized: "Kies een stijl om de generator meer richting te geven.")
+        return Bundle.appLocalizedString("Kies een stijl om de generator meer richting te geven.")
+    }
+
+    private var soundStyleAccentLine: String? {
+        guard let preset = viewModel.activeSoundStylePreset else {
+            return nil
+        }
+
+        let accentLine = preset.accentLine(
+            for: viewModel.nameType,
+            allowedSyllables: Set(sortedSyllables)
+        )
+
+        return accentLine.isEmpty ? nil : accentLine
     }
 
     private var baseSettingsSummaryText: String {
@@ -572,12 +644,21 @@ struct ContentView: View {
         if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
             parts.append(filterSummaryText)
         } else if viewModel.selectionMode == .perReelManual {
-            parts.append(String(localized: "Selectie per positie"))
+            parts.append(Bundle.appLocalizedString("Selectie per positie"))
         } else {
-            parts.append(String(localized: "Handmatige selectie"))
+            parts.append(Bundle.appLocalizedString("Handmatige selectie"))
         }
 
         return parts.joined(separator: " • ")
+    }
+
+    private var advancedModeBadgeText: String {
+        switch viewModel.selectionMode {
+        case .automatic, .automaticShared:
+            return "Auto"
+        case .sharedManual, .distributedManual, .perReelManual:
+            return "Pro"
+        }
     }
 
     private var sortedSyllables: [String] {
@@ -777,11 +858,11 @@ private struct AdvancedSettingsSheetView: View {
                 )
                 .ignoresSafeArea()
             )
-            .navigationTitle("Geavanceerd")
+            .navigationTitle(Bundle.appLocalizedString("Geavanceerd"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Klaar") {
+                    Button(Bundle.appLocalizedString("Klaar")) {
                         dismiss()
                     }
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
@@ -792,7 +873,7 @@ private struct AdvancedSettingsSheetView: View {
 
     private var advancedModeSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Lettergreepmodus")
+            Text(Bundle.appLocalizedString("Lettergreepmodus"))
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .foregroundStyle(Theme.ink)
 
@@ -842,7 +923,7 @@ private struct AdvancedSettingsSheetView: View {
             }
             .disabled(viewModel.isCreating)
             .buttonStyle(.plain)
-            .accessibilityLabel("Kies lettergreepmodus")
+            .accessibilityLabel(Bundle.appLocalizedString("Kies lettergreepmodus"))
             .accessibilityValue(viewModel.selectionMode.title)
 
             Text(viewModel.selectionMode.detail)
@@ -853,11 +934,11 @@ private struct AdvancedSettingsSheetView: View {
 
     private var filterSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Verfijn stijl")
+            Text(Bundle.appLocalizedString("Verfijn stijl"))
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .foregroundStyle(Theme.ink)
 
-            Text("Verberg alleen de klankgroepen die je liever niet hoort. Dit werkt in de automatische modi.")
+            Text(Bundle.appLocalizedString("Verberg alleen de klankgroepen die je liever niet hoort. Dit werkt in de automatische modi."))
                 .font(.system(size: 13, weight: .medium, design: .rounded))
                 .foregroundStyle(Theme.inkSoft)
 
@@ -904,16 +985,16 @@ private struct AdvancedSettingsSheetView: View {
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isCreating)
-            .accessibilityLabel("Open handmatige lettergreepselectie")
+            .accessibilityLabel(Bundle.appLocalizedString("Open handmatige lettergreepselectie"))
         }
     }
 
     private var manualSelectionHeadline: String {
         if viewModel.selectionMode == .perReelManual {
-            return String(localized: "Kies voor iedere positie de gewenste lettergrepen")
+            return Bundle.appLocalizedString("Kies voor iedere positie de gewenste lettergrepen")
         }
 
-        return String(localized: "Kies hier je lettergrepen")
+        return Bundle.appLocalizedString("Kies hier je lettergrepen")
     }
 }
 
@@ -979,7 +1060,7 @@ private struct FullScreenSyllablePickerView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Reset") {
+                    Button(Bundle.appLocalizedString("Reset")) {
                         viewModel.resetCurrentSyllableSelection()
                     }
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -989,7 +1070,7 @@ private struct FullScreenSyllablePickerView: View {
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Klaar") {
+                    Button(Bundle.appLocalizedString("Klaar")) {
                         dismiss()
                     }
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
@@ -1003,10 +1084,10 @@ private struct FullScreenSyllablePickerView: View {
 
     private var introText: String {
         if viewModel.selectionMode == .perReelManual {
-            return String(localized: "Kies hier je lettergrepen")
+            return Bundle.appLocalizedString("Kies hier je lettergrepen")
         }
 
-        return String(localized: "Kies fullscreen welke lettergrepen in de generator mogen terugkomen.")
+        return Bundle.appLocalizedString("Kies fullscreen welke lettergrepen in de generator mogen terugkomen.")
     }
 
     private var canResetCurrentSelection: Bool {

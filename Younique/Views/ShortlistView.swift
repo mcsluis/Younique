@@ -74,17 +74,6 @@ struct ShortlistView: View {
                         .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
                 }
                 .onDelete(perform: delete)
-            } header: {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Tik op een naam voor details")
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .foregroundStyle(Theme.ink)
-
-                    Text("In het detailscherm vind je notities, delen en extra opties.")
-                        .font(.system(size: 12, weight: .medium, design: .rounded))
-                        .foregroundStyle(Theme.inkSoft)
-                }
-                .textCase(nil)
             }
         }
         .listStyle(.plain)
@@ -93,13 +82,13 @@ struct ShortlistView: View {
 
     private func row(for favorite: FavoriteName) -> some View {
         HStack(spacing: 14) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(favorite.name)
                     .font(.system(size: 26, weight: .semibold, design: .serif))
                     .foregroundStyle(Theme.ink)
 
                 Text(NameProfile(syllables: favorite.syllables).summary)
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.inkSoft)
 
                 if !favorite.note.isEmpty {
@@ -119,9 +108,11 @@ struct ShortlistView: View {
 
             Spacer()
 
-            Image(systemName: "chevron.right")
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(Theme.inkSoft)
+            VStack(alignment: .trailing, spacing: 8) {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Theme.inkSoft)
+            }
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)

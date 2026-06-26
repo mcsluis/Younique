@@ -57,7 +57,10 @@ struct YouniqueApp: App {
                 .task {
                     await purchaseManager.loadProduct()
                 }
-                .task(id: appLanguagePreference.rawValue) {
+                .onAppear {
+                    Bundle.setAppLanguage(appLanguagePreference.languageCode)
+                }
+                .onChange(of: appLanguagePreference.rawValue) { _, _ in
                     Bundle.setAppLanguage(appLanguagePreference.languageCode)
                 }
                 .environment(\.locale, appLanguagePreference.locale)
