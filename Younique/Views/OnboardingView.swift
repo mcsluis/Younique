@@ -142,6 +142,7 @@ struct OnboardingView: View {
         pageLayout(
             eyebrow: "Welkom bij",
             title: "Younique",
+            useDisplayFont: true,
             bodyText: "Genereer unieke babynamen door zorgvuldig gekozen lettergrepen als een speelse slotmachine te combineren."
         ) {
             VStack(spacing: 22) {
@@ -262,9 +263,10 @@ struct OnboardingView: View {
     }
 
     private func pageLayout<Content: View>(
-        eyebrow: String,
-        title: String,
-        bodyText: String,
+        eyebrow: LocalizedStringKey,
+        title: LocalizedStringKey,
+        useDisplayFont: Bool = false,
+        bodyText: LocalizedStringKey,
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(spacing: 0) {
@@ -277,7 +279,7 @@ struct OnboardingView: View {
                         .foregroundStyle(Theme.inkSoft)
 
                     Text(title)
-                        .font(title == "Younique" ? titleDisplayFont : .system(size: 31, weight: .bold, design: .serif))
+                        .font(useDisplayFont ? titleDisplayFont : .system(size: 31, weight: .bold, design: .serif))
                         .foregroundStyle(Theme.ink)
                         .frame(maxWidth: .infinity)
                         .multilineTextAlignment(.center)
@@ -317,7 +319,7 @@ struct OnboardingView: View {
             )
     }
 
-    private func infoPill(title: String, value: String) -> some View {
+    private func infoPill(title: LocalizedStringKey, value: LocalizedStringKey) -> some View {
         VStack(spacing: 4) {
             Text(title)
                 .font(.caption.weight(.bold))
@@ -333,7 +335,7 @@ struct OnboardingView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
-    private func positionCard(number: String, label: String) -> some View {
+    private func positionCard(number: String, label: LocalizedStringKey) -> some View {
         VStack(spacing: 6) {
             Text(number)
                 .font(.title.weight(.bold))
@@ -363,7 +365,7 @@ struct OnboardingView: View {
             .clipShape(Capsule())
     }
 
-    private func premiumRow(icon: String, text: String) -> some View {
+    private func premiumRow(icon: String, text: LocalizedStringKey) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.body.weight(.bold))

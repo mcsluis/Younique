@@ -38,8 +38,14 @@ struct SyllableChip: View {
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
-        .accessibilityLabel("Lettergreep \(syllable)")
-        .accessibilityValue(isLocked ? "Vergrendeld" : (isSelected ? "Geselecteerd" : "Niet geselecteerd"))
-        .accessibilityHint(isDisabled ? "Nu niet beschikbaar." : (isLocked ? "Dubbeltik om Premium te bekijken." : "Dubbeltik om de selectie te wijzigen."))
+        .accessibilityLabel(Text("Lettergreep \(syllable)"))
+        .accessibilityValue(isLocked
+            ? String(localized: "Vergrendeld")
+            : (isSelected ? String(localized: "Geselecteerd") : String(localized: "Niet geselecteerd")))
+        .accessibilityHint(isDisabled
+            ? String(localized: "Nu niet beschikbaar.")
+            : (isLocked
+                ? String(localized: "Dubbeltik om Premium te bekijken.")
+                : String(localized: "Dubbeltik om de selectie te wijzigen.")))
     }
 }

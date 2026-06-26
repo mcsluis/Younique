@@ -12,6 +12,7 @@ struct SettingsView: View {
     @AppStorage("displayFont") private var displayFontRaw: String = DisplayFont.default.rawValue
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage("appearancePreference") private var appearancePreferenceRaw = AppearancePreference.system.rawValue
+    @AppStorage("appLanguagePreference") private var appLanguagePreferenceRaw = AppLanguagePreference.system.rawValue
     @Environment(\.dismiss) private var dismiss
     @Environment(PurchaseManager.self) private var purchaseManager
 
@@ -112,6 +113,12 @@ struct SettingsView: View {
                 Section("Weergave") {
                     Picker("Kleurmodus", selection: $appearancePreferenceRaw) {
                         ForEach(AppearancePreference.allCases) { option in
+                            Text(option.title).tag(option.rawValue)
+                        }
+                    }
+
+                    Picker("Taal", selection: $appLanguagePreferenceRaw) {
+                        ForEach(AppLanguagePreference.allCases) { option in
                             Text(option.title).tag(option.rawValue)
                         }
                     }

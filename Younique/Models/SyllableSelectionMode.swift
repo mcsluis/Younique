@@ -19,30 +19,30 @@ enum SyllableSelectionMode: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .automatic:
-            return "Geoptimaliseerd"
+            return String(localized: "Geoptimaliseerd")
         case .automaticShared:
-            return "Iedere positie, elke lettergreep"
+            return String(localized: "Iedere positie, elke lettergreep")
         case .sharedManual:
-            return "Elke gekozen lettergreep op alle posities"
+            return String(localized: "Elke gekozen lettergreep op alle posities")
         case .distributedManual:
-            return "Gekozen lettergrepen beschikbaar volgens de positiestructuur"
+            return String(localized: "Gekozen lettergrepen beschikbaar volgens de positiestructuur")
         case .perReelManual:
-            return "Zelf de lettergrepen per positie kiezen"
+            return String(localized: "Zelf de lettergrepen per positie kiezen")
         }
     }
 
     var detail: String {
         switch self {
         case .automatic:
-            return "De app kiest uit de pools en filters."
+            return String(localized: "De app kiest uit de pools en filters.")
         case .automaticShared:
-            return "Elke positie gebruikt dezelfde volledige lettergreeppool."
+            return String(localized: "Elke positie gebruikt dezelfde volledige lettergreeppool.")
         case .sharedManual:
-            return "Alle posities gebruiken dezelfde gekozen lettergrepen."
+            return String(localized: "Alle posities gebruiken dezelfde gekozen lettergrepen.")
         case .distributedManual:
-            return "De gekozen lettergrepen worden verdeeld volgens de positiestructuur."
+            return String(localized: "De gekozen lettergrepen worden verdeeld volgens de positiestructuur.")
         case .perReelManual:
-            return "Je kiest per positie apart welke lettergrepen beschikbaar zijn."
+            return String(localized: "Je kiest per positie apart welke lettergrepen beschikbaar zijn.")
         }
     }
 }

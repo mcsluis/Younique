@@ -19,30 +19,30 @@ enum NameFilterGroup: String, CaseIterable, Identifiable, Hashable {
     var title: String {
         switch self {
         case .sharpStarts:
-            return "Harde starts"
+            return String(localized: "Harde starts")
         case .flowStarts:
-            return "Zachte starts"
+            return String(localized: "Zachte starts")
         case .urbanAccents:
-            return "Dj/Sh/Y-klanken"
+            return String(localized: "Dj/Sh/Y-klanken")
         case .englishTails:
-            return "Engelse eindes"
+            return String(localized: "Engelse eindes")
         case .softFillers:
-            return "Zachte vulklanken"
+            return String(localized: "Zachte vulklanken")
         }
     }
 
     var detail: String {
         switch self {
         case .sharpStarts:
-            return "Ka, Ke, Ta, Ste, Pri"
+            return String(localized: "Ka, Ke, Ta, Ste, Pri")
         case .flowStarts:
-            return "La, Le, Li, Ma, Na"
+            return String(localized: "La, Le, Li, Ma, Na")
         case .urbanAccents:
-            return "Dja, Dje, Sha, Jay, ya"
+            return String(localized: "Dja, Dje, Sha, Jay, ya")
         case .englishTails:
-            return "ley, lyn, lynn, ney, son"
+            return String(localized: "ley, lyn, lynn, ney, son")
         case .softFillers:
-            return "a, an, el, en, na, ra"
+            return String(localized: "a, an, el, en, na, ra")
         }
     }
 }

@@ -110,34 +110,34 @@ final class NameGeneratorViewModel {
 
     var roleExplanation: String {
         if selectionMode == .distributedManual {
-            return "Handmatige selectie met positieverdeling: alleen jouw gekozen lettergrepen worden gebruikt, verdeeld per positie."
+            return String(localized: "Handmatige selectie met positieverdeling: alleen jouw gekozen lettergrepen worden gebruikt, verdeeld per positie.")
         }
 
         if selectionMode == .sharedManual {
-            return "Handmatige selectie zonder positieverdeling: elke positie gebruikt dezelfde gekozen lettergrepen."
+            return String(localized: "Handmatige selectie zonder positieverdeling: elke positie gebruikt dezelfde gekozen lettergrepen.")
         }
 
         if selectionMode == .perReelManual {
-            return "Volledig handmatig: per positie bepaal je zelf welke lettergrepen beschikbaar zijn."
+            return String(localized: "Volledig handmatig: per positie bepaal je zelf welke lettergrepen beschikbaar zijn.")
         }
 
         if selectionMode == .automaticShared {
-            return "Vrije stand: elke positie gebruikt dezelfde volledige lettergreep-pool, dus herhaling mag."
+            return String(localized: "Vrije stand: elke positie gebruikt dezelfde volledige lettergreep-pool, dus herhaling mag.")
         }
 
         if !excludedGroups.isEmpty {
-            return "Gefilterd op hoofdgroepen: de positieverdeling blijft actief, maar uitgesloten klankfamilies worden overgeslagen."
+            return String(localized: "Gefilterd op hoofdgroepen: de positieverdeling blijft actief, maar uitgesloten klankfamilies worden overgeslagen.")
         }
 
         switch reelCount {
         case .two:
-            return "Verdeling: een beginpositie en een eindpositie voor korte, directe namen."
+            return String(localized: "Verdeling: een beginpositie en een eindpositie voor korte, directe namen.")
         case .three:
-            return "Verdeling: een beginpositie, een volle middenpositie en een duidelijke eindpositie."
+            return String(localized: "Verdeling: een beginpositie, een volle middenpositie en een duidelijke eindpositie.")
         case .four:
-            return "Verdeling: begin, verbinding, kern en eindklank voor langere maar nog vloeiende namen."
+            return String(localized: "Verdeling: begin, verbinding, kern en eindklank voor langere maar nog vloeiende namen.")
         case .five:
-            return "Verdeling: begin, brug, kern, extra kleur en een sterke afsluiter."
+            return String(localized: "Verdeling: begin, brug, kern, extra kleur en een sterke afsluiter.")
         }
     }
 
@@ -199,10 +199,11 @@ final class NameGeneratorViewModel {
     func selectedCountText() -> String {
         switch selectionMode {
         case .sharedManual, .distributedManual:
-            return "Geselecteerd: \(selectedSyllables.count)"
+            return String(localized: "Geselecteerd: \(selectedSyllables.count)")
         case .perReelManual:
             let count = (perReelSelectedSyllables[activeReelSelectionIndex] ?? []).count
-            return "Positie \(activeReelSelectionIndex + 1): \(count) geselecteerd"
+            let position = activeReelSelectionIndex + 1
+            return String(localized: "Positie \(position): \(count) geselecteerd")
         case .automatic, .automaticShared:
             return ""
         }

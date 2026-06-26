@@ -74,6 +74,6 @@ struct ReelCard: View {
         .animation(.spring(response: 0.45, dampingFraction: 0.62), value: isSpinning)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Positie")
-        .accessibilityValue(isSpinning ? "Draait" : syllable)
+        .accessibilityValue(isSpinning ? String(localized: "Draait") : syllable)
     }
 }

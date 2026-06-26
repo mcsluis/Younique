@@ -37,7 +37,9 @@ struct FilterChip: View {
         .buttonStyle(.plain)
         .disabled(isDisabled)
         .accessibilityLabel(group.title)
-        .accessibilityValue(isExcluded ? "Verborgen" : "Zichtbaar")
-        .accessibilityHint(isDisabled ? "Nu niet beschikbaar." : "Dubbeltik om deze klankgroep te verbergen of weer toe te laten.")
+        .accessibilityValue(isExcluded ? String(localized: "Verborgen") : String(localized: "Zichtbaar"))
+        .accessibilityHint(isDisabled
+            ? String(localized: "Nu niet beschikbaar.")
+            : String(localized: "Dubbeltik om deze klankgroep te verbergen of weer toe te laten."))
     }
 }

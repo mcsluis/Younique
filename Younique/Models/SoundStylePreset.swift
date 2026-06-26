@@ -31,42 +31,42 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .softLatin:
-            return "Zacht & Latijn"
+            return String(localized: "Zacht & Latijn")
         case .stoerKort:
-            return "Stoer & kort"
+            return String(localized: "Stoer & kort")
         case .freshModern:
-            return "Fris & modern"
+            return String(localized: "Fris & modern")
         case .warmSpanish:
-            return "Warm & Spaans"
+            return String(localized: "Warm & Spaans")
         case .dreamySoft:
-            return "Dromerig & zacht"
+            return String(localized: "Dromerig & zacht")
         case .powerfulBold:
-            return "Krachtig & uitgesproken"
+            return String(localized: "Krachtig & uitgesproken")
         case .romantic:
-            return "Romantisch"
+            return String(localized: "Romantisch")
         case .classicEnglish:
-            return "Klassiek Engels"
+            return String(localized: "Klassiek Engels")
         }
     }
 
     var baseDetail: String {
         switch self {
         case .softLatin:
-            return "Vloeiende openers, zachte bruggen en open eindklanken."
+            return String(localized: "Vloeiende openers, zachte bruggen en open eindklanken.")
         case .stoerKort:
-            return "Compacte combinaties met stevigere starts en directe eindes."
+            return String(localized: "Compacte combinaties met stevigere starts en directe eindes.")
         case .freshModern:
-            return "Helder, fris en geschikt voor moderne, korte naamcombinaties."
+            return String(localized: "Helder, fris en geschikt voor moderne, korte naamcombinaties.")
         case .warmSpanish:
-            return "Warme, ritmische klanken met open eindes en zonnige overgangen."
+            return String(localized: "Warme, ritmische klanken met open eindes en zonnige overgangen.")
         case .dreamySoft:
-            return "Luchtig en sierlijk: ijle openers en elegante eindes voor een dromerige sfeer."
+            return String(localized: "Luchtig en sierlijk: ijle openers en elegante eindes voor een dromerige sfeer.")
         case .powerfulBold:
-            return "Klassieke kracht: stevige starts en gedragen middenstukken, niet kort of edgy."
+            return String(localized: "Klassieke kracht: stevige starts en gedragen middenstukken, niet kort of edgy.")
         case .romantic:
-            return "Melodisch en mediterraan: zoete, vloeiende klanken met een sierlijke afwerking."
+            return String(localized: "Melodisch en mediterraan: zoete, vloeiende klanken met een sierlijke afwerking.")
         case .classicEnglish:
-            return "Meer Engelse staarten en een sierlijke, herkenbare klank."
+            return String(localized: "Meer Engelse staarten en een sierlijke, herkenbare klank.")
         }
     }
 
@@ -173,7 +173,7 @@ enum SoundStylePreset: String, CaseIterable, Identifiable {
     func detailText(for nameType: NameType, allowedSyllables: Set<String>) -> String {
         let samples = sampleSyllables(for: nameType, allowedSyllables: allowedSyllables)
         guard !samples.isEmpty else { return baseDetail }
-        return "\(baseDetail) Bijvoorbeeld: \(samples.joined(separator: ", "))."
+        return String(localized: "\(baseDetail) Bijvoorbeeld: \(samples.joined(separator: ", ")).")
     }
 
     @MainActor

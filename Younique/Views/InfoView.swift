@@ -121,13 +121,13 @@ struct InfoView: View {
         }
     }
 
-    private func section(title: String, lines: [String]) -> some View {
+    private func section(title: LocalizedStringKey, lines: [LocalizedStringKey]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.title3.weight(.semibold))
                 .foregroundStyle(Theme.ink)
 
-            ForEach(lines, id: \.self) { line in
+            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
                 Text(line)
                     .font(.body.weight(.medium))
                     .foregroundStyle(Theme.ink.opacity(0.78))

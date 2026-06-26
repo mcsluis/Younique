@@ -366,8 +366,12 @@ struct ContentView: View {
         .buttonStyle(.plain)
         .disabled(viewModel.isCreating)
         .accessibilityLabel(preset.title)
-        .accessibilityValue(isLocked ? "Vergrendeld" : (isSelected ? "Geselecteerd" : "Niet geselecteerd"))
-        .accessibilityHint(isLocked ? "Dubbeltik om Premium te bekijken." : "Dubbeltik om deze klankstijl toe te passen.")
+        .accessibilityValue(isLocked
+            ? String(localized: "Vergrendeld")
+            : (isSelected ? String(localized: "Geselecteerd") : String(localized: "Niet geselecteerd")))
+        .accessibilityHint(isLocked
+            ? String(localized: "Dubbeltik om Premium te bekijken.")
+            : String(localized: "Dubbeltik om deze klankstijl toe te passen."))
     }
 
     private var advancedSection: some View {
@@ -530,22 +534,24 @@ struct ContentView: View {
         .disabled(viewModel.isCreating || !viewModel.canGenerate)
         .opacity((viewModel.isCreating || !viewModel.canGenerate) ? 0.7 : 1)
         .accessibilityHint("Genereert een nieuwe naam op basis van je huidige keuzes.")
+        .accessibilityIdentifier("discoverButton")
     }
 
     private var filterSummaryText: String {
         if viewModel.excludedGroups.isEmpty {
-            return "Geen klankgroepen verborgen"
+            return String(localized: "Geen klankgroepen verborgen")
         }
 
-        return "\(viewModel.excludedGroups.count) klankgroepen verborgen"
+        let count = viewModel.excludedGroups.count
+        return String(localized: "\(count) klankgroepen verborgen")
     }
 
     private var manualSelectionHeadline: String {
         if viewModel.selectionMode == .perReelManual {
-            return "Kies per positie je lettergrepen"
+            return String(localized: "Kies per positie je lettergrepen")
         }
 
-        return "Open de lettergreep-selector"
+        return String(localized: "Open de lettergreep-selector")
     }
 
     private var soundStyleDetailText: String {
@@ -553,7 +559,7 @@ struct ContentView: View {
             return preset.baseDetail
         }
 
-        return "Kies een stijl om de generator meer richting te geven."
+        return String(localized: "Kies een stijl om de generator meer richting te geven.")
     }
 
     private var baseSettingsSummaryText: String {
@@ -566,9 +572,9 @@ struct ContentView: View {
         if viewModel.selectionMode == .automatic || viewModel.selectionMode == .automaticShared {
             parts.append(filterSummaryText)
         } else if viewModel.selectionMode == .perReelManual {
-            parts.append("Selectie per positie")
+            parts.append(String(localized: "Selectie per positie"))
         } else {
-            parts.append("Handmatige selectie")
+            parts.append(String(localized: "Handmatige selectie"))
         }
 
         return parts.joined(separator: " • ")
@@ -619,7 +625,7 @@ struct ContentView: View {
 
                     if let name = viewModel.displayedName, !viewModel.isCreating {
                         ShareLink(
-                            item: "Wat vind je van de naam \(name)?",
+                            item: String(localized: "Wat vind je van de naam \(name)?"),
                             subject: Text("Babynaam-idee uit Younique"),
                             message: Text("Wat vind je van de naam \(name)?")
                         ) {
@@ -647,7 +653,9 @@ struct ContentView: View {
                         }
                         .buttonStyle(.plain)
                         .transition(.opacity.combined(with: .scale(scale: 0.7)))
-                        .accessibilityLabel(isFavorite(name) ? "Verwijder \(name) uit favorieten" : "Bewaar \(name) als favoriet")
+                        .accessibilityLabel(isFavorite(name)
+                            ? String(localized: "Verwijder \(name) uit favorieten")
+                            : String(localized: "Bewaar \(name) als favoriet"))
                     }
                 }
 
@@ -696,6 +704,7 @@ struct ContentView: View {
                     Image(systemName: "wand.and.stars")
                         .font(.system(size: 22, weight: .bold))
                         .accessibilityLabel("Nog een keer draaien")
+                        .accessibilityIdentifier("spinAgainButton")
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
@@ -901,10 +910,10 @@ private struct AdvancedSettingsSheetView: View {
 
     private var manualSelectionHeadline: String {
         if viewModel.selectionMode == .perReelManual {
-            return "Kies voor iedere positie de gewenste lettergrepen"
+            return String(localized: "Kies voor iedere positie de gewenste lettergrepen")
         }
 
-        return "Kies hier je lettergrepen"
+        return String(localized: "Kies hier je lettergrepen")
     }
 }
 
@@ -994,10 +1003,10 @@ private struct FullScreenSyllablePickerView: View {
 
     private var introText: String {
         if viewModel.selectionMode == .perReelManual {
-            return "Kies hier je lettergrepen"
+            return String(localized: "Kies hier je lettergrepen")
         }
 
-        return "Kies fullscreen welke lettergrepen in de generator mogen terugkomen."
+        return String(localized: "Kies fullscreen welke lettergrepen in de generator mogen terugkomen.")
     }
 
     private var canResetCurrentSelection: Bool {

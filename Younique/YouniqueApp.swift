@@ -13,9 +13,21 @@ struct YouniqueApp: App {
     @State private var purchaseManager = PurchaseManager()
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage("appearancePreference") private var appearancePreferenceRaw = AppearancePreference.system.rawValue
+    @AppStorage("appLanguagePreference") private var appLanguagePreferenceRaw = AppLanguagePreference.system.rawValue
+
+    init() {
+        let preference = AppLanguagePreference(
+            rawValue: UserDefaults.standard.string(forKey: "appLanguagePreference") ?? AppLanguagePreference.system.rawValue
+        ) ?? .system
+        Bundle.setAppLanguage(preference.languageCode)
+    }
 
     private var appearancePreference: AppearancePreference {
         AppearancePreference(rawValue: appearancePreferenceRaw) ?? .system
+    }
+
+    private var appLanguagePreference: AppLanguagePreference {
+        AppLanguagePreference(rawValue: appLanguagePreferenceRaw) ?? .system
     }
 
     private var shouldSkipOnboardingForUITests: Bool {
@@ -45,6 +57,11 @@ struct YouniqueApp: App {
                 .task {
                     await purchaseManager.loadProduct()
                 }
+                .task(id: appLanguagePreference.rawValue) {
+                    Bundle.setAppLanguage(appLanguagePreference.languageCode)
+                }
+                .environment(\.locale, appLanguagePreference.locale)
+                .id(appLanguagePreference.rawValue)
         }
         .modelContainer(for: FavoriteName.self)
     }

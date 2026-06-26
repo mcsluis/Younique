@@ -21,12 +21,12 @@ enum DisplayFont: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .snellBold: return "Snell Roundhand — Vet"
-        case .snellRegular: return "Snell Roundhand"
-        case .zapfino: return "Zapfino"
-        case .appleChancery: return "Apple Chancery"
-        case .hoeflerItalic: return "Hoefler Text — Cursief"
-        case .systemSerif: return "Standaard serif"
+        case .snellBold: return String(localized: "Snell Roundhand — Vet")
+        case .snellRegular: return String(localized: "Snell Roundhand")
+        case .zapfino: return String(localized: "Zapfino")
+        case .appleChancery: return String(localized: "Apple Chancery")
+        case .hoeflerItalic: return String(localized: "Hoefler Text — Cursief")
+        case .systemSerif: return String(localized: "Standaard serif")
         }
     }
 

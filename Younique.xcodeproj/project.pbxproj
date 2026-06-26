@@ -200,11 +200,12 @@
 				};
 			};
 			buildConfigurationList = 7D943F822FE865630011C0F5 /* Build configuration list for PBXProject "Younique" */;
-			developmentRegion = en;
+			developmentRegion = nl;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				nl,
 			);
 			mainGroup = 7D943F7E2FE865630011C0F5;
 			minimizedProjectReferenceProxies = 1;

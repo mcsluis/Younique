@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacybeleid – Younique</title>
+    <title>Privacy Policy / Privacybeleid - Younique</title>
     <style>
         :root {
             --cream-top: #FAF0DE;
@@ -28,7 +28,7 @@
         }
 
         main {
-            max-width: 640px;
+            max-width: 720px;
             margin: 0 auto;
         }
 
@@ -51,6 +51,35 @@
             color: var(--ink-soft);
             font-size: 14px;
             font-family: Georgia, "Times New Roman", serif;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 0 28px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: var(--ink);
+        }
+
+        .language-block {
+            margin-bottom: 28px;
+        }
+
+        .language-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--ink);
         }
 
         section {
@@ -95,50 +124,105 @@
     <main>
         <header>
             <h1>Younique</h1>
-            <p>Privacybeleid</p>
+            <p>Privacy Policy / Privacybeleid</p>
         </header>
 
-        <section>
-            <h2>Korte versie</h2>
-            <p>Younique verzamelt en verstuurt geen persoonlijke gegevens. Alles wat je doet — namen genereren, favorieten bewaren, lettertype kiezen — blijft op je apparaat (of in je eigen iCloud).</p>
-        </section>
+        <nav aria-label="Language navigation">
+            <a href="#english">English</a>
+            <a href="#nederlands">Nederlands</a>
+        </nav>
 
-        <section>
-            <h2>Wat slaan we op?</h2>
-            <p>Op je apparaat: je favoriete namen (via Apple's SwiftData), je gekozen lettertype en de status van je Premium-aankoop. Niets hiervan wordt naar onze servers gestuurd — we hebben geen servers.</p>
-        </section>
+        <div class="language-block" id="english">
+            <h2 class="language-title">English</h2>
 
-        <section>
-            <h2>Aankopen</h2>
-            <p>De Premium-aankoop verloopt volledig via Apple's App Store. Wij ontvangen geen betaalgegevens. Apple kan je bonnetje en aankoopstatus delen met de app — die gebruiken we alleen om Premium-functies te ontgrendelen. Family Sharing-leden krijgen automatisch toegang via Apple's eigen mechanisme.</p>
-        </section>
+            <section>
+                <h2>Short version</h2>
+                <p>Younique collects and sends no personal data. Everything you do - generating names, saving favorites, choosing a font - stays on your device (or in your own iCloud).</p>
+            </section>
 
-        <section>
-            <h2>Tracking &amp; analytics</h2>
-            <p>Younique gebruikt geen analytics, geen advertenties, geen tracking SDK's. Er worden geen gebeurtenissen of foutmeldingen naar externe diensten gestuurd.</p>
-        </section>
+            <section>
+                <h2>What do we store?</h2>
+                <p>On your device: your favorite names (via Apple's SwiftData), your chosen font, and the status of your Premium purchase. None of this is sent to our servers - we don't have any servers.</p>
+            </section>
 
-        <section>
-            <h2>iCloud-synchronisatie</h2>
-            <p>Premium-gebruikers met iCloud ingeschakeld kunnen hun Youniquelist synchroniseren tussen hun eigen Apple-apparaten via Apple's SwiftData/CloudKit. Dit gebeurt versleuteld via je eigen Apple-ID — wij hebben er geen toegang toe. Family Sharing-leden behouden hun eigen iCloud en zien dus hun eigen favorieten, niet die van anderen.</p>
-        </section>
+            <section>
+                <h2>Purchases</h2>
+                <p>The Premium purchase goes entirely through Apple's App Store. We don't receive any payment details. Apple may share your receipt and purchase status with the app - we use those only to unlock Premium features. Family Sharing members get automatic access via Apple's own mechanism.</p>
+            </section>
 
-        <section>
-            <h2>Delen</h2>
-            <p>Wanneer je een naam deelt via het deel-icoon, opent het standaard iOS-deelvenster. De naam gaat rechtstreeks naar de gekozen app (iMessage, WhatsApp, Mail, etc.) — Younique stuurt zelf geen data en houdt niets bij.</p>
-        </section>
+            <section>
+                <h2>Tracking &amp; analytics</h2>
+                <p>Younique uses no analytics, no ads, and no tracking SDKs. No events or error reports are sent to external services.</p>
+            </section>
 
-        <section>
-            <h2>Kinderen</h2>
-            <p>Younique is een tool voor (aanstaande) ouders. We verzamelen bewust geen gegevens, dus de app is geschikt voor alle leeftijden.</p>
-        </section>
+            <section>
+                <h2>iCloud sync</h2>
+                <p>Premium users with iCloud enabled can sync their Youniquelist across their own Apple devices via Apple's SwiftData/CloudKit. This is encrypted via your own Apple ID - we have no access to it. Family Sharing members keep their own iCloud, so they see their own favorites, not anyone else's.</p>
+            </section>
 
-        <section>
-            <h2>Contact</h2>
-            <p>Vragen over privacy of de app in het algemeen? Mail naar <a href="mailto:mcsluis@gmail.com">mcsluis@gmail.com</a>.</p>
-        </section>
+            <section>
+                <h2>Sharing</h2>
+                <p>When you share a name with the share icon, the standard iOS share sheet opens. The name goes directly to the chosen app (iMessage, WhatsApp, Mail, etc.) - Younique itself sends no data and keeps no record.</p>
+            </section>
 
-        <p class="meta">Laatste update: 25 juni 2026</p>
+            <section>
+                <h2>Children</h2>
+                <p>Younique is a tool for (expectant) parents. We deliberately collect no data, so the app is suitable for all ages.</p>
+            </section>
+
+            <section>
+                <h2>Contact</h2>
+                <p>Questions about privacy or the app in general? Email <a href="mailto:mcsluis@gmail.com">mcsluis@gmail.com</a>.</p>
+            </section>
+
+            <p class="meta">Last updated: June 25, 2026</p>
+        </div>
+
+        <div class="language-block" id="nederlands">
+            <h2 class="language-title">Nederlands</h2>
+
+            <section>
+                <h2>Korte versie</h2>
+                <p>Younique verzamelt en verstuurt geen persoonlijke gegevens. Alles wat je doet - namen genereren, favorieten bewaren, lettertype kiezen - blijft op je apparaat (of in je eigen iCloud).</p>
+            </section>
+
+            <section>
+                <h2>Wat slaan we op?</h2>
+                <p>Op je apparaat: je favoriete namen (via Apple's SwiftData), je gekozen lettertype en de status van je Premium-aankoop. Niets hiervan wordt naar onze servers gestuurd - we hebben geen servers.</p>
+            </section>
+
+            <section>
+                <h2>Aankopen</h2>
+                <p>De Premium-aankoop verloopt volledig via Apple's App Store. Wij ontvangen geen betaalgegevens. Apple kan je bonnetje en aankoopstatus delen met de app - die gebruiken we alleen om Premium-functies te ontgrendelen. Family Sharing-leden krijgen automatisch toegang via Apple's eigen mechanisme.</p>
+            </section>
+
+            <section>
+                <h2>Tracking &amp; analytics</h2>
+                <p>Younique gebruikt geen analytics, geen advertenties, geen tracking SDK's. Er worden geen gebeurtenissen of foutmeldingen naar externe diensten gestuurd.</p>
+            </section>
+
+            <section>
+                <h2>iCloud-synchronisatie</h2>
+                <p>Premium-gebruikers met iCloud ingeschakeld kunnen hun Youniquelist synchroniseren tussen hun eigen Apple-apparaten via Apple's SwiftData/CloudKit. Dit gebeurt versleuteld via je eigen Apple-ID - wij hebben er geen toegang toe. Family Sharing-leden behouden hun eigen iCloud en zien dus hun eigen favorieten, niet die van anderen.</p>
+            </section>
+
+            <section>
+                <h2>Delen</h2>
+                <p>Wanneer je een naam deelt via het deel-icoon, opent het standaard iOS-deelvenster. De naam gaat rechtstreeks naar de gekozen app (iMessage, WhatsApp, Mail, etc.) - Younique stuurt zelf geen data en houdt niets bij.</p>
+            </section>
+
+            <section>
+                <h2>Kinderen</h2>
+                <p>Younique is een tool voor (aanstaande) ouders. We verzamelen bewust geen gegevens, dus de app is geschikt voor alle leeftijden.</p>
+            </section>
+
+            <section>
+                <h2>Contact</h2>
+                <p>Vragen over privacy of de app in het algemeen? Mail naar <a href="mailto:mcsluis@gmail.com">mcsluis@gmail.com</a>.</p>
+            </section>
+
+            <p class="meta">Laatste update: 25 juni 2026</p>
+        </div>
     </main>
 </body>
 </html>

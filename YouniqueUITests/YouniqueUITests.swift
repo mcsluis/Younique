@@ -28,14 +28,11 @@ final class YouniqueUITests: XCTestCase {
         app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
         app.launch()
 
-        // App-titel zichtbaar
+        // App-titel zichtbaar (taal-onafhankelijk)
         XCTAssertTrue(app.staticTexts["Younique"].waitForExistence(timeout: 5))
 
-        // Default section labels aanwezig
-        XCTAssertTrue(app.staticTexts["Naamtype"].exists)
-        XCTAssertTrue(app.staticTexts["Aantal posities"].exists)
-        XCTAssertTrue(app.staticTexts["Klankstijl"].exists)
-        XCTAssertTrue(app.staticTexts["Geavanceerd aanpassen"].exists)
+        // De primaire actieknop bestaat (via accessibility identifier)
+        XCTAssertTrue(app.buttons["discoverButton"].exists)
     }
 
     @MainActor
@@ -44,11 +41,11 @@ final class YouniqueUITests: XCTestCase {
         app.launchArguments.append("UI_TEST_SKIP_ONBOARDING")
         app.launch()
 
-        let discoverButton = app.buttons["Ontdek een naam"]
+        let discoverButton = app.buttons["discoverButton"]
         XCTAssertTrue(discoverButton.waitForExistence(timeout: 5))
         discoverButton.tap()
 
-        let wandButton = app.buttons["Nog een keer draaien"]
+        let wandButton = app.buttons["spinAgainButton"]
         XCTAssertTrue(wandButton.waitForExistence(timeout: 10))
     }
 

@@ -70,7 +70,7 @@ struct FavoriteDetailView: View {
                                         RoundedRectangle(cornerRadius: 16, style: .continuous)
                                             .stroke(Theme.border, lineWidth: 1)
                                     }
-                                    .accessibilityLabel("Notitie voor \(favorite.name)")
+                                    .accessibilityLabel(Text("Notitie voor \(favorite.name)"))
                                     .accessibilityHint("Voeg een persoonlijke notitie toe of pas die aan.")
 
                                 if favorite.note.isEmpty && !isNoteFocused {
@@ -116,7 +116,7 @@ struct FavoriteDetailView: View {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundStyle(Theme.accent)
                     }
-                    .accessibilityLabel("Deel \(favorite.name)")
+                    .accessibilityLabel(Text("Deel \(favorite.name)"))
                     .accessibilityHint("Opent het deelmenu voor deze naam.")
                 }
 
@@ -128,7 +128,7 @@ struct FavoriteDetailView: View {
                         Image(systemName: "trash")
                     }
                     .tint(.red)
-                    .accessibilityLabel("Verwijder \(favorite.name)")
+                    .accessibilityLabel(Text("Verwijder \(favorite.name)"))
                 }
 
                 ToolbarItemGroup(placement: .keyboard) {
@@ -141,6 +141,6 @@ struct FavoriteDetailView: View {
     }
 
     private var shareText: String {
-        "Wat vind je van de naam \(favorite.name)?"
+        String(localized: "Wat vind je van de naam \(favorite.name)?")
     }
 }

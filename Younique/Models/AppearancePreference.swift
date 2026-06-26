@@ -17,11 +17,11 @@ enum AppearancePreference: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .system:
-            return "Systeem"
+            return Bundle.appLocalizedString("Systeem")
         case .light:
-            return "Licht"
+            return Bundle.appLocalizedString("Licht")
         case .dark:
-            return "Donker"
+            return Bundle.appLocalizedString("Donker")
         }
     }
 

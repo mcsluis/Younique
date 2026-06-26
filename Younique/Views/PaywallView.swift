@@ -178,12 +178,12 @@ struct PaywallView: View {
 
     private var purchaseButtonText: String {
         if let displayPrice = purchaseManager.product?.displayPrice {
-            return "Ontgrendel Premium voor \(displayPrice)"
+            return String(localized: "Ontgrendel Premium voor \(displayPrice)")
         }
-        return "Laden..."
+        return String(localized: "Laden...")
     }
 
-    private func featureRow(icon: String, text: String) -> some View {
+    private func featureRow(icon: String, text: LocalizedStringKey) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.body.weight(.bold))
@@ -196,7 +196,7 @@ struct PaywallView: View {
         }
     }
 
-    private func trustPill(icon: String, text: String) -> some View {
+    private func trustPill(icon: String, text: LocalizedStringKey) -> some View {
         HStack(spacing: 5) {
             Image(systemName: icon)
                 .font(.system(size: 11, weight: .bold))
