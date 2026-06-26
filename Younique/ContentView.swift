@@ -854,10 +854,17 @@ private struct AdvancedSettingsSheetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(Bundle.appLocalizedString("Klaar")) {
+                    Button {
                         dismiss()
+                    } label: {
+                        Text(Bundle.appLocalizedString("Klaar"))
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                            .foregroundStyle(Theme.ink)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(.ultraThinMaterial, in: Capsule())
                     }
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .buttonStyle(.plain)
                 }
             }
         }
