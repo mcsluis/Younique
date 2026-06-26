@@ -227,22 +227,19 @@ struct ContentView: View {
 
             reelCountPicker
 
-            HStack(spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "sparkles")
                     .font(.system(size: 12, weight: .bold))
                     .foregroundStyle(Theme.accent)
+                    .padding(.top, 2)
 
                 Text(baseSettingsSummaryText)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(Theme.inkSoft)
                     .fixedSize(horizontal: false, vertical: true)
-                    .layoutPriority(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, minHeight: 62, alignment: .leading)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Theme.surfaceSoft)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .padding(.top, 8)
         }
         .padding(18)
         .background(Theme.surface)
@@ -347,7 +344,6 @@ struct ContentView: View {
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(Theme.inkSoft)
                         .fixedSize(horizontal: false, vertical: true)
-                        .layoutPriority(1)
 
                     if let accentLine = soundStyleAccentLine {
                         Text(accentLine)
@@ -357,13 +353,9 @@ struct ContentView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(minHeight: 60, alignment: .topLeading)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(Theme.surfaceSoft)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .padding(.top, 8)
         }
         .padding(18)
         .background(Theme.surface)
@@ -655,9 +647,9 @@ struct ContentView: View {
     private var advancedModeBadgeText: String {
         switch viewModel.selectionMode {
         case .automatic, .automaticShared:
-            return "Auto"
+            return Bundle.appLocalizedString("Auto")
         case .sharedManual, .distributedManual, .perReelManual:
-            return "Pro"
+            return Bundle.appLocalizedString("Handmatig")
         }
     }
 

@@ -195,6 +195,17 @@
         }
       }
     },
+    "Auto" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto"
+          }
+        }
+      }
+    },
     "Babynaam-idee uit Younique" : {
       "localizations" : {
         "en" : {
@@ -844,6 +855,17 @@
         }
       }
     },
+    "Handmatig" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual"
+          }
+        }
+      }
+    },
     "Handmatige modi zijn bewust eenvoudiger gehouden: daar stuur je direct op lettergrepen in plaats van op stijlclusters." : {
       "localizations" : {
         "en" : {
@@ -1408,6 +1430,9 @@
           }
         }
       }
+    },
+    "Lettertype" : {
+
     },
     "Lettertype gegenereerde naam" : {
       "localizations" : {
@@ -2414,6 +2439,9 @@
           }
         }
       }
+    },
+    "Voorbeeld in gekozen lettertype" : {
+
     },
     "Vragen over privacy of de app in het algemeen? Mail naar mcsluis@gmail.com." : {
       "extractionState" : "stale",

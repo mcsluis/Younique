@@ -19,7 +19,9 @@ struct SettingsView: View {
     @State private var isPaywallPresented = false
     @State private var isPrivacyPolicyPresented = false
 
-    private let previewName = "Younique"
+    private var displayFont: DisplayFont {
+        DisplayFont(rawValue: displayFontRaw) ?? .default
+    }
 
     private var appVersion: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -82,36 +84,25 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    ForEach(DisplayFont.allCases) { option in
-                        Button {
-                            displayFontRaw = option.rawValue
-                        } label: {
-                            HStack(alignment: .firstTextBaseline, spacing: 12) {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(option.displayName)
-                                        .font(.callout.weight(.semibold))
-                                        .foregroundStyle(Theme.inkSoft)
-
-                                    Text(previewName)
-                                        .font(option.font(baseSize: 26))
-                                        .foregroundStyle(Theme.ink)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.5)
-                                }
-
-                                Spacer(minLength: 8)
-
-                                if option.rawValue == displayFontRaw {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.title3.weight(.semibold))
-                                        .foregroundStyle(Theme.accent)
-                                }
-                            }
-                            .contentShape(Rectangle())
+                    Picker("Lettertype", selection: $displayFontRaw) {
+                        ForEach(DisplayFont.allCases) { option in
+                            Text(option.displayName)
+                                .font(option.font(baseSize: 17))
+                                .tag(option.rawValue)
                         }
-                        .buttonStyle(.plain)
-                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                     }
+
+                    HStack {
+                        Spacer()
+                        Text("Younique")
+                            .font(displayFont.font(baseSize: 32))
+                            .foregroundStyle(Theme.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                            .padding(.vertical, 8)
+                        Spacer()
+                    }
+                    .accessibilityLabel("Voorbeeld in gekozen lettertype")
                 } header: {
                     Text("Lettertype gegenereerde naam")
                 } footer: {
