@@ -14,7 +14,7 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Fix Lettertype label and font names not respecting in-app EN switch
+4379490  Fix Lettertype label and font names not respecting in-app EN switch
 e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
 6ad1528  Refresh paywall copy and clean up handoff docs
 97dd86d  Style Advanced sheet Done button as glass pill
