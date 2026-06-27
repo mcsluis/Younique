@@ -157,7 +157,14 @@
       }
     },
     "Alle selectiemodi beschikbaar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All selection modes unlocked"
+          }
+        }
+      }
     },
     "Alle selectiemodi vrijspelen" : {
       "extractionState" : "stale",
@@ -408,7 +415,14 @@
       }
     },
     "Dit lettertype wordt gebruikt zodra je een naam opent in het resultaat." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This font is used when you open a name in the result."
+          }
+        }
+      }
     },
     "Dj/Sh/Y-klanken" : {
       "extractionState" : "stale",
@@ -1972,7 +1986,14 @@
       }
     },
     "Premium is een eenmalige aankoop en wordt automatisch hersteld via je Apple-account." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium is a one-time purchase and is automatically restored via your Apple account."
+          }
+        }
+      }
     },
     "Premium kopen" : {
       "localizations" : {
@@ -2518,7 +2539,14 @@
       }
     },
     "Voorbeeld in gekozen lettertype" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview in chosen font"
+          }
+        }
+      }
     },
     "Vragen over privacy of de app in het algemeen? Mail naar mcsluis@gmail.com." : {
       "extractionState" : "stale",
@@ -2628,7 +2656,14 @@
       }
     },
     "Wijzigingen in kleur en taal worden direct in de app toegepast." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color and language changes apply immediately in the app."
+          }
+        }
+      }
     },
     "Younique" : {
       "comment" : "The name of the app.",
