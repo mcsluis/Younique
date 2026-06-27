@@ -5,24 +5,30 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: app icon dark+tinted variants)
+2026-06-27  (sessie: ShareLink dubbel-bericht fix)
 
 BRANCH STATE
 ------------
 Branch: main
-6 commits ahead of origin/main — nog niet gepushed.
+7 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Drop duplicate ShareLink message parameter
+4aa0b56  Record icon commit SHA and refresh extraction state
 7534f4a  Add dark and tinted app icon variants
 b27d82f  Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
-d0a8754  Auto-detect CSV delimiter in translations script
-f77d7f3  Record commit SHA in STATUS
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Bug-fix vervolg op d0fddff: in de share sheet stond de zin "Wat vind
+  je van de naam X?" twee keer in het bericht (Messages, Mail). Oorzaak:
+  ShareLink kreeg dezelfde tekst mee als `item:` én `message:` — sommige
+  share-targets plakken ze achter elkaar. `message:` parameter weggehaald
+  op beide sites (ContentView.swift:701 en FavoriteDetailView.swift:111).
+  `subject:` blijft voor de mail-onderwerpregel.
 - App icon polish voor iOS 18+ Liquid Glass appearances. Bron Y.png
   (cream/peach gradient + dark Y) was opaque met alpha-kanaal en de dark+
   tinted slots in Contents.json waren lege stubs. Nu:

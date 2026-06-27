@@ -110,8 +110,7 @@ struct FavoriteDetailView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     ShareLink(
                         item: shareText,
-                        subject: Text("Babynaam-idee uit Younique"),
-                        message: Text(shareText)
+                        subject: Text("Babynaam-idee uit Younique")
                     ) {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundStyle(Theme.accent)

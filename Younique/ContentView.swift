@@ -700,8 +700,7 @@ struct ContentView: View {
                         let shareMessage = String(format: Bundle.appLocalizedString("Wat vind je van de naam %@?"), name)
                         ShareLink(
                             item: shareMessage,
-                            subject: Text("Babynaam-idee uit Younique"),
-                            message: Text(shareMessage)
+                            subject: Text("Babynaam-idee uit Younique")
                         ) {
                             Image(systemName: "square.and.arrow.up")
                                 .font(.system(size: 16, weight: .semibold))
