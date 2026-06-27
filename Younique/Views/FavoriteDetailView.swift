@@ -141,6 +141,6 @@ struct FavoriteDetailView: View {
     }
 
     private var shareText: String {
-        String(localized: "Wat vind je van de naam \(favorite.name)?")
+        String(format: Bundle.appLocalizedString("Wat vind je van de naam %@?"), favorite.name)
     }
 }

@@ -5,24 +5,31 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: spin→generate terminologie + translation review import)
+2026-06-27  (sessie: share-message mixed-language fix)
 
 BRANCH STATE
 ------------
 Branch: main
-3 commits ahead of origin/main — nog niet gepushed.
+4 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
 d0a8754  Auto-detect CSV delimiter in translations script
 f77d7f3  Record commit SHA in STATUS
 4379490  Fix Lettertype label and font names not respecting in-app EN switch
 e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
-6ad1528  Refresh paywall copy and clean up handoff docs
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Bug-fix: ShareLink toonde mixed-language tekst (NL en EN tegelijk in
+  bericht) wanneer systeem-taal en in-app taal verschilden. Oorzaak: het
+  `item:` argument gebruikte String(localized:) (systeem-bundle) terwijl
+  `subject:`/`message:` Text-LocalizedStringKey gebruiken (in-app override).
+  Vervangen door String(format: Bundle.appLocalizedString("Wat vind je van
+  de naam %@?"), name). Locaties: FavoriteDetailView.swift:143 en
+  ContentView.swift rond regel 700.
 - Terminologie-wissel: "draaien"/"spin" → "genereren"/"generate" in
   user-facing strings. Bron-keys hernoemd in xcstrings (NL = key conventie):
   "Draait" → "Genereert", "Nog een keer draaien" → "Nog een keer genereren",

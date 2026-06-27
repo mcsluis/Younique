@@ -697,10 +697,11 @@ struct ContentView: View {
                     Spacer()
 
                     if let name = viewModel.displayedName, !viewModel.isCreating {
+                        let shareMessage = String(format: Bundle.appLocalizedString("Wat vind je van de naam %@?"), name)
                         ShareLink(
-                            item: String(localized: "Wat vind je van de naam \(name)?"),
+                            item: shareMessage,
                             subject: Text("Babynaam-idee uit Younique"),
-                            message: Text("Wat vind je van de naam \(name)?")
+                            message: Text(shareMessage)
                         ) {
                             Image(systemName: "square.and.arrow.up")
                                 .font(.system(size: 16, weight: .semibold))
