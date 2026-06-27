@@ -119,16 +119,16 @@ SCREENSHOTS PROGRESS
 Doelmaat #1: 6.9" iPhone 16 Pro Max (REQUIRED) — NL eerst.
 
 6.9" NL  (Screenshots/6.9/nl/)
-  [ ] 01-home-base.png        Home, naamtype Meisje, 3 posities, geen preset
-  [ ] 02-home-preset.png      Home, preset "Warm & Spaans" actief
-  [ ] 03-overlay-name.png     Result overlay, mooie gegenereerde naam
-  [ ] 04-overlay-other.png    Result overlay, andere preset/nametype
-  [ ] 05-advanced-mode.png    Geavanceerd sheet, mode "Per positie"
-  [ ] 06-syllable-picker.png  Syllable picker fullscreen, paar chips actief
-  [ ] 07-youniquelist.png     Favorieten-lijst met 4-5 namen
-  [ ] 08-favorite-detail.png  Favorite detail met notitie
-  [ ] 09-settings.png         Settings met lettertype-preview + Premium-pill
-  [ ] 10-paywall.png          Paywall, "Vind die ene perfecte naam"
+  [x] 01-home-base.png        Home, naamtype Meisje, 3 posities, geen preset
+  [x] 02-home-preset.png      Home, preset "Zacht & Latijn" actief
+  [x] 03-overlay-name.png     Result overlay, "Aramel" (Zacht & Latijn)
+  [x] 04-overlay-other.png    Result overlay, "Miliki" (Jongensnaam, Fris & modern)
+  [x] 05-advanced-mode.png    Geavanceerd sheet, mode "Per positie"
+  [x] 06-syllable-picker.png  Syllable picker, Positie 1 met 7 chips geselecteerd
+  [x] 07-youniquelist.png     Youniquelist met 9 favorieten in mix van lengtes
+  [x] 08-favorite-detail.png  Luvanaro detail met notitie
+  [x] 09-settings.png         Settings met lettertype-preview + Premium-pill
+  [x] 10-paywall.png          Paywall, "Vind die ene perfecte naam"
 
 6.9" EN  (Screenshots/6.9/en/) — na NL volledig af.
 6.7"     — na 6.9" af (kan vaak hergebruiken met resize).
