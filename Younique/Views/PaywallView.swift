@@ -185,9 +185,9 @@ struct PaywallView: View {
 
     private var purchaseButtonText: String {
         if let displayPrice = purchaseManager.product?.displayPrice {
-            return String(localized: "Ontgrendel Premium voor \(displayPrice)")
+            return String(format: Bundle.appLocalizedString("Ontgrendel Premium voor %@"), displayPrice)
         }
-        return String(localized: "Laden...")
+        return Bundle.appLocalizedString("Laden...")
     }
 
     private func featureRow(icon: String, text: LocalizedStringKey) -> some View {

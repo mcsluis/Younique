@@ -5,24 +5,36 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: home section headers boven cards + gecentreerd)
+2026-06-27  (sessie: paywall-knop EN-fix + 6.9" NL screenshots)
 
 BRANCH STATE
 ------------
 Branch: main
-2 commits ahead of origin/main — nog niet gepushed.
+1 commit ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
-ccc0c76  Lift home section headers above cards and center them
-4782578  Mark branch as in sync with origin
-48e9d64  Mark share-message key as manually managed
-281e559  Drop duplicate ShareLink message parameter
-4aa0b56  Record icon commit SHA and refresh extraction state
-7534f4a  Add dark and tinted app icon variants
+<pending> Fix paywall button not respecting in-app EN switch
+b9f0e84  Capture 6.9" NL App Store screenshots
+3ad750c  Scaffold screenshot capture workflow
+7e191b7  Add App Store listing copy draft
+d0031d7  Trim STATUS open punten after device test pass
+aaad5b3  Record commit SHA in STATUS
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Bug-fix: paywall-knop "Ontgrendel Premium voor X" en "Laden..." bleven
+  in NL hangen wanneer de in-app taal op EN stond. Oorzaak: String(localized:)
+  in PaywallView.swift:188 leest uit de systeem-bundle, niet de BundleLanguage
+  override. Vervangen door Bundle.appLocalizedString + String(format:). Beide
+  keys op extractionState: manual gezet. De "ook in onboarding" observatie
+  komt uit diezelfde PaywallView — de onboarding's "Premium bekijken" knop
+  opent de paywall, dus één fix dekt beide plekken.
+- 6.9" NL App Store screenshots: 10/10 marketing shots vastgelegd op
+  iPhone 17 Pro Max (1320×2868) — home base, home met preset, twee result
+  overlays, advanced sheet, syllable picker, Youniquelist (9 favorieten),
+  favorite detail met notitie, settings + lettertype-preview, paywall.
+  Opgeslagen in Screenshots/6.9/nl/.
 - Home controlsSection: titels van de drie blokken (baseSettings,
   soundStyle, advanced) staan nu BOVEN de cards ipv erin, gecentreerd
   (frame(maxWidth: .infinity, alignment: .center) op de Text).

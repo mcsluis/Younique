@@ -1404,6 +1404,7 @@
       }
     },
     "Laden..." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1787,6 +1788,7 @@
       }
     },
     "Ontgrendel Premium voor %@" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
