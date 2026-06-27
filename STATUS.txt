@@ -14,7 +14,7 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Fix paywall button not respecting in-app EN switch
+369bb6f  Fix paywall button not respecting in-app EN switch
 b9f0e84  Capture 6.9" NL App Store screenshots
 3ad750c  Scaffold screenshot capture workflow
 7e191b7  Add App Store listing copy draft
