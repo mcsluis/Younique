@@ -14,7 +14,7 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Drop duplicate ShareLink message parameter
+281e559  Drop duplicate ShareLink message parameter
 4aa0b56  Record icon commit SHA and refresh extraction state
 7534f4a  Add dark and tinted app icon variants
 b27d82f  Drop build number from Settings version display
