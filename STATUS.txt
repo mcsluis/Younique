@@ -10,7 +10,7 @@ LAATST BIJGEWERKT
 BRANCH STATE
 ------------
 Branch: main
-14 commits ahead of origin/main — nog niet gepushed.
+In sync met origin/main.
 
 RECENT COMMITS (top 6)
 ----------------------
