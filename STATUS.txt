@@ -5,24 +5,29 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: ShareLink dubbel-bericht fix)
+2026-06-27  (sessie: stale-flag opgelost voor share-message key)
 
 BRANCH STATE
 ------------
 Branch: main
-7 commits ahead of origin/main — nog niet gepushed.
+14 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+48e9d64  Mark share-message key as manually managed
 281e559  Drop duplicate ShareLink message parameter
 4aa0b56  Record icon commit SHA and refresh extraction state
 7534f4a  Add dark and tinted app icon variants
 b27d82f  Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
-5031b75  Apply translation review and rename spin→generate
 
 WAT IS RECENT GEBEURD
 ---------------------
+- "Wat vind je van de naam %@?" key in xcstrings: extractionState gezet op
+  "manual" zodat Xcode hem niet bij elke build opnieuw als stale markeert.
+  Het runtime gebruik (Bundle.appLocalizedString) is voor de extractor
+  onzichtbaar; "manual" is Apple's signaal dat de key handmatig beheerd
+  wordt.
 - Bug-fix vervolg op d0fddff: in de share sheet stond de zin "Wat vind
   je van de naam X?" twee keer in het bericht (Messages, Mail). Oorzaak:
   ShareLink kreeg dezelfde tekst mee als `item:` én `message:` — sommige
