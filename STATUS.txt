@@ -106,13 +106,32 @@ WAT IS RECENT GEBEURD
 OPEN PUNTEN (TODO)
 ------------------
 1. App Store last mile:
-   - Screenshots in NL én EN voor 6.9", 6.7", 6.1", iPad varianten.
+   - Screenshots (in progress) — zie Screenshots/README.txt + STATUS hier.
    - App Store Connect: metadata, beschrijving, keywords, leeftijdscategorie,
      privacy URLs (docs/privacy.html via GitHub Pages).
-   - Listing copy + promotional text (NL + EN).
+   - Listing copy (draft in APP_STORE_LISTING.txt).
    - StoreKit production product matching Configuration.storekit.
 
-2. Push openstaande commits naar origin/main (3 commits ahead).
+2. Push openstaande commits naar origin/main.
+
+SCREENSHOTS PROGRESS
+--------------------
+Doelmaat #1: 6.9" iPhone 16 Pro Max (REQUIRED) — NL eerst.
+
+6.9" NL  (Screenshots/6.9/nl/)
+  [ ] 01-home-base.png        Home, naamtype Meisje, 3 posities, geen preset
+  [ ] 02-home-preset.png      Home, preset "Warm & Spaans" actief
+  [ ] 03-overlay-name.png     Result overlay, mooie gegenereerde naam
+  [ ] 04-overlay-other.png    Result overlay, andere preset/nametype
+  [ ] 05-advanced-mode.png    Geavanceerd sheet, mode "Per positie"
+  [ ] 06-syllable-picker.png  Syllable picker fullscreen, paar chips actief
+  [ ] 07-youniquelist.png     Favorieten-lijst met 4-5 namen
+  [ ] 08-favorite-detail.png  Favorite detail met notitie
+  [ ] 09-settings.png         Settings met lettertype-preview + Premium-pill
+  [ ] 10-paywall.png          Paywall, "Vind die ene perfecte naam"
+
+6.9" EN  (Screenshots/6.9/en/) — na NL volledig af.
+6.7"     — na 6.9" af (kan vaak hergebruiken met resize).
 
 AFGEROND DEZE WEEK
 ------------------
