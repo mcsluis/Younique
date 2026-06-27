@@ -105,32 +105,20 @@ WAT IS RECENT GEBEURD
 
 OPEN PUNTEN (TODO)
 ------------------
-1. USER ACTION — Handmatige test op echte device:
-   - Generator output per preset (klinken ze onderscheidend?).
-   - 5-positie names: voldoende accent-variatie?
-   - Premium-switching: preset-gedrag bij nametype-wissel, toggle-off.
-   - Hele UI in NL én EN doorlopen (taalwissel via Settings).
-   - Paywall flow + "Misschien later" knop.
-
-2. USER ACTION — Translation review:
-   Run: python3 Scripts/translations.py export
-   Edit translations.csv in Numbers (NL of EN aanpassen waar nodig).
-   Run: python3 Scripts/translations.py import
-   Tip: alleen import schrijft als er wijzigingen zijn — no-op is veilig.
-
-3. App Store afronding (laatste mile vóór ship):
-   - App icon polish + alle benodigde sizes (Assets.xcassets).
+1. App Store last mile:
    - Screenshots in NL én EN voor 6.9", 6.7", 6.1", iPad varianten.
    - App Store Connect: metadata, beschrijving, keywords, leeftijdscategorie,
      privacy URLs (docs/privacy.html via GitHub Pages).
-   - Listing copy + promotional text.
+   - Listing copy + promotional text (NL + EN).
    - StoreKit production product matching Configuration.storekit.
-   - Eventuele extra screenshot generator / fastlane setup.
 
-4. Tweaks na handmatige test (komen waarschijnlijk uit punt 1):
-   - Mogelijk extra preset / syllable tuning rondes.
-   - Eventueel copy tweaks die uit translation review komen.
-   - Eventueel paywall tweaks na review.
+2. Push openstaande commits naar origin/main (3 commits ahead).
+
+AFGEROND DEZE WEEK
+------------------
+- Handmatige device-test door user (OK).
+- Translation review (geen verdere wijzigingen nodig).
+- App icon polish (light + dark + tinted variants).
 
 BEKENDE CAVEATS
 ---------------
