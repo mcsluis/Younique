@@ -5,24 +5,40 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: settings Lettertype EN-fix)
+2026-06-27  (sessie: spin→generate terminologie + translation review import)
 
 BRANCH STATE
 ------------
 Branch: main
-1 commit ahead of origin/main — nog niet gepushed.
+3 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Apply translation review and rename spin→generate
+<pending> Auto-detect CSV delimiter in translations script
+f77d7f3  Record commit SHA in STATUS
 4379490  Fix Lettertype label and font names not respecting in-app EN switch
 e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
 6ad1528  Refresh paywall copy and clean up handoff docs
-97dd86d  Style Advanced sheet Done button as glass pill
-a1d1524  Polish home and settings UI
-0ed091e  Add CSV translation export/import script
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Terminologie-wissel: "draaien"/"spin" → "genereren"/"generate" in
+  user-facing strings. Bron-keys hernoemd in xcstrings (NL = key conventie):
+  "Draait" → "Genereert", "Nog een keer draaien" → "Nog een keer genereren",
+  en de lange overlay-uitleg key (InfoView.swift:32). EN-vertalingen
+  meegegaan: Spinning → Generating, Spin again → Generate again, "spin again
+  with the magic wand" → "generate again with the magic wand". Interne code
+  identifiers (spinReels, isSpinning, spinAgainButton accessibility ID)
+  ongewijzigd — die zijn taal-agnostisch.
+- Translation review-import van user-bijgewerkte CSV (uit Numbers).
+  Inhoudelijk: NL "Pick fullscreen which syllables..." → "Pick which
+  syllables..." (typo verwijderd), nieuwe NL voor diezelfde key
+  ("Kies welke lettergrepen in de generator mogen terugkomen."), en de
+  trailing-space cosmetic op een stale entry (harmloos).
+- Scripts/translations.py: detect_delimiter() toegevoegd — Numbers
+  exporteert CSV met `;` in EU-locale, Excel met `,`. Script kiest nu
+  automatisch o.b.v. de header.
 - Bug-fix: bij in-app taalwissel naar EN bleef Settings "Lettertype" tonen
   en bleven de font-namen Nederlands. Twee oorzaken: (1) key "Lettertype"
   in Localizable.xcstrings had een leeg localizations-blok (geen EN-vertaling

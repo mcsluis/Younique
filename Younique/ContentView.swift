@@ -776,7 +776,7 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "wand.and.stars")
                         .font(.system(size: 22, weight: .bold))
-                        .accessibilityLabel("Nog een keer draaien")
+                        .accessibilityLabel("Nog een keer genereren")
                         .accessibilityIdentifier("spinAgainButton")
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)

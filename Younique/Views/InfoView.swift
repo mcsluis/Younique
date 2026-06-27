@@ -29,7 +29,7 @@ struct InfoView: View {
                             "Daarna kies je hoeveel posities je wilt gebruiken: 2, 3, 4 of 5.",
                             "Daarna kies je hoe de lettergrepen bepaald worden via de selectiemodus.",
                             "Tik Ontdek een naam om de overlay te openen — daar verschijnt direct een naam.",
-                            "In de overlay kun je opnieuw draaien met de toverstaf, de naam bewaren via het hartje, delen via het deel-icoon, of sluiten met het kruisje.",
+                            "In de overlay kun je opnieuw genereren met de toverstaf, de naam bewaren via het hartje, delen via het deel-icoon, of sluiten met het kruisje.",
                             "Het hartje linksboven in de werkbalk opent je bewaarde namen. Bij elke favoriet kun je via het deel-icoon de naam doorsturen naar je partner.",
                             "Het tandwiel rechtsboven laat je het lettertype voor de getoonde naam kiezen en je Premium-aankoop beheren."
                         ]

@@ -171,7 +171,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alle selectiemodi beschikbaar"
+            "value" : "Alle selectiemodi beschikbaar "
           }
         }
       }
@@ -439,16 +439,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dark"
-          }
-        }
-      }
-    },
-    "Draait" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spinning"
           }
         }
       }
@@ -808,6 +798,17 @@
         }
       }
     },
+    "Genereert" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generating"
+          }
+        }
+      }
+    },
     "Genereert een nieuwe naam op basis van je huidige keuzes." : {
       "localizations" : {
         "en" : {
@@ -1080,12 +1081,12 @@
         }
       }
     },
-    "In de overlay kun je opnieuw draaien met de toverstaf, de naam bewaren via het hartje, delen via het deel-icoon, of sluiten met het kruisje." : {
+    "In de overlay kun je opnieuw genereren met de toverstaf, de naam bewaren via het hartje, delen via het deel-icoon, of sluiten met het kruisje." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In the overlay you can spin again with the magic wand, save the name with the heart, share it with the share icon, or close it with the cross."
+            "value" : "In the overlay you can generate again with the magic wand, save the name with the heart, share it with the share icon, or close it with the cross."
           }
         }
       }
@@ -1221,7 +1222,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pick fullscreen which syllables can appear in the generator."
+            "value" : "Pick which syllables can appear in the generator."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies welke lettergrepen in de generator mogen terugkomen."
           }
         }
       }
@@ -1674,12 +1681,12 @@
         }
       }
     },
-    "Nog een keer draaien" : {
+    "Nog een keer genereren" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spin again"
+            "value" : "Generate again"
           }
         }
       }
