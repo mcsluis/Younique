@@ -144,7 +144,7 @@ ONTWORPEN VOOR iOS 26
 Liquid Glass-design, dark mode, Dynamic Type, VoiceOver-ondersteuning,
 en een runtime-taalkeuze (Nederlands of Engels) los van je systeemtaal.
 
-Klaar om jullie unieke naam te ontdekken? Open Younique en draai aan.
+Klaar om jullie unieke naam te ontdekken? Open Younique en druk op de toverstaf!
 ───
 
 SUPPORT URL
@@ -211,7 +211,7 @@ Liquid Glass design, dark mode, Dynamic Type, VoiceOver support, and
 a runtime language toggle (Dutch or English) independent of your
 system language.
 
-Ready to discover your one-of-a-kind name? Open Younique and spin.
+Ready to discover your one-of-a-kind name? Open Younique and create it!
 ───
 
 SUPPORT URL

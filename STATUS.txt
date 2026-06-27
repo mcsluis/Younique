@@ -5,21 +5,45 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: paywall-knop EN-fix + 6.9" NL screenshots)
+2026-06-27  (sessie: ASC setup + build upload)
 
 BRANCH STATE
 ------------
 Branch: main
-1 commit ahead of origin/main — nog niet gepushed.
+In sync met origin/main.
 
 RECENT COMMITS (top 6)
 ----------------------
+f3c6e23  Add bilingual support page for App Store Connect
+95ca6ac  Switch Bundle ID to reverse-DNS com.mcs.younique
+176301f  Capture 6.9" EN App Store screenshots
+1388d5f  Format favorite save date with in-app locale
+fa10e44  Fill in missing EN translations for Settings and onboarding strings
 369bb6f  Fix paywall button not respecting in-app EN switch
-b9f0e84  Capture 6.9" NL App Store screenshots
-3ad750c  Scaffold screenshot capture workflow
-7e191b7  Add App Store listing copy draft
-d0031d7  Trim STATUS open punten after device test pass
-aaad5b3  Record commit SHA in STATUS
+
+LIVE APP STORE SUBMISSION (in progress)
+---------------------------------------
+Build geüpload via Xcode Organizer → ASC verwerkt (~10-30 min).
+- App ID: com.mcs.younique (XC Xcode-managed)
+- IAP: com.mcs.younique.unlock_full @ €1,99 — Ready to Submit
+- Listing: NL + EN ingevuld (name, subtitle, promo, keywords, description,
+  support URL https://mcsluis.github.io/Younique/support.html, privacy URL
+  https://mcsluis.github.io/Younique/{privacy.html,privacy-en.html})
+- Screenshots: 10x 6.9" NL + 10x 6.9" EN uploaded.
+- Categorieën: Lifestyle (primary) + Reference (secondary)
+- Age rating: 4+ (alle "None")
+- Pricing: Free (IAP afzonderlijk)
+- Availability: 175 countries (all)
+- Privacy: "No data collected"
+
+NOG TE DOEN VÓÓR SUBMIT
+-----------------------
+1. Wachten op ASC build-processing (email-notify, ~10-30 min).
+2. Op 1.0 pagina: Build sectie → "+" → kies de net-verwerkte build.
+3. IAP koppelen aan v1.0 submission (+ knop bij In-App Purchases sectie
+   op de 1.0 page).
+4. Submit for Review.
+5. Optioneel: Phased Release aanzetten (release in 7-daagse cohorts).
 
 WAT IS RECENT GEBEURD
 ---------------------
