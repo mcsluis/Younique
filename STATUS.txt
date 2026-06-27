@@ -14,8 +14,8 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Apply translation review and rename spin→generate
-<pending> Auto-detect CSV delimiter in translations script
+5031b75  Apply translation review and rename spin→generate
+d0a8754  Auto-detect CSV delimiter in translations script
 f77d7f3  Record commit SHA in STATUS
 4379490  Fix Lettertype label and font names not respecting in-app EN switch
 e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
