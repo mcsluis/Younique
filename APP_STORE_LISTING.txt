@@ -1,0 +1,283 @@
+YOUNIQUE — APP STORE LISTING
+============================
+Concept-copy voor App Store Connect. Per veld staat een limit, zodat je
+weet of het past. Plak in ASC en pas waar nodig aan.
+
+ASC pad: My Apps → Younique → App Information / App Store / Localizations
+Talen: per locale onder "App Store" → "Localizable Information".
+
+
+────────────────────────────────────────────────────────────────────
+1. APP INFORMATION  (ÉÉN keer, niet per taal)
+────────────────────────────────────────────────────────────────────
+
+CATEGORY (Primary)
+   Lifestyle
+
+CATEGORY (Secondary, optioneel)
+   Reference
+
+CONTENT RIGHTS
+   Does your app contain, show, or access third-party content? → No
+
+AGE RATING
+   Klik door de questionnaire: alle Apple-categorieën op "None".
+   Resultaat: 4+
+
+BUNDLE ID
+   (Bestaand — niet wijzigen na eerste submit.)
+
+PRIVACY POLICY URL
+   NL: https://mcsluis.github.io/Younique/privacy.html
+   EN: https://mcsluis.github.io/Younique/privacy-en.html
+   (Check de exacte URL na publicatie van docs/ via GitHub Pages.)
+
+
+────────────────────────────────────────────────────────────────────
+2. PRIVACY ("App Privacy" sectie in ASC)
+────────────────────────────────────────────────────────────────────
+
+DATA COLLECTION
+   Antwoord: "No, we do not collect data from this app."
+   Reden: alle state staat lokaal of in user's eigen iCloud
+   (SwiftData + CloudKit). Geen analytics, geen SDK's, geen servers.
+
+
+────────────────────────────────────────────────────────────────────
+3. PRICING & AVAILABILITY
+────────────────────────────────────────────────────────────────────
+
+PRICE
+   App: Free
+   IAP "Younique Premium": €1,99 (Tier 2 in NL/EU)
+   Family Sharing: ENABLED
+
+AVAILABILITY
+   Alle landen — of beperken tot NL/BE/DE/FR/UK/US/etc. naar smaak.
+
+
+────────────────────────────────────────────────────────────────────
+4. IN-APP PURCHASES
+────────────────────────────────────────────────────────────────────
+
+PRODUCT
+   Reference Name: Younique Premium
+   Product ID: <moet exact matchen wat in Configuration.storekit /
+                PurchaseManager.swift staat — controleer voor submit>
+   Type: Non-Consumable
+   Family Sharing: Enabled
+   Price: Tier 2 (€1,99)
+
+DISPLAY NAME (NL, 30 char)
+   Younique Premium
+
+DESCRIPTION (NL, 45 char)
+   Langere namen, alle stijlen, iCloud-sync.
+
+DISPLAY NAME (EN, 30 char)
+   Younique Premium
+
+DESCRIPTION (EN, 45 char)
+   Longer names, all styles, iCloud sync.
+
+REVIEW SCREENSHOT
+   Screenshot van de Paywall view (PaywallView). Zelf maken op
+   simulator (1284×2778 of 1290×2796 voor 6.7").
+
+REVIEW NOTES
+   Tap the gear icon (Settings) → "Premium kopen" to reach the paywall.
+   Test purchase via sandbox account, no special demo flow required.
+
+
+────────────────────────────────────────────────────────────────────
+5. LOCALIZED LISTING — NEDERLANDS (Primary)
+────────────────────────────────────────────────────────────────────
+
+NAME  (max 30 char)
+   Younique: babynamen vinden
+
+SUBTITLE  (max 30 char)
+   Ontdek unieke babynamen
+
+PROMOTIONAL TEXT  (max 170 char — updateable zonder resubmit)
+   Op zoek naar een unieke voornaam voor jullie baby? Younique combineert
+   klankrijke lettergrepen tot frisse namen die je nergens anders vindt.
+
+KEYWORDS  (max 100 char, komma-gescheiden, geen spaties na komma)
+   babynaam,babynamen,naam,namen,zwanger,zwangerschap,baby,uniek,meisjesnaam,jongensnaam
+
+DESCRIPTION  (max 4000 char)
+───
+Younique helpt (aanstaande) ouders met het vinden van een unieke voornaam
+voor hun baby. Geen lijst om door te scrollen — een slimme generator
+combineert zorgvuldig getagde lettergrepen tot namen die nog niet
+overvraagd zijn op het schoolplein.
+
+KIES JE EIGEN STIJL
+• Naamtype: meisje, jongen of neutraal.
+• Aantal posities: van compact (2) tot uitgesponnen (5).
+• Klankstijl: warm Spaans, dromerig & zacht, krachtig & uitgesproken,
+  fris & modern, klassiek Engels, en meer.
+
+VAN AUTOMATISCH TOT VOLLEDIG HANDMATIG
+Begin met één tik op "Ontdek een naam" en laat Younique het werk doen.
+Wil je meer controle? Kies zelf welke lettergrepen mogen voorkomen, per
+positie of voor het hele woord.
+
+BEWAAR JE FAVORIETEN
+Tik op het hartje om een naam aan je Youniquelist toe te voegen.
+Voeg notities toe, deel met je partner via iMessage, WhatsApp of mail.
+
+PREMIUM (€1,99 eenmalig)
+• Namen tot 5 lettergrepen voor extra variatie.
+• Alle 8 klankstijlen ontgrendeld.
+• Volledige handmatige controle per positie.
+• iCloud-sync van je favorieten tussen apparaten.
+• Inbegrepen via Apple Family Sharing.
+
+PRIVACY VOOROP
+Younique verzamelt niets. Geen analytics, geen advertenties, geen
+tracking. Je favorieten staan op je eigen apparaat (of in je eigen
+iCloud). Wij hebben geen servers en zien je gegevens niet.
+
+ONTWORPEN VOOR iOS 26
+Liquid Glass-design, dark mode, Dynamic Type, VoiceOver-ondersteuning,
+en een runtime-taalkeuze (Nederlands of Engels) los van je systeemtaal.
+
+Klaar om jullie unieke naam te ontdekken? Open Younique en draai aan.
+───
+
+SUPPORT URL
+   mailto:mcsluis@gmail.com
+   (Of een GitHub Pages support-pagina als je die later maakt.)
+
+MARKETING URL  (optioneel)
+   (Leeg laten voor v1.)
+
+
+────────────────────────────────────────────────────────────────────
+6. LOCALIZED LISTING — ENGLISH (UK / US)
+────────────────────────────────────────────────────────────────────
+
+NAME  (max 30 char)
+   Younique: find baby names
+
+SUBTITLE  (max 30 char)
+   Discover one-of-a-kind names
+
+PROMOTIONAL TEXT  (max 170 char)
+   Looking for a one-of-a-kind first name for your baby? Younique blends
+   curated syllables into fresh names you won't find anywhere else.
+
+KEYWORDS  (max 100 char, komma-gescheiden)
+   baby name,baby names,name,unique,pregnancy,pregnant,baby,girl name,boy name,unisex
+
+DESCRIPTION  (max 4000 char)
+───
+Younique helps expecting parents find a one-of-a-kind first name for
+their baby. No endless scrolling list — a smart generator blends
+carefully tagged syllables into names that aren't already shouted
+across every playground.
+
+PICK YOUR OWN STYLE
+• Name type: girl, boy or unisex.
+• Length: from compact (2 positions) to elaborate (5).
+• Sound style: warm Spanish, dreamy & soft, powerful & bold,
+  fresh & modern, classic English, and more.
+
+FROM AUTOMATIC TO FULLY MANUAL
+Start with a single tap on "Discover a name" and let Younique do the
+work. Want more control? Choose exactly which syllables can appear,
+per position or for the whole word.
+
+SAVE YOUR FAVORITES
+Tap the heart to add a name to your Youniquelist. Add notes, share
+with your partner through iMessage, WhatsApp or mail.
+
+PREMIUM ($1.99 one-time)
+• Names up to 5 syllables for richer variation.
+• All 8 sound styles unlocked.
+• Full manual control over each position.
+• iCloud sync of your favorites across devices.
+• Included via Apple Family Sharing.
+
+PRIVACY FIRST
+Younique collects nothing. No analytics, no ads, no tracking. Your
+favorites live on your own device (or in your own iCloud). We have
+no servers and we never see your data.
+
+DESIGNED FOR iOS 26
+Liquid Glass design, dark mode, Dynamic Type, VoiceOver support, and
+a runtime language toggle (Dutch or English) independent of your
+system language.
+
+Ready to discover your one-of-a-kind name? Open Younique and spin.
+───
+
+SUPPORT URL
+   mailto:mcsluis@gmail.com
+
+MARKETING URL  (optional)
+   (Leave blank for v1.)
+
+
+────────────────────────────────────────────────────────────────────
+7. APP REVIEW INFORMATION  (alleen voor reviewer, niet zichtbaar)
+────────────────────────────────────────────────────────────────────
+
+CONTACT INFORMATION
+   Naam, telefoon, email — gebruikersgegevens.
+
+DEMO ACCOUNT
+   Not required — app heeft geen login.
+
+NOTES
+   Younique is a baby-name generator. The app has no login, no server
+   communication, no analytics. Premium is a one-time in-app purchase
+   that unlocks longer name lengths, additional sound style presets,
+   and full manual control over syllable selection per position.
+
+   To test Premium: open the Settings (gear icon, top right) → tap
+   "Premium kopen" / "Buy Premium" to reach the paywall, then use a
+   sandbox account.
+
+   Language: the app defaults to the system language (Dutch or English).
+   Users can override this in Settings → Taal / Language.
+
+
+────────────────────────────────────────────────────────────────────
+8. WHAT'S NEW  (alleen voor v1.0 — leeg laten of korte zin)
+────────────────────────────────────────────────────────────────────
+
+NL
+   Eerste release van Younique. Welkom!
+
+EN
+   First release of Younique. Welcome!
+
+
+────────────────────────────────────────────────────────────────────
+9. SCREENSHOTS — vereiste sizes
+────────────────────────────────────────────────────────────────────
+
+VERPLICHT
+- 6.9"  iPhone 16 Pro Max         (1320×2868)
+- 6.7"  iPhone 14/15 Plus etc.    (1290×2796 of 1284×2778)
+
+OPTIONEEL maar aangeraden
+- 6.1"  iPhone 16/15              (1206×2622 of 1179×2556)
+- iPad 13" / 12.9"                (2064×2752 of 2048×2732)
+
+PER LANG: 3-10 screenshots in NL + 3-10 in EN.
+
+VOORGESTELDE SCREENSHOT-FLOW (10 in totaal per taal):
+1. Home — net na launch, naamtype "Meisjesnaam", 3 posities, geen preset.
+2. Home — preset "Warm & Spaans" geselecteerd, summary toont stijl-uitleg.
+3. Result overlay — een mooie gegenereerde naam (bv. "Liana" of "Soraya").
+4. Result overlay — andere preset/nametype voor variatie.
+5. Geavanceerd sheet — Lettergreepmodus "Per positie".
+6. Syllable picker (fullscreen) — een paar chips geselecteerd.
+7. Youniquelist met 4-5 favorieten en notities.
+8. FavoriteDetail — notitie + share/delete acties.
+9. Settings — lettertype-preview + Premium-pill.
+10. Paywall — emotionele kop + 3 bullets + Premium-knop.
