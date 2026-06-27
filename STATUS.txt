@@ -142,7 +142,17 @@ Doelmaat #1: 6.9" iPhone 16 Pro Max (REQUIRED) — NL eerst.
   [x] 09-settings.png         Settings met lettertype-preview + Premium-pill
   [x] 10-paywall.png          Paywall, "Vind die ene perfecte naam"
 
-6.9" EN  (Screenshots/6.9/en/) — na NL volledig af.
+6.9" EN  (Screenshots/6.9/en/)
+  [x] 01-home-base.png        Home, Girl name, 3 positions, no preset
+  [x] 02-home-preset.png      Home, "Soft & Latin" preset active
+  [x] 03-overlay-name.png     Result overlay, "Leyalou" (Soft & Latin)
+  [x] 04-overlay-other.png    Result overlay, "Livizev" (Boy + Fresh & Modern)
+  [x] 05-advanced-mode.png    Advanced sheet, mode "Per position"
+  [x] 06-syllable-picker.png  Syllable picker, Position 1 with 9 chips selected
+  [x] 07-youniquelist.png     Youniquelist with 9 favorites
+  [x] 08-favorite-detail.png  Vimara detail with note
+  [x] 09-settings.png         Settings with font preview + Premium pill
+  [x] 10-paywall.png          Paywall, "Find the one perfect name"
 6.7"     — na 6.9" af (kan vaak hergebruiken met resize).
 
 AFGEROND DEZE WEEK
