@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - Younique</title>
+    <style>
+        :root {
+            --cream-top: #FAF0DE;
+            --cream-mid: #F2DCCF;
+            --sage: #E0E8D9;
+            --ink: #2E2A28;
+            --ink-soft: #6C625E;
+            --accent: #C58D6A;
+            --surface: rgba(255, 255, 255, 0.72);
+            --border: rgba(255, 255, 255, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--cream-top) 0%, var(--cream-mid) 50%, var(--sage) 100%);
+            color: var(--ink);
+            min-height: 100vh;
+            padding: 32px 20px 80px;
+            line-height: 1.5;
+        }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 24px 0 8px;
+        }
+
+        h1 {
+            font-family: "Snell Roundhand", "Apple Chancery", cursive;
+            font-size: 56px;
+            font-weight: bold;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        header p {
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: 14px;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 0 28px;
+        }
+
+        nav button {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--ink-soft);
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        nav button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        section.card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 28px 26px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--ink);
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .lang { display: none; }
+        .lang.active { display: block; }
+
+        footer {
+            text-align: center;
+            color: var(--ink-soft);
+            font-size: 12px;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Younique</h1>
+            <p>Support</p>
+        </header>
+
+        <nav>
+            <button id="btn-nl" class="active" onclick="setLang('nl')">Nederlands</button>
+            <button id="btn-en" onclick="setLang('en')">English</button>
+        </nav>
+
+        <div id="nl" class="lang active">
+            <section class="card">
+                <h2>Hulp nodig?</h2>
+                <p>Heb je een vraag, suggestie of probleem met Younique? Stuur een mail en je krijgt zo snel mogelijk antwoord.</p>
+                <p><strong>E-mail:</strong> <a href="mailto:mcsluis@gmail.com">mcsluis@gmail.com</a></p>
+            </section>
+
+            <section class="card">
+                <h2>Veelgestelde vragen</h2>
+                <p><strong>Hoe herstel ik mijn Premium-aankoop?</strong><br>
+                Open Younique, ga naar Instellingen (tandwiel-icoon) en tik op <em>Herstel aankopen</em>. Je aankoop wordt automatisch hersteld via je Apple Account.</p>
+                <p><strong>Werkt Younique offline?</strong><br>
+                Ja. Alle generatie en bewaarde namen werken zonder internet. Alleen iCloud-sync van je favorieten vereist een actieve iCloud-verbinding.</p>
+                <p><strong>Welke gegevens worden er bewaard?</strong><br>
+                Niets op onze servers — we hebben er geen. Zie het <a href="privacy.html">privacybeleid</a> voor details.</p>
+            </section>
+        </div>
+
+        <div id="en" class="lang">
+            <section class="card">
+                <h2>Need help?</h2>
+                <p>Got a question, suggestion or issue with Younique? Drop a line and you'll hear back as soon as possible.</p>
+                <p><strong>Email:</strong> <a href="mailto:mcsluis@gmail.com">mcsluis@gmail.com</a></p>
+            </section>
+
+            <section class="card">
+                <h2>Frequently asked</h2>
+                <p><strong>How do I restore my Premium purchase?</strong><br>
+                Open Younique, go to Settings (gear icon) and tap <em>Restore Purchases</em>. Your purchase is restored automatically via your Apple Account.</p>
+                <p><strong>Does Younique work offline?</strong><br>
+                Yes. All name generation and saved favorites work without internet. Only iCloud sync of your favorites requires an active iCloud connection.</p>
+                <p><strong>What data is stored?</strong><br>
+                Nothing on our servers — we don't have any. See the <a href="privacy-en.html">privacy policy</a> for details.</p>
+            </section>
+        </div>
+
+        <footer>
+            &copy; Younique
+        </footer>
+    </main>
+
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('.lang').forEach(el => el.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+    </script>
+</body>
+</html>
