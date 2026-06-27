@@ -5,24 +5,26 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: share-message mixed-language fix)
+2026-06-27  (sessie: version display simplified)
 
 BRANCH STATE
 ------------
 Branch: main
-4 commits ahead of origin/main — nog niet gepushed.
+5 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
 d0a8754  Auto-detect CSV delimiter in translations script
 f77d7f3  Record commit SHA in STATUS
 4379490  Fix Lettertype label and font names not respecting in-app EN switch
-e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Settings versie-weergave: alleen marketing-versie tonen (was "1.0 (1)",
+  nu "1.0"). Build-nummer is een dev-detail dat gebruikers niets zegt.
 - Bug-fix: ShareLink toonde mixed-language tekst (NL en EN tegelijk in
   bericht) wanneer systeem-taal en in-app taal verschilden. Oorzaak: het
   `item:` argument gebruikte String(localized:) (systeem-bundle) terwijl
