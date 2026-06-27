@@ -75,6 +75,13 @@ def export(csv_path: Path):
     print(f"Exported {len(rows)} strings → {csv_path}")
 
 
+def detect_delimiter(csv_path: Path) -> str:
+    # Numbers exports with `;` in EU locales, Excel with `,`. Sniff the header.
+    with csv_path.open("r", encoding="utf-8", newline="") as f:
+        first_line = f.readline()
+    return ";" if first_line.count(";") > first_line.count(",") else ","
+
+
 def import_csv(csv_path: Path):
     original_text = CATALOG.read_text(encoding="utf-8")
     data = json.loads(original_text)
@@ -83,8 +90,9 @@ def import_csv(csv_path: Path):
     changed_en = 0
     skipped_unknown = 0
 
+    delimiter = detect_delimiter(csv_path)
     with csv_path.open("r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
+        reader = csv.DictReader(f, delimiter=delimiter)
         for row in reader:
             key = row.get("key", "")
             if not key or key not in strings:
