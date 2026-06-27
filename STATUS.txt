@@ -5,24 +5,30 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: stale-flag opgelost voor share-message key)
+2026-06-27  (sessie: home section headers boven cards + gecentreerd)
 
 BRANCH STATE
 ------------
 Branch: main
-In sync met origin/main.
+2 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Lift home section headers above cards and center them
+4782578  Mark branch as in sync with origin
 48e9d64  Mark share-message key as manually managed
 281e559  Drop duplicate ShareLink message parameter
 4aa0b56  Record icon commit SHA and refresh extraction state
 7534f4a  Add dark and tinted app icon variants
-b27d82f  Drop build number from Settings version display
-d0fddff  Fix mixed-language share message (respect in-app language)
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Home controlsSection: titels van de drie blokken (baseSettings,
+  soundStyle, advanced) staan nu BOVEN de cards ipv erin, gecentreerd
+  (frame(maxWidth: .infinity, alignment: .center) op de Text).
+  Voor advancedSection betekent dit: de knop is nu alleen de summary +
+  badge + chevron rij, de "Geavanceerd aanpassen" titel zit boven de knop.
+  accessibilityLabel op de knop blijft "Geavanceerd aanpassen".
 - "Wat vind je van de naam %@?" key in xcstrings: extractionState gezet op
   "manual" zodat Xcode hem niet bij elke build opnieuw als stale markeert.
   Het runtime gebruik (Bundle.appLocalizedString) is voor de extractor

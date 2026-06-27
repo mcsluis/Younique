@@ -210,12 +210,13 @@ struct ContentView: View {
     }
 
     private var baseSettingsSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Kies naamtype en aantal posities")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.ink)
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Kies naamtype en aantal posities")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+                .frame(maxWidth: .infinity, alignment: .center)
 
+            VStack(alignment: .leading, spacing: 14) {
                 Picker("Naamtype", selection: $viewModel.nameType) {
                     ForEach(NameType.allCases) { nameType in
                         Text(nameType.title).tag(nameType)
@@ -223,30 +224,30 @@ struct ContentView: View {
                 }
                 .pickerStyle(.segmented)
                 .disabled(viewModel.isCreating)
+
+                reelCountPicker
+
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                        .padding(.top, 2)
+
+                    Text(baseSettingsSummaryText)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(Theme.inkSoft)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.top, 8)
             }
-
-            reelCountPicker
-
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Theme.accent)
-                    .padding(.top, 2)
-
-                Text(baseSettingsSummaryText)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Theme.inkSoft)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(18)
+            .background(Theme.surface)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(Theme.borderStrong, lineWidth: 1)
             }
-            .padding(.top, 8)
-        }
-        .padding(18)
-        .background(Theme.surface)
-        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(Theme.borderStrong, lineWidth: 1)
         }
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -318,11 +319,12 @@ struct ContentView: View {
 
     private var soundStyleSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Kies optioneel je klankstijl")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.ink)
+            Text("Kies optioneel je klankstijl")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+                .frame(maxWidth: .infinity, alignment: .center)
 
+            VStack(alignment: .leading, spacing: 10) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(SoundStylePreset.allCases) { preset in
@@ -331,38 +333,38 @@ struct ContentView: View {
                     }
                     .padding(.vertical, 1)
                 }
-            }
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: viewModel.activeSoundStylePreset == nil ? "wand.and.stars" : "waveform.path")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Theme.accent)
-                    .padding(.top, 2)
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: viewModel.activeSoundStylePreset == nil ? "wand.and.stars" : "waveform.path")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.accent)
+                        .padding(.top, 2)
 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(soundStyleDetailText)
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundStyle(Theme.inkSoft)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    if let accentLine = soundStyleAccentLine {
-                        Text(accentLine)
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Theme.ink)
-                            .padding(.top, 10)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(soundStyleDetailText)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(Theme.inkSoft)
                             .fixedSize(horizontal: false, vertical: true)
+
+                        if let accentLine = soundStyleAccentLine {
+                            Text(accentLine)
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .foregroundStyle(Theme.ink)
+                                .padding(.top, 10)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 8)
             }
-            .padding(.top, 8)
-        }
-        .padding(18)
-        .background(Theme.surface)
-        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(Theme.borderStrong, lineWidth: 1)
+            .padding(18)
+            .background(Theme.surface)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(Theme.borderStrong, lineWidth: 1)
+            }
         }
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -413,51 +415,51 @@ struct ContentView: View {
     }
 
     private var advancedSection: some View {
-        Button {
-            isAdvancedSheetPresented = true
-        } label: {
-            HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Geavanceerd aanpassen")
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .foregroundStyle(Theme.ink)
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Geavanceerd aanpassen")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(Theme.ink)
+                .frame(maxWidth: .infinity, alignment: .center)
 
+            Button {
+                isAdvancedSheetPresented = true
+            } label: {
+                HStack(spacing: 12) {
                     Text(advancedSummaryText)
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundStyle(Theme.inkSoft)
                         .lineLimit(2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(alignment: .trailing, spacing: 8) {
+                        Text(advancedModeBadgeText)
+                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.accent)
+                            .padding(.horizontal, 9)
+                            .padding(.vertical, 5)
+                            .background(Theme.surfaceSoft)
+                            .clipShape(Capsule())
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundStyle(Theme.accent)
+                    }
                 }
-
-                Spacer()
-
-                VStack(alignment: .trailing, spacing: 8) {
-                    Text(advancedModeBadgeText)
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.accent)
-                        .padding(.horizontal, 9)
-                        .padding(.vertical, 5)
-                        .background(Theme.surfaceSoft)
-                        .clipShape(Capsule())
-
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Theme.accent)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(Theme.borderStrong, lineWidth: 1)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Theme.surface)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Theme.borderStrong, lineWidth: 1)
-            }
+            .buttonStyle(.plain)
+            .disabled(viewModel.isCreating)
+            .accessibilityLabel("Geavanceerd aanpassen")
+            .accessibilityHint("Opent extra instellingen in een apart paneel.")
         }
-        .buttonStyle(.plain)
-        .disabled(viewModel.isCreating)
-        .accessibilityLabel("Geavanceerd aanpassen")
-        .accessibilityHint("Opent extra instellingen in een apart paneel.")
     }
 
     private var advancedModeSection: some View {
