@@ -5,24 +5,30 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-26  (sessie: paywall refresh + handoff docs cleanup)
+2026-06-27  (sessie: settings Lettertype EN-fix)
 
 BRANCH STATE
 ------------
 Branch: main
-5 commits ahead of origin/main — nog niet gepushed.
+1 commit ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Fix Lettertype label and font names not respecting in-app EN switch
+e5ab5e1  Add session handoff docs (PROJECT, STATUS, SESSION_PROMPT)
 6ad1528  Refresh paywall copy and clean up handoff docs
 97dd86d  Style Advanced sheet Done button as glass pill
 a1d1524  Polish home and settings UI
 0ed091e  Add CSV translation export/import script
-0be478d  Tune preset distinction and syllable weighting
-6575f02  Polish home flow and runtime language switching
 
 WAT IS RECENT GEBEURD
 ---------------------
+- Bug-fix: bij in-app taalwissel naar EN bleef Settings "Lettertype" tonen
+  en bleven de font-namen Nederlands. Twee oorzaken: (1) key "Lettertype"
+  in Localizable.xcstrings had een leeg localizations-blok (geen EN-vertaling
+  → "Font"); (2) DisplayFont.displayName gebruikte String(localized:) wat
+  de runtime BundleLanguage-override negeert. Vervangen door
+  Bundle.appLocalizedString conform PROJECT.txt-conventie.
 - Volledige NL→EN localisatie afgerond met Localizable.xcstrings; pbxproj
   bijgewerkt met developmentRegion=nl en knownRegions=nl,en,Base (handmatig
   via Xcode UI door user).

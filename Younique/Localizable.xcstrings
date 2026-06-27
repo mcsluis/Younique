@@ -198,6 +198,7 @@
       }
     },
     "Apple Chancery" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1007,6 +1008,7 @@
       }
     },
     "Hoefler Text — Cursief" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1447,7 +1449,14 @@
       }
     },
     "Lettertype" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Font"
+          }
+        }
+      }
     },
     "Lettertype gegenereerde naam" : {
       "localizations" : {
@@ -2071,6 +2080,7 @@
       }
     },
     "Snell Roundhand" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2081,6 +2091,7 @@
       }
     },
     "Snell Roundhand — Vet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2091,6 +2102,7 @@
       }
     },
     "Standaard serif" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2711,6 +2723,7 @@
       }
     },
     "Zapfino" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
