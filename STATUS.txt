@@ -5,24 +5,35 @@ Voor architectuur en conventies: zie PROJECT.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: version display simplified)
+2026-06-27  (sessie: app icon dark+tinted variants)
 
 BRANCH STATE
 ------------
 Branch: main
-5 commits ahead of origin/main — nog niet gepushed.
+6 commits ahead of origin/main — nog niet gepushed.
 
 RECENT COMMITS (top 6)
 ----------------------
+<pending> Add dark and tinted app icon variants
 b27d82f  Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
 d0a8754  Auto-detect CSV delimiter in translations script
 f77d7f3  Record commit SHA in STATUS
-4379490  Fix Lettertype label and font names not respecting in-app EN switch
 
 WAT IS RECENT GEBEURD
 ---------------------
+- App icon polish voor iOS 18+ Liquid Glass appearances. Bron Y.png
+  (cream/peach gradient + dark Y) was opaque met alpha-kanaal en de dark+
+  tinted slots in Contents.json waren lege stubs. Nu:
+  - Y.png: alpha gestript (App Store compliant).
+  - Y-dark.png: HSV-luminance ge-invert van Y.png — donkere achtergrond,
+    warme cream Y (behoudt brand-hue).
+  - Y-tinted.png: hoog-contrast grayscale (light Y op donkere achtergrond)
+    voor iOS-tint overlay.
+  - Contents.json: dark/tinted entries verwijzen naar de nieuwe files.
+  Beide variants mechanisch gegenereerd via Pillow uit Y.png — geen
+  design tooling nodig.
 - Settings versie-weergave: alleen marketing-versie tonen (was "1.0 (1)",
   nu "1.0"). Build-nummer is een dev-detail dat gebruikers niets zegt.
 - Bug-fix: ShareLink toonde mixed-language tekst (NL en EN tegelijk in
