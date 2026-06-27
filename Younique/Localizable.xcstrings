@@ -2595,7 +2595,7 @@
       }
     },
     "Wat vind je van de naam %@?" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
