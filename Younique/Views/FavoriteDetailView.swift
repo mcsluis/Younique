@@ -12,6 +12,7 @@ struct FavoriteDetailView: View {
     @Bindable var favorite: FavoriteName
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.locale) private var locale
     @FocusState private var isNoteFocused: Bool
 
     @AppStorage("displayFont") private var displayFontRaw: String = DisplayFont.default.rawValue
@@ -89,7 +90,7 @@ struct FavoriteDetailView: View {
                                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                                 .foregroundStyle(Theme.inkMuted)
 
-                            Text(favorite.savedAt.formatted(date: .long, time: .shortened))
+                            Text(favorite.savedAt.formatted(.dateTime.day().month(.wide).year().hour().minute().locale(locale)))
                                 .font(.system(size: 13, weight: .medium, design: .rounded))
                                 .foregroundStyle(Theme.inkSoft)
                         }
