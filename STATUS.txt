@@ -14,7 +14,7 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Drop build number from Settings version display
+b27d82f  Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
 d0a8754  Auto-detect CSV delimiter in translations script
