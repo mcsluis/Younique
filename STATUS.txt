@@ -14,7 +14,7 @@ Branch: main
 
 RECENT COMMITS (top 6)
 ----------------------
-<pending> Add dark and tinted app icon variants
+7534f4a  Add dark and tinted app icon variants
 b27d82f  Drop build number from Settings version display
 d0fddff  Fix mixed-language share message (respect in-app language)
 5031b75  Apply translation review and rename spin→generate
