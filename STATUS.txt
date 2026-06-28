@@ -148,17 +148,15 @@ sessie-mijlpalen:
 ===================================================================
 SCREENSHOTS — STATUS
 ===================================================================
-6.9" NL  Screenshots/6.9/nl/   10/10 ✓
-6.9" EN  Screenshots/6.9/en/   10/10 ✓
+6.9" NL  Screenshots/6.9/nl/   10/10 lokaal (01–10)
+6.9" EN  Screenshots/6.9/en/   10/10 lokaal (01–10)
 6.7"     niet gemaakt — ASC schaalt 6.9" automatisch voor kleinere
          iPhones, dus niet kritiek voor v1.0. Voor iPad apart leveren
          als/wanneer iPad-doelgroep relevant wordt.
 
-NB: huidige screenshots zijn gemaakt met de PRE-freeLaunch app. Bekijk
-of er screenshots zijn die expliciet de Premium-knop of -pagina tonen
-(Settings-screenshot, onboarding-page-3). Niet kritiek (review beoordeelt
-de live app, niet screenshots) maar wel iets om te checken voor
-consistentie. Eventueel set hermaken met freeLaunch=true.
+In ASC: 09-settings.png en 10-paywall.png worden verwijderd (tonen
+Premium-UI die onder freeLaunch niet meer bestaat) → 8/10 in ASC, NL
+en EN. Lokale bestanden blijven staan voor terugkeer in v1.1.
 
 ===================================================================
 BEKENDE CAVEATS
