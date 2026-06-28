@@ -6,15 +6,17 @@ Voor ASC-listing copy en velden: zie APP_STORE_LISTING.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-28  (sessie: ASC setup + build upload — DSA/KvK blocker geraakt)
+2026-06-28  (sessie: Pad B gekozen — Premium-UI verborgen voor v1.0 launch)
 
 BRANCH STATE
 ------------
 Branch: main
-In sync met origin/main.
+Lokaal 2 commits voor op origin/main (30eb3eb + 96f4291); deze commit
+voegt een derde toe. Nog niet gepusht.
 
 RECENT COMMITS (top 8)
 ----------------------
+30eb3eb  Restructure STATUS as handoff snapshot at DSA blocker
 96f4291  Record App Store submission progress in STATUS
 f3c6e23  Add bilingual support page for App Store Connect
 95ca6ac  Switch Bundle ID to reverse-DNS com.mcs.younique
@@ -22,14 +24,39 @@ f3c6e23  Add bilingual support page for App Store Connect
 1388d5f  Format favorite save date with in-app locale
 fa10e44  Fill in missing EN translations for Settings and onboarding strings
 369bb6f  Fix paywall button not respecting in-app EN switch
-b9f0e84  Capture 6.9" NL App Store screenshots
 
 ===================================================================
 HUIDIGE STAND APP STORE SUBMISSION
 ===================================================================
 
-WAT IS AF
----------
+PAD B GEKOZEN — gratis launch zonder Premium IAP
+------------------------------------------------
+Reden: KvK-registratie vereist voor DSA-trader-status (en dus voor
+Paid Apps Agreement). Gebruiker heeft geen KvK en wil eerst een
+klantenbasis opbouwen. Premium IAP komt terug in v1.1.
+
+Code-aanpak: één compile-time flag `PurchaseManager.freeLaunch`
+(huidige sessie). Bij true:
+- isUnlocked geldt overal als true → alle premium-gates open
+  (ReelCount 3/4/5, alle selectiemodi, alle 3 premium presets).
+- Premium-sectie in Settings verborgen.
+- Premium-pagina in Onboarding overgeslagen (2 ipv 3 pages).
+- Premium-sectie in InfoView verborgen.
+- Paywall-code blijft staan, maar wordt niet meer getriggerd
+  (alle entry-points zitten achter een isUnlocked-gate).
+
+Bij v1.1: één regel (`freeLaunch = false`) zet alles weer aan.
+
+Drie inline tekstverwijzingen naar Premium NIET aangepast (zou nieuwe
+NL+EN strings vereisen in xcstrings):
+- InfoView.swift:34   "...en je Premium-aankoop beheren"
+- InfoView.swift:94   "Met Premium synchroniseren je favorieten via iCloud..."
+- OnboardingView.swift:238 (premiumPage body — pagina is verborgen,
+  tekst dus niet zichtbaar; OK om te laten)
+Optioneel later opruimen — niet kritiek voor review.
+
+WAT IS AF (ASC kant)
+--------------------
 - Bundle ID gemigreerd naar reverse-DNS: com.mcs.younique (App ID
   registered + iCloud + IAP capabilities aan in Developer portal).
 - iCloud container: iCloud.com.mcs.younique.
@@ -44,84 +71,58 @@ WAT IS AF
 - Screenshots: 10x 6.9" NL + 10x 6.9" EN geüpload in ASC (lokaal in
   Screenshots/6.9/{nl,en}/).
 - In-App Purchases setup: com.mcs.younique.unlock_full @ €1,99 — status
-  "Ready to Submit" met paywall-review-screenshot + reviewer notes.
-- Build geüpload via Xcode Organizer (Any iOS Device archive). ASC
-  proces draait — laatst gecheckt: nog niet verschenen op 1.0 page.
-
-BLOCKER — DSA TRADER VALIDATIE
-------------------------------
-Apple's Business validatie (ASC → Business → Agreements/Tax/Banking)
-verlangt onder de EU Digital Services Act dat een developer met
-betaalde producten (Premium IAP telt) zich registreert als **trader**
-(handelaar), niet non-trader. Dat vereist een KvK-nummer.
-
-User heeft GEEN KvK.
-
-Zonder KvK: Paid Apps Agreement kan niet getekend → IAP gaat niet live
-→ Premium-pad werkt niet, ook al staat alles in code en ASC klaar.
-
-===================================================================
-BESLISSING NODIG — TWEE PADEN
-===================================================================
-
-PAD A — KvK aanvragen, Premium IAP behouden
-   Tijd:   ~1-3 dagen (online intake + KvK-afspraak + nummer terug).
-   Geld:   ~€85 eenmalig.
-   Daarna: Trader-velden invullen (KvK-nr + zakelijk adres + telefoon
-           — wordt publiek getoond op App Store listing in EU), Paid
-           Apps Agreement tekenen, bank + tax forms, dan submit.
-   Vervolg: kwartaal-administratie (BTW + IB) voor de eenmanszaak.
-   Voordeel: Premium IAP werkt vanaf v1.0; inkomsten vanaf dag 1.
-
-PAD B — Eerst gratis shippen, Premium later (aanbeveling)
-   Tijd:   submit vandaag/morgen, live binnen 1-3 dagen na review.
-   Geld:   €0.
-   Wat:    IAP weghalen / niet koppelen aan v1.0 submission. App
-           submit als 100% gratis → non-trader status volstaat → géén
-           KvK nodig.
-   Vervolg: KvK aanvragen wanneer het uitkomt, Premium toevoegen via
-           v1.1 update. Bestaande users krijgen die update gratis;
-           Premium-features blijven dan locked tot upgrade.
-   Voordeel: snelste pad naar real users + feedback; admin/financiële
-           overhead pas wanneer er bewezen vraag is.
-   Tradeoff: geen IAP-inkomsten vanaf launch; in v1.0 zijn 3/4/5
-           posities en alle stijlen voor IEDEREEN beschikbaar (of: we
-           tonen de paywall maar de buy-knop is verborgen — keuze).
+  "Ready to Submit" met paywall-review-screenshot. Blijft staan voor
+  later, NIET koppelen aan v1.0 submission.
+- Build geüpload via Xcode Organizer — MAAR die build heeft de
+  freeLaunch-flag NOG NIET. Nieuwe build vereist.
 
 ===================================================================
 NOG TE DOEN
 ===================================================================
 
-WACHTEN OP BESLISSING (zie hierboven)
-- A: KvK opstarten + door met Paid Apps flow.
-- B: IAP losmaken van v1.0 + submit zonder Premium.
+CODE
+- Nieuwe archive maken (Any iOS Device) met de freeLaunch-build en
+  uploaden via Xcode Organizer. ZONDER deze nieuwe build verschijnt
+  v1.0 nog steeds als "Premium beschikbaar" in de App Store.
 
-ALS BUILD VERSCHIJNT IN ASC (los van A/B)
-1. 1.0 page → Build sectie → "+" → kies de verwerkte build (1.0/1).
-2. ALLEEN bij pad A: IAP koppelen aan v1.0 submission via "+" bij
-   In-App Purchases sectie op 1.0 page.
-3. Optioneel: Phased Release aanzetten (release sectie, 7-daagse
-   cohorten).
+ASC (na nieuwe build verwerkt)
+1. 1.0 page → Build sectie → "+" → kies de nieuwe build (1.0/2 of hoger).
+2. IAP NIET koppelen aan v1.0 (geen "+" bij In-App Purchases sectie).
+   Het bestaande IAP "Ready to Submit" blijft staan voor v1.1.
+3. Optioneel: Phased Release aanzetten (7-daagse cohorten).
 4. Submit for Review.
-5. Push de nog niet gepushte commits naar origin (check eerst met
+5. Push nog niet gepushte commits naar origin (check eerst met
    git log origin/main..HEAD).
 
 NA REVIEW (24-48u typisch)
-- Bij rejection: lees de note van Apple, fix, resubmit.
+- Bij rejection: lees de note van Apple, fix, resubmit. Risico-punt:
+  de drie inline Premium-zinnen die nog in InfoView staan kunnen
+  vragen oproepen. Overweeg vooraf op te ruimen of in reviewer-notes
+  te vermelden ("Premium is geplanned voor v1.1, terminologie blijft
+  in de info-tekst staan").
 - Bij approval + manual release: knop "Release this version" in ASC.
 - Bij approval + phased rollout: gaat automatisch.
 
 ===================================================================
-LATER, BIJ EERSTE UPDATE (v1.1)
+LATER — v1.1 (Premium activeren)
 ===================================================================
-- Bump MARKETING_VERSION (1.0 → 1.1) en CURRENT_PROJECT_VERSION (1 → 2)
-  in Xcode → Target → General.
-- Archive + upload zoals nu.
-- ASC: maak nieuwe versie 1.1 aan, vul What's New tekst (NL + EN), kies
-  nieuwe build, Submit for Review.
-- Phased Release blijft optie.
-- Pad B → ook: KvK toevoegen, Trader validatie afronden, IAP submitten
-  in dezelfde of latere release.
+Volgorde:
+1. KvK aanvragen (~1-3 dagen, ~€85 eenmalig).
+2. ASC Business → Trader-velden invullen (KvK + zakelijk adres +
+   telefoon — wordt publiek op listing in EU). Paid Apps Agreement
+   tekenen, bank + tax forms.
+3. Code: `PurchaseManager.freeLaunch = false` zetten. Verborgen
+   Premium-UI komt automatisch terug.
+4. Bump MARKETING_VERSION (1.0 → 1.1) en CURRENT_PROJECT_VERSION
+   in Xcode → Target → General.
+5. Archive + upload.
+6. ASC: nieuwe versie 1.1, What's New (NL+EN), kies nieuwe build, IAP
+   nu wél koppelen ("+" bij In-App Purchases), Submit for Review.
+7. Communicatie naar bestaande v1.0 users: features die in v1.0 gratis
+   waren (3/4/5 posities + 3 premium presets) worden in v1.1 weer
+   premium. Overweeg een grandfathering-mechanisme (bv. UserDefaults-
+   flag "installed_before_v1_1") als dat te abrupt voelt — afzonderlijke
+   beslissing.
 
 ===================================================================
 HISTORIE — KORT
@@ -140,6 +141,9 @@ sessie-mijlpalen:
 - 6.9" NL + EN screenshot-set (10 + 10 = 20).
 - ASC listing draft in APP_STORE_LISTING.txt + support page online via
   GitHub Pages (privacy + support pagina's leven in docs/).
+- DSA/KvK-blocker geraakt na build-upload; Pad B gekozen — gratis
+  launch zonder Premium. PurchaseManager.freeLaunch flag toegevoegd;
+  Premium-UI verborgen in Settings, Onboarding en InfoView.
 
 ===================================================================
 SCREENSHOTS — STATUS
@@ -150,17 +154,29 @@ SCREENSHOTS — STATUS
          iPhones, dus niet kritiek voor v1.0. Voor iPad apart leveren
          als/wanneer iPad-doelgroep relevant wordt.
 
+NB: huidige screenshots zijn gemaakt met de PRE-freeLaunch app. Bekijk
+of er screenshots zijn die expliciet de Premium-knop of -pagina tonen
+(Settings-screenshot, onboarding-page-3). Niet kritiek (review beoordeelt
+de live app, niet screenshots) maar wel iets om te checken voor
+consistentie. Eventueel set hermaken met freeLaunch=true.
+
 ===================================================================
 BEKENDE CAVEATS
 ===================================================================
 - pbxproj: developmentRegion=nl, knownRegions=nl,en,Base. Bundle ID =
   com.mcs.younique (app target). Niet zonder akkoord aanpassen.
-- IAP product ID is ÉÉN bron van waarheid: code (PurchaseManager:14
+- IAP product ID is ÉÉN bron van waarheid: code (PurchaseManager
   unlockProductID) + Configuration.storekit + ASC moeten exact gelijk
   zijn: com.mcs.younique.unlock_full.
+- PurchaseManager.freeLaunch (PurchaseManager.swift:18) is de master-
+  schakelaar voor gratis launch. true = alle premium-features open + UI
+  verborgen. false = normaal gedrag (IAP gate aan). Eén regel flippen,
+  geen UI-werk nodig om Premium weer aan te zetten.
 - StoreKit Configuration in scheme = ALLEEN Run (debug). Productie
   TestFlight/App Store ignoreert dit en praat met ASC.
 - iCloud container = iCloud.com.mcs.younique (na de bundle ID switch).
+  iCloud-sync is NIET code-gated achter Premium; werkt voor iedereen
+  met iCloud aan, ongeacht freeLaunch.
 - 116 stale entries in Localizable.xcstrings zijn grotendeels false
   positives (worden runtime gebruikt via Bundle.appLocalizedString die
   de extractor niet ziet). Bewust laten staan; bij twijfel grep eerst.

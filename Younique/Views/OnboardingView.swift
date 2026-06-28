@@ -21,6 +21,10 @@ struct OnboardingView: View {
 
     let onFinish: () -> Void
 
+    private var pageCount: Int {
+        PurchaseManager.freeLaunch ? 2 : 3
+    }
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -43,8 +47,10 @@ struct OnboardingView: View {
                         howItWorksPage
                             .tag(1)
 
-                        premiumPage
-                            .tag(2)
+                        if !PurchaseManager.freeLaunch {
+                            premiumPage
+                                .tag(2)
+                        }
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .animation(.spring(response: 0.35, dampingFraction: 0.86), value: currentPage)
@@ -83,7 +89,7 @@ struct OnboardingView: View {
 
     private var footer: some View {
         VStack(spacing: 12) {
-            if currentPage < 2 {
+            if currentPage < pageCount - 1 {
                 Button {
                     withAnimation {
                         currentPage += 1
@@ -129,7 +135,7 @@ struct OnboardingView: View {
 
     private var pageDots: some View {
         HStack(spacing: 8) {
-            ForEach(0..<3, id: \.self) { index in
+            ForEach(0..<pageCount, id: \.self) { index in
                 Capsule()
                     .fill(index == currentPage ? Theme.accent : Theme.ink.opacity(0.14))
                     .frame(width: index == currentPage ? 24 : 8, height: 8)

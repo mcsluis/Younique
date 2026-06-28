@@ -95,15 +95,17 @@ struct InfoView: View {
                         ]
                     )
 
-                    section(
-                        title: "Premium",
-                        lines: [
-                            "Eenmalig €1,99 ontgrendelt 3, 4 en 5 posities en alle vier de handmatige selectiemodi.",
-                            "Inclusief iCloud-synchronisatie van je Youniquelist.",
-                            "Deelbaar met je gezin via Apple Family Sharing — als jij koopt, hebben gezinsleden ook toegang.",
-                            "Eenmaal gekocht, voor altijd toegang. Geen abonnement."
-                        ]
-                    )
+                    if !PurchaseManager.freeLaunch {
+                        section(
+                            title: "Premium",
+                            lines: [
+                                "Eenmalig €1,99 ontgrendelt 3, 4 en 5 posities en alle vier de handmatige selectiemodi.",
+                                "Inclusief iCloud-synchronisatie van je Youniquelist.",
+                                "Deelbaar met je gezin via Apple Family Sharing — als jij koopt, hebben gezinsleden ook toegang.",
+                                "Eenmaal gekocht, voor altijd toegang. Geen abonnement."
+                            ]
+                        )
+                    }
                 }
                 .padding(20)
                 }

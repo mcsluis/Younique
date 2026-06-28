@@ -30,55 +30,57 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    if purchaseManager.isUnlocked {
-                        HStack {
-                            Image(systemName: "checkmark.seal.fill")
-                                .foregroundStyle(Theme.accent)
-                            Text("Premium ontgrendeld")
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(Theme.ink)
-                        }
-                    } else {
-                        Button {
-                            isPaywallPresented = true
-                        } label: {
-                            HStack(alignment: .firstTextBaseline) {
-                                Image(systemName: "sparkles")
+                if !PurchaseManager.freeLaunch {
+                    Section {
+                        if purchaseManager.isUnlocked {
+                            HStack {
+                                Image(systemName: "checkmark.seal.fill")
                                     .foregroundStyle(Theme.accent)
-                                Text("Premium kopen")
+                                Text("Premium ontgrendeld")
                                     .font(.body.weight(.semibold))
                                     .foregroundStyle(Theme.ink)
-                                Spacer()
-                                if let displayPrice = purchaseManager.product?.displayPrice {
-                                    Text(displayPrice)
-                                        .font(.callout.weight(.medium))
+                            }
+                        } else {
+                            Button {
+                                isPaywallPresented = true
+                            } label: {
+                                HStack(alignment: .firstTextBaseline) {
+                                    Image(systemName: "sparkles")
+                                        .foregroundStyle(Theme.accent)
+                                    Text("Premium kopen")
+                                        .font(.body.weight(.semibold))
+                                        .foregroundStyle(Theme.ink)
+                                    Spacer()
+                                    if let displayPrice = purchaseManager.product?.displayPrice {
+                                        Text(displayPrice)
+                                            .font(.callout.weight(.medium))
+                                            .foregroundStyle(Theme.inkSoft)
+                                    }
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption.weight(.bold))
                                         .foregroundStyle(Theme.inkSoft)
                                 }
-                                Image(systemName: "chevron.right")
-                                    .font(.caption.weight(.bold))
-                                    .foregroundStyle(Theme.inkSoft)
+                            }
+                            .buttonStyle(.plain)
+                        }
+
+                        Button {
+                            Task { await purchaseManager.restore() }
+                        } label: {
+                            HStack {
+                                Image(systemName: "arrow.clockwise")
+                                    .foregroundStyle(Theme.accent)
+                                Text("Herstel aankopen")
+                                    .font(.body.weight(.semibold))
+                                    .foregroundStyle(Theme.ink)
                             }
                         }
                         .buttonStyle(.plain)
+                    } header: {
+                        Text("Premium")
+                    } footer: {
+                        Text("Premium is een eenmalige aankoop en wordt automatisch hersteld via je Apple-account.")
                     }
-
-                    Button {
-                        Task { await purchaseManager.restore() }
-                    } label: {
-                        HStack {
-                            Image(systemName: "arrow.clockwise")
-                                .foregroundStyle(Theme.accent)
-                            Text("Herstel aankopen")
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(Theme.ink)
-                        }
-                    }
-                    .buttonStyle(.plain)
-                } header: {
-                    Text("Premium")
-                } footer: {
-                    Text("Premium is een eenmalige aankoop en wordt automatisch hersteld via je Apple-account.")
                 }
 
                 Section {

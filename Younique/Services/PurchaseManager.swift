@@ -13,8 +13,13 @@ import StoreKit
 final class PurchaseManager {
     static let unlockProductID = "com.mcs.younique.unlock_full"
 
+    /// v1.0 launches as free. While true, all Premium gates behave as unlocked
+    /// and IAP-facing UI (paywall entries in Settings/Onboarding) stays hidden.
+    /// Flip to false in v1.1 once the IAP is live in ASC.
+    static let freeLaunch = true
+
     var product: Product?
-    var isUnlocked: Bool = false
+    var isUnlocked: Bool = PurchaseManager.freeLaunch
     var isPurchasing: Bool = false
     var errorMessage: String?
 
@@ -46,6 +51,10 @@ final class PurchaseManager {
     }
 
     func refreshEntitlement() async {
+        if Self.freeLaunch {
+            isUnlocked = true
+            return
+        }
         var unlocked = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
