@@ -2,199 +2,176 @@ YOUNIQUE — CURRENT STATUS
 =========================
 Dynamisch document. Bijwerken bij elke commit en aan het einde van elke sessie.
 Voor architectuur en conventies: zie PROJECT.txt.
+Voor ASC-listing copy en velden: zie APP_STORE_LISTING.txt.
 
 LAATST BIJGEWERKT
 -----------------
-2026-06-27  (sessie: ASC setup + build upload)
+2026-06-28  (sessie: ASC setup + build upload — DSA/KvK blocker geraakt)
 
 BRANCH STATE
 ------------
 Branch: main
 In sync met origin/main.
 
-RECENT COMMITS (top 6)
+RECENT COMMITS (top 8)
 ----------------------
+96f4291  Record App Store submission progress in STATUS
 f3c6e23  Add bilingual support page for App Store Connect
 95ca6ac  Switch Bundle ID to reverse-DNS com.mcs.younique
 176301f  Capture 6.9" EN App Store screenshots
 1388d5f  Format favorite save date with in-app locale
 fa10e44  Fill in missing EN translations for Settings and onboarding strings
 369bb6f  Fix paywall button not respecting in-app EN switch
+b9f0e84  Capture 6.9" NL App Store screenshots
 
-LIVE APP STORE SUBMISSION (in progress)
----------------------------------------
-Build geüpload via Xcode Organizer → ASC verwerkt (~10-30 min).
-- App ID: com.mcs.younique (XC Xcode-managed)
-- IAP: com.mcs.younique.unlock_full @ €1,99 — Ready to Submit
-- Listing: NL + EN ingevuld (name, subtitle, promo, keywords, description,
-  support URL https://mcsluis.github.io/Younique/support.html, privacy URL
-  https://mcsluis.github.io/Younique/{privacy.html,privacy-en.html})
-- Screenshots: 10x 6.9" NL + 10x 6.9" EN uploaded.
-- Categorieën: Lifestyle (primary) + Reference (secondary)
-- Age rating: 4+ (alle "None")
-- Pricing: Free (IAP afzonderlijk)
-- Availability: 175 countries (all)
-- Privacy: "No data collected"
+===================================================================
+HUIDIGE STAND APP STORE SUBMISSION
+===================================================================
 
-NOG TE DOEN VÓÓR SUBMIT
------------------------
-1. Wachten op ASC build-processing (email-notify, ~10-30 min).
-2. Op 1.0 pagina: Build sectie → "+" → kies de net-verwerkte build.
-3. IAP koppelen aan v1.0 submission (+ knop bij In-App Purchases sectie
-   op de 1.0 page).
+WAT IS AF
+---------
+- Bundle ID gemigreerd naar reverse-DNS: com.mcs.younique (App ID
+  registered + iCloud + IAP capabilities aan in Developer portal).
+- iCloud container: iCloud.com.mcs.younique.
+- ASC app aangemaakt (primary language: Dutch).
+- App Information: Lifestyle + Reference, Age 4+, content rights = No,
+  privacy URL NL/EN.
+- App Privacy: "No data collected" + privacy policy URLs.
+- Pricing & Availability: Free, 175 countries.
+- 1.0 listing (NL + EN): name, subtitle, promo, keywords, description,
+  support URL https://mcsluis.github.io/Younique/support.html, marketing
+  URL leeg. Volledige listing-copy staat in APP_STORE_LISTING.txt.
+- Screenshots: 10x 6.9" NL + 10x 6.9" EN geüpload in ASC (lokaal in
+  Screenshots/6.9/{nl,en}/).
+- In-App Purchases setup: com.mcs.younique.unlock_full @ €1,99 — status
+  "Ready to Submit" met paywall-review-screenshot + reviewer notes.
+- Build geüpload via Xcode Organizer (Any iOS Device archive). ASC
+  proces draait — laatst gecheckt: nog niet verschenen op 1.0 page.
+
+BLOCKER — DSA TRADER VALIDATIE
+------------------------------
+Apple's Business validatie (ASC → Business → Agreements/Tax/Banking)
+verlangt onder de EU Digital Services Act dat een developer met
+betaalde producten (Premium IAP telt) zich registreert als **trader**
+(handelaar), niet non-trader. Dat vereist een KvK-nummer.
+
+User heeft GEEN KvK.
+
+Zonder KvK: Paid Apps Agreement kan niet getekend → IAP gaat niet live
+→ Premium-pad werkt niet, ook al staat alles in code en ASC klaar.
+
+===================================================================
+BESLISSING NODIG — TWEE PADEN
+===================================================================
+
+PAD A — KvK aanvragen, Premium IAP behouden
+   Tijd:   ~1-3 dagen (online intake + KvK-afspraak + nummer terug).
+   Geld:   ~€85 eenmalig.
+   Daarna: Trader-velden invullen (KvK-nr + zakelijk adres + telefoon
+           — wordt publiek getoond op App Store listing in EU), Paid
+           Apps Agreement tekenen, bank + tax forms, dan submit.
+   Vervolg: kwartaal-administratie (BTW + IB) voor de eenmanszaak.
+   Voordeel: Premium IAP werkt vanaf v1.0; inkomsten vanaf dag 1.
+
+PAD B — Eerst gratis shippen, Premium later (aanbeveling)
+   Tijd:   submit vandaag/morgen, live binnen 1-3 dagen na review.
+   Geld:   €0.
+   Wat:    IAP weghalen / niet koppelen aan v1.0 submission. App
+           submit als 100% gratis → non-trader status volstaat → géén
+           KvK nodig.
+   Vervolg: KvK aanvragen wanneer het uitkomt, Premium toevoegen via
+           v1.1 update. Bestaande users krijgen die update gratis;
+           Premium-features blijven dan locked tot upgrade.
+   Voordeel: snelste pad naar real users + feedback; admin/financiële
+           overhead pas wanneer er bewezen vraag is.
+   Tradeoff: geen IAP-inkomsten vanaf launch; in v1.0 zijn 3/4/5
+           posities en alle stijlen voor IEDEREEN beschikbaar (of: we
+           tonen de paywall maar de buy-knop is verborgen — keuze).
+
+===================================================================
+NOG TE DOEN
+===================================================================
+
+WACHTEN OP BESLISSING (zie hierboven)
+- A: KvK opstarten + door met Paid Apps flow.
+- B: IAP losmaken van v1.0 + submit zonder Premium.
+
+ALS BUILD VERSCHIJNT IN ASC (los van A/B)
+1. 1.0 page → Build sectie → "+" → kies de verwerkte build (1.0/1).
+2. ALLEEN bij pad A: IAP koppelen aan v1.0 submission via "+" bij
+   In-App Purchases sectie op 1.0 page.
+3. Optioneel: Phased Release aanzetten (release sectie, 7-daagse
+   cohorten).
 4. Submit for Review.
-5. Optioneel: Phased Release aanzetten (release in 7-daagse cohorts).
+5. Push de nog niet gepushte commits naar origin (check eerst met
+   git log origin/main..HEAD).
 
-WAT IS RECENT GEBEURD
----------------------
-- Bug-fix: paywall-knop "Ontgrendel Premium voor X" en "Laden..." bleven
-  in NL hangen wanneer de in-app taal op EN stond. Oorzaak: String(localized:)
-  in PaywallView.swift:188 leest uit de systeem-bundle, niet de BundleLanguage
-  override. Vervangen door Bundle.appLocalizedString + String(format:). Beide
-  keys op extractionState: manual gezet. De "ook in onboarding" observatie
-  komt uit diezelfde PaywallView — de onboarding's "Premium bekijken" knop
-  opent de paywall, dus één fix dekt beide plekken.
-- 6.9" NL App Store screenshots: 10/10 marketing shots vastgelegd op
-  iPhone 17 Pro Max (1320×2868) — home base, home met preset, twee result
-  overlays, advanced sheet, syllable picker, Youniquelist (9 favorieten),
-  favorite detail met notitie, settings + lettertype-preview, paywall.
-  Opgeslagen in Screenshots/6.9/nl/.
-- Home controlsSection: titels van de drie blokken (baseSettings,
-  soundStyle, advanced) staan nu BOVEN de cards ipv erin, gecentreerd
-  (frame(maxWidth: .infinity, alignment: .center) op de Text).
-  Voor advancedSection betekent dit: de knop is nu alleen de summary +
-  badge + chevron rij, de "Geavanceerd aanpassen" titel zit boven de knop.
-  accessibilityLabel op de knop blijft "Geavanceerd aanpassen".
-- "Wat vind je van de naam %@?" key in xcstrings: extractionState gezet op
-  "manual" zodat Xcode hem niet bij elke build opnieuw als stale markeert.
-  Het runtime gebruik (Bundle.appLocalizedString) is voor de extractor
-  onzichtbaar; "manual" is Apple's signaal dat de key handmatig beheerd
-  wordt.
-- Bug-fix vervolg op d0fddff: in de share sheet stond de zin "Wat vind
-  je van de naam X?" twee keer in het bericht (Messages, Mail). Oorzaak:
-  ShareLink kreeg dezelfde tekst mee als `item:` én `message:` — sommige
-  share-targets plakken ze achter elkaar. `message:` parameter weggehaald
-  op beide sites (ContentView.swift:701 en FavoriteDetailView.swift:111).
-  `subject:` blijft voor de mail-onderwerpregel.
-- App icon polish voor iOS 18+ Liquid Glass appearances. Bron Y.png
-  (cream/peach gradient + dark Y) was opaque met alpha-kanaal en de dark+
-  tinted slots in Contents.json waren lege stubs. Nu:
-  - Y.png: alpha gestript (App Store compliant).
-  - Y-dark.png: HSV-luminance ge-invert van Y.png — donkere achtergrond,
-    warme cream Y (behoudt brand-hue).
-  - Y-tinted.png: hoog-contrast grayscale (light Y op donkere achtergrond)
-    voor iOS-tint overlay.
-  - Contents.json: dark/tinted entries verwijzen naar de nieuwe files.
-  Beide variants mechanisch gegenereerd via Pillow uit Y.png — geen
-  design tooling nodig.
-- Settings versie-weergave: alleen marketing-versie tonen (was "1.0 (1)",
-  nu "1.0"). Build-nummer is een dev-detail dat gebruikers niets zegt.
-- Bug-fix: ShareLink toonde mixed-language tekst (NL en EN tegelijk in
-  bericht) wanneer systeem-taal en in-app taal verschilden. Oorzaak: het
-  `item:` argument gebruikte String(localized:) (systeem-bundle) terwijl
-  `subject:`/`message:` Text-LocalizedStringKey gebruiken (in-app override).
-  Vervangen door String(format: Bundle.appLocalizedString("Wat vind je van
-  de naam %@?"), name). Locaties: FavoriteDetailView.swift:143 en
-  ContentView.swift rond regel 700.
-- Terminologie-wissel: "draaien"/"spin" → "genereren"/"generate" in
-  user-facing strings. Bron-keys hernoemd in xcstrings (NL = key conventie):
-  "Draait" → "Genereert", "Nog een keer draaien" → "Nog een keer genereren",
-  en de lange overlay-uitleg key (InfoView.swift:32). EN-vertalingen
-  meegegaan: Spinning → Generating, Spin again → Generate again, "spin again
-  with the magic wand" → "generate again with the magic wand". Interne code
-  identifiers (spinReels, isSpinning, spinAgainButton accessibility ID)
-  ongewijzigd — die zijn taal-agnostisch.
-- Translation review-import van user-bijgewerkte CSV (uit Numbers).
-  Inhoudelijk: NL "Pick fullscreen which syllables..." → "Pick which
-  syllables..." (typo verwijderd), nieuwe NL voor diezelfde key
-  ("Kies welke lettergrepen in de generator mogen terugkomen."), en de
-  trailing-space cosmetic op een stale entry (harmloos).
-- Scripts/translations.py: detect_delimiter() toegevoegd — Numbers
-  exporteert CSV met `;` in EU-locale, Excel met `,`. Script kiest nu
-  automatisch o.b.v. de header.
-- Bug-fix: bij in-app taalwissel naar EN bleef Settings "Lettertype" tonen
-  en bleven de font-namen Nederlands. Twee oorzaken: (1) key "Lettertype"
-  in Localizable.xcstrings had een leeg localizations-blok (geen EN-vertaling
-  → "Font"); (2) DisplayFont.displayName gebruikte String(localized:) wat
-  de runtime BundleLanguage-override negeert. Vervangen door
-  Bundle.appLocalizedString conform PROJECT.txt-conventie.
-- Volledige NL→EN localisatie afgerond met Localizable.xcstrings; pbxproj
-  bijgewerkt met developmentRegion=nl en knownRegions=nl,en,Base (handmatig
-  via Xcode UI door user).
-- Generator-tuning ronde 1: PowerfulBold uitgebreid (modern niet meer excluded),
-  DreamySoft secondaryTags=[romantic,unisex], signatureIDs opgeschoond (geen
-  la/mi/ra meer; blair/jax/luz/noe/sve/thor toegevoegd), modernIDs zonder vik,
-  accentIDs uitgebreid met ali/rey/rio.
-- Scripts/translations.py: CSV export/import voor Localizable.xcstrings — zodat
-  vertalingen in Numbers gereviewd kunnen worden. translations.csv staat in
-  .gitignore. Import schrijft alleen bij echte wijzigingen.
-- Home UI polish: Lettertype-picker is nu een sub-menu Picker (consistent met
-  Kleurmodus + Taal), met een gecentreerde live-preview rij eronder.
-  Toelichtingen in baseSettings en soundStyle staan nu direct op outer card
-  (geen nested blokjes), met 8pt extra top-padding. Badge op Geavanceerd-knop
-  is "Auto" / "Handmatig" (was misleidend "Pro").
-- Advanced sheet Done-button is nu een handmatige Capsule + .ultraThinMaterial
-  pill (matcht de Liquid Glass styling van de syllable picker).
-- Paywall refresh: emotionele kop "Vind die ene perfecte naam", 5→3 grouped
-  Premium bullets, crown.fill badge, en subtiele "Misschien later" knop onder
-  Herstel aankopen.
+NA REVIEW (24-48u typisch)
+- Bij rejection: lees de note van Apple, fix, resubmit.
+- Bij approval + manual release: knop "Release this version" in ASC.
+- Bij approval + phased rollout: gaat automatisch.
 
-OPEN PUNTEN (TODO)
-------------------
-1. App Store last mile:
-   - Screenshots (in progress) — zie Screenshots/README.txt + STATUS hier.
-   - App Store Connect: metadata, beschrijving, keywords, leeftijdscategorie,
-     privacy URLs (docs/privacy.html via GitHub Pages).
-   - Listing copy (draft in APP_STORE_LISTING.txt).
-   - StoreKit production product matching Configuration.storekit.
+===================================================================
+LATER, BIJ EERSTE UPDATE (v1.1)
+===================================================================
+- Bump MARKETING_VERSION (1.0 → 1.1) en CURRENT_PROJECT_VERSION (1 → 2)
+  in Xcode → Target → General.
+- Archive + upload zoals nu.
+- ASC: maak nieuwe versie 1.1 aan, vul What's New tekst (NL + EN), kies
+  nieuwe build, Submit for Review.
+- Phased Release blijft optie.
+- Pad B → ook: KvK toevoegen, Trader validatie afronden, IAP submitten
+  in dezelfde of latere release.
 
-2. Push openstaande commits naar origin/main.
+===================================================================
+HISTORIE — KORT
+===================================================================
+Volledige WAT IS RECENT GEBEURD staat in git log. Belangrijkste
+sessie-mijlpalen:
+- Spin → generate terminologie (code + xcstrings).
+- App icon dark + tinted variants gegenereerd via Pillow.
+- Diverse bug-fixes voor in-app taalwissel (settings lettertype, font
+  names, share-message, paywall-knop, favorite save-date locale).
+- Mixed-language share fix (ShareLink item/message duplicatie
+  weggehaald + Bundle.appLocalizedString).
+- Home section headers boven cards + gecentreerd.
+- Volledige NL→EN xcstrings coverage; 5 ontbrekende EN-vertalingen
+  ingevuld die in EN onboarding/settings naar boven kwamen.
+- 6.9" NL + EN screenshot-set (10 + 10 = 20).
+- ASC listing draft in APP_STORE_LISTING.txt + support page online via
+  GitHub Pages (privacy + support pagina's leven in docs/).
 
-SCREENSHOTS PROGRESS
---------------------
-Doelmaat #1: 6.9" iPhone 16 Pro Max (REQUIRED) — NL eerst.
+===================================================================
+SCREENSHOTS — STATUS
+===================================================================
+6.9" NL  Screenshots/6.9/nl/   10/10 ✓
+6.9" EN  Screenshots/6.9/en/   10/10 ✓
+6.7"     niet gemaakt — ASC schaalt 6.9" automatisch voor kleinere
+         iPhones, dus niet kritiek voor v1.0. Voor iPad apart leveren
+         als/wanneer iPad-doelgroep relevant wordt.
 
-6.9" NL  (Screenshots/6.9/nl/)
-  [x] 01-home-base.png        Home, naamtype Meisje, 3 posities, geen preset
-  [x] 02-home-preset.png      Home, preset "Zacht & Latijn" actief
-  [x] 03-overlay-name.png     Result overlay, "Aramel" (Zacht & Latijn)
-  [x] 04-overlay-other.png    Result overlay, "Miliki" (Jongensnaam, Fris & modern)
-  [x] 05-advanced-mode.png    Geavanceerd sheet, mode "Per positie"
-  [x] 06-syllable-picker.png  Syllable picker, Positie 1 met 7 chips geselecteerd
-  [x] 07-youniquelist.png     Youniquelist met 9 favorieten in mix van lengtes
-  [x] 08-favorite-detail.png  Luvanaro detail met notitie
-  [x] 09-settings.png         Settings met lettertype-preview + Premium-pill
-  [x] 10-paywall.png          Paywall, "Vind die ene perfecte naam"
-
-6.9" EN  (Screenshots/6.9/en/)
-  [x] 01-home-base.png        Home, Girl name, 3 positions, no preset
-  [x] 02-home-preset.png      Home, "Soft & Latin" preset active
-  [x] 03-overlay-name.png     Result overlay, "Leyalou" (Soft & Latin)
-  [x] 04-overlay-other.png    Result overlay, "Livizev" (Boy + Fresh & Modern)
-  [x] 05-advanced-mode.png    Advanced sheet, mode "Per position"
-  [x] 06-syllable-picker.png  Syllable picker, Position 1 with 9 chips selected
-  [x] 07-youniquelist.png     Youniquelist with 9 favorites
-  [x] 08-favorite-detail.png  Vimara detail with note
-  [x] 09-settings.png         Settings with font preview + Premium pill
-  [x] 10-paywall.png          Paywall, "Find the one perfect name"
-6.7"     — na 6.9" af (kan vaak hergebruiken met resize).
-
-AFGEROND DEZE WEEK
-------------------
-- Handmatige device-test door user (OK).
-- Translation review (geen verdere wijzigingen nodig).
-- App icon polish (light + dark + tinted variants).
-
+===================================================================
 BEKENDE CAVEATS
----------------
-- pbxproj: developmentRegion=nl, knownRegions=nl,en,Base. Niet zonder akkoord
-  aanpassen (build/lokalisatie breekt anders).
+===================================================================
+- pbxproj: developmentRegion=nl, knownRegions=nl,en,Base. Bundle ID =
+  com.mcs.younique (app target). Niet zonder akkoord aanpassen.
+- IAP product ID is ÉÉN bron van waarheid: code (PurchaseManager:14
+  unlockProductID) + Configuration.storekit + ASC moeten exact gelijk
+  zijn: com.mcs.younique.unlock_full.
+- StoreKit Configuration in scheme = ALLEEN Run (debug). Productie
+  TestFlight/App Store ignoreert dit en praat met ASC.
+- iCloud container = iCloud.com.mcs.younique (na de bundle ID switch).
+- 116 stale entries in Localizable.xcstrings zijn grotendeels false
+  positives (worden runtime gebruikt via Bundle.appLocalizedString die
+  de extractor niet ziet). Bewust laten staan; bij twijfel grep eerst.
+- "Wat vind je van de naam %@?", "Ontgrendel Premium voor %@" en
+  "Laden..." staan op extractionState: manual om auto-stale te
+  voorkomen.
+- Liquid Glass toolbar pills renderen automatisch in fullScreenCover
+  ZONDER navigationTitle. Workaround = handmatige Capsule.
+- UI tests gebruiken accessibility identifiers (NIET tekstmatch). Bij
+  refactor van knoppen: identifier behouden ("discoverButton",
+  "spinAgainButton").
 - translations.csv staat in .gitignore — gegenereerd bestand.
-- Eerste echte import via translations.py geeft eenmalig cosmetische diff
-  (lege {} blocks worden compacter); daarna stabiel.
-- UI tests gebruiken accessibility identifiers, NIET tekstmatch. Bij refactor
-  van die buttons: identifier behouden.
-- Codex (parallel agent) commit soms grotere refactors — altijd `git diff`
-  bekijken voor commit van zijn werk en samenvattingen toevoegen.
-- Liquid Glass toolbar pills renderen automatisch in fullScreenCover ZONDER
-  navigationTitle. Met navigationTitle → flat. Workaround = handmatige Capsule.
+- Codex (parallel agent) commit soms grotere refactors — altijd `git
+  diff` reviewen voor commit-summaries.
