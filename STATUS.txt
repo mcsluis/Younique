@@ -187,5 +187,9 @@ BEKENDE CAVEATS
   refactor van knoppen: identifier behouden ("discoverButton",
   "spinAgainButton").
 - translations.csv staat in .gitignore — gegenereerd bestand.
+- Info.plist heeft ITSAppUsesNonExemptEncryption=false: Younique gebruikt
+  alleen system-encryption (HTTPS via CloudKit/StoreKit), geen eigen crypto.
+  ASC slaat de Export Compliance vraag daarom over. Bij introductie van
+  custom crypto: opnieuw evalueren.
 - Codex (parallel agent) commit soms grotere refactors — altijd `git
   diff` reviewen voor commit-summaries.
